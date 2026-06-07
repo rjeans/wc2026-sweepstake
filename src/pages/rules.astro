@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/WC2026Layout.astro';
+---
+
+<Layout title="Rules" active="rules">
+  <section>
+    <div class="section-head">
+      <h2 class="label">Rules</h2>
+      <span class="count">How it works</span>
+    </div>
+
+    <div class="prose">
+      <div>
+        <h3 class="label">The draw</h3>
+        <ul>
+          <li>All 48 teams are sorted by FIFA rank and split into six strength tiers of eight.</li>
+          <li>Each player receives exactly one team from every tier.</li>
+          <li>No player holds two teams from the same group.</li>
+          <li>The draw is randomised but optimised to keep total squad strength balanced.</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="label">The scoring</h3>
+        <p>
+          Group stage: <strong>3</strong> points per win, <strong>1</strong> per draw (maximum 9 per team).
+        </p>
+        <p>
+          Knockout progression bonuses, cumulative &mdash; a team keeps the points for every round it clears:
+        </p>
+        <table class="scoring">
+          <tbody>
+            <tr><td>Reach the Round of 32 (qualified)</td><td><strong>5</strong></td></tr>
+            <tr><td>Reach the Round of 16</td><td><strong>10</strong></td></tr>
+            <tr><td>Reach the Quarter-final</td><td><strong>18</strong></td></tr>
+            <tr><td>Reach the Semi-final</td><td><strong>30</strong></td></tr>
+            <tr><td>Reach the Final</td><td><strong>45</strong></td></tr>
+            <tr><td>Win the World Cup</td><td><strong>80</strong></td></tr>
+          </tbody>
+        </table>
+        <p>
+          A player's score is the sum across their six teams of group points plus the
+          deepest progression bonus reached. The table sorts by points, then goals for,
+          then goal difference.
+        </p>
+      </div>
+
+      <p class="fineprint">
+        The 80-point champion bonus is calibrated so the winner's owner finishes top
+        of the table about 92% of the time. The remaining ~8% goes to whoever has the
+        broadest spread of deep runs across their six teams.
+      </p>
+    </div>
+  </section>
+</Layout>

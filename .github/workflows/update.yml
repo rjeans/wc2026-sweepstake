@@ -1,0 +1,75 @@
+name: Update and deploy sweepstake
+
+on:
+  schedule:
+    # Every 30 minutes. GitHub may delay during high load; that's fine.
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}        # manual trigger from the Actions tab
+  push:
+    branches: [main]           # code/content changes deploy too
+
+permissions:
+  contents: write              # to commit refreshed data for history
+
+concurrency:
+  group: sweepstake
+  cancel-in-progress: false    # let any in-flight run finish
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # fetch_results.py / scoring.py are standard-library only - no pip install.
+      - name: Fetch results + fixtures from ESPN
+        run: |
+          python fetch_results.py \
+            --teams src/data/teams.csv \
+            --output src/data/results.csv \
+            --matches src/data/matches.csv
+
+      - name: Compute standings (if the draw has happened)
+        run: |
+          if [ -f src/data/allocation.csv ]; then
+            python scoring.py \
+              --alloc src/data/allocation.csv \
+              --results src/data/results.csv \
+              --output src/data/standings.csv
+          else
+            echo "::notice::No allocation.csv yet - skipping scoring (pre-draw)."
+          fi
+
+      # Persist refreshed data for history. [skip ci] stops this commit from
+      # re-triggering the workflow (which would otherwise loop).
+      - name: Commit data if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/results.csv src/data/matches.csv src/data/standings.csv
+          if git diff --cached --quiet; then
+            echo "::notice::No data changes."
+          else
+            git commit -m "data: $(date -u +%Y-%m-%dT%H:%MZ) update [skip ci]"
+            git push
+          fi
+
+      - name: Build static site
+        run: |
+          npm ci
+          npm run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=wc2026-sweepstake

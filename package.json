@@ -1,0 +1,14 @@
+{
+  "name": "wc2026-sweepstake",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "fetch": "python3 fetch_results.py --teams src/data/teams.csv --output src/data/results.csv --matches src/data/matches.csv"
+  },
+  "dependencies": {
+    "astro": "^5.15.3"
+  }
+}

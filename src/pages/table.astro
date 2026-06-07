@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/WC2026Layout.astro';
+import { getTournamentData, stageLabel } from '../lib/wc2026';
+import { playerColor, stageStyle, fmtSigned, MEDALS } from '../lib/wc2026-ui';
+
+const data = getTournamentData();
+const hasScores = data.status === 'in-progress' || data.status === 'complete';
+
+// Podium display order: 2nd, 1st, 3rd (winner centre).
+const podium = hasScores ? [data.players[1], data.players[0], data.players[2]] : [];
+---
+
+<Layout title="Overall Table" active="table">
+  {!hasScores && (
+    <p class="lead">
+      The table goes live with the first kick-off on <strong>Thursday 11 June 2026</strong>.
+      Until then everyone sits level on zero.
+    </p>
+  )}
+
+  {hasScores && (
+    <div class="podium">
+      {podium.map((p, i) => {
+        const place = i === 1 ? 1 : i === 0 ? 2 : 3;
+        return (
+          <div class={`podium-card place-${place}`} style={`--accent:${playerColor(p.name)}`}>
+            <span class="medal" style={`background-color:${MEDALS[place - 1]}`}>{place}</span>
+            <span class="podium-name">{p.name}</span>
+            <span class="podium-pts">{p.points}<small>pts</small></span>
+            <span class="podium-meta">{stageLabel(p.best)} &middot; GF {p.gf}</span>
+          </div>
+        );
+      })}
+    </div>
+  )}
+
+  <section>
+    <div class="section-head">
+      <h2 class="label">{hasScores ? 'Overall Table' : 'Players'}</h2>
+      <span class="count">8 players, 6 teams each</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th>Player</th>
+            <th class="num">Points</th>
+            <th class="num">GF</th>
+            <th class="num">GD</th>
+            <th>Best Run</th>
+            <th class="num">Teams</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.players.map((p) => (
+            <tr class={hasScores && p.rank <= 3 ? 'top' : ''}>
+              <td class="num rank">{p.rank}</td>
+              <td class="nowrap">
+                <span class="chip" style={`--accent:${playerColor(p.name)}`}>
+                  <span class="chip-dot"></span>{p.name}
+                </span>
+              </td>
+              <td class="num strong">{p.points}</td>
+              <td class="num">{p.gf}</td>
+              <td class="num">{fmtSigned(p.gd)}</td>
+              <td class="nowrap"><span class="badge" style={stageStyle(p.best)}>{stageLabel(p.best)}</span></td>
+              <td class="num">{p.teams.length === 0 ? <span class="muted">&mdash;</span> : p.teams.length}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</Layout>

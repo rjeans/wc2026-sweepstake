@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/WC2026Layout.astro';
+import { getTournamentData } from '../lib/wc2026';
+import { playerColor, flagCode } from '../lib/wc2026-ui';
+
+const data = getTournamentData();
+---
+
+<Layout title="Teams" active="teams">
+  {data.status === 'pre-draw' && (
+    <div class="callout">
+      <p class="label">Announcement</p>
+      <p class="callout-lead">
+        The draw takes place on <strong>Sunday 7 June 2026</strong>.
+      </p>
+      <p class="callout-text">
+        Eight players &mdash; Ella, Emily, Henry, Nichola, Pete, Richard, Sophie, Tega &mdash;
+        each receive six of the 48 teams. The allocation is randomised but balanced so
+        everyone holds one team from every strength tier. Standings begin updating
+        with the first kick-off on Thursday 11 June.
+      </p>
+    </div>
+  )}
+
+  {data.status === 'pre-tournament' && (
+    <div class="callout">
+      <p class="label">Announcement</p>
+      <p class="callout-lead">
+        Draw complete. <strong>Tournament kicks off Thursday 11 June 2026.</strong>
+      </p>
+    </div>
+  )}
+
+  <section>
+    <div class="section-head">
+      <h2 class="label">Selected Teams</h2>
+      <span class="count">8 players, one team per tier</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Tier 1</th>
+            <th>Tier 2</th>
+            <th>Tier 3</th>
+            <th>Tier 4</th>
+            <th>Tier 5</th>
+            <th>Tier 6</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.players.map((p) => (
+            <tr>
+              <td class="nowrap">
+                <span class="chip" style={`--accent:${playerColor(p.name)}`}>
+                  <span class="chip-dot"></span>{p.name}
+                </span>
+              </td>
+              {[1, 2, 3, 4, 5, 6].map((tier) => {
+                const t = p.teams.find((x) => x.tier === tier);
+                return (
+                  <td class="nowrap">
+                    {t ? (
+                      <span class="team">
+                        {flagCode(t.country) && (
+                          <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
+                        )}
+                        {t.country}
+                      </span>
+                    ) : (
+                      <span class="muted">&mdash;</span>
+                    )}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</Layout>

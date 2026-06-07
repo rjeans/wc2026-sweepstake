@@ -1,0 +1,13 @@
+# Node / Astro
+node_modules/
+dist/
+.astro/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Misc
+.DS_Store
+files.zip
