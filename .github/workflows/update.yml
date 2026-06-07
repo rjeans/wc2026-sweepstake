@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write              # to commit refreshed data for history
 
+# Run JS-based actions on Node 24 (Node 20 is being deprecated mid-June 2026).
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 concurrency:
   group: sweepstake
   cancel-in-progress: false    # let any in-flight run finish
@@ -27,7 +31,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       # fetch_results.py / scoring.py are standard-library only - no pip install.
       - name: Fetch results + fixtures from ESPN
