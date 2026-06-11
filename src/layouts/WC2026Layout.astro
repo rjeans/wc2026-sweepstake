@@ -4,7 +4,7 @@ import { STATUS_META, flagCode } from '../lib/wc2026-ui';
 
 interface Props {
   title: string;
-  active: 'teams' | 'table' | 'results' | 'rules';
+  active: 'teams' | 'table' | 'results' | 'recaps' | 'rules';
 }
 
 const { title, active } = Astro.props;
@@ -15,6 +15,7 @@ const nav = [
   { key: 'teams', label: 'Teams', href: '/' },
   { key: 'table', label: 'Overall Table', href: '/table' },
   { key: 'results', label: 'Results', href: '/results' },
+  { key: 'recaps', label: 'Recaps', href: '/recaps' },
   { key: 'rules', label: 'Rules', href: '/rules' },
 ] as const;
 
