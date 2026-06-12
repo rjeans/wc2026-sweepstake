@@ -134,7 +134,7 @@ def champion_value_needed(teams, names, by_group, rng):
         if o == champ_owner:
             continue
         gap = base[o] - base[champ_owner]
-        owner_wins_tiebreak = (GF[champ_owner], GD[champ_owner]) > (GF[o], GD[o])
+        owner_wins_tiebreak = (GD[champ_owner], GF[champ_owner]) > (GD[o], GF[o])
         need = max(need, gap if owner_wins_tiebreak else gap + 1)
     return max(0, need)
 

@@ -14,7 +14,7 @@ Knockout progression (cumulative bonus a team keeps once it reaches a round):
     WIN THE CUP         :  80     <- calibrated to ~90% (see below)
 
 A person's score = sum over their 6 teams of (group points + progression bonus).
-Table is sorted by points, then goals for, then goal difference.
+Table is sorted by points, then goal difference, then goals for.
 
 Calibration: "probably certain", not certain
 ---------------------------------------------
@@ -141,7 +141,7 @@ def score(owners, teams_of, results):
             if r["stage"] == "CHAMPION":
                 champion_owner = person
         rows.append({"person": person, "points": pts, "gf": gf, "gd": gd, "best": deepest})
-    rows.sort(key=lambda x: (-x["points"], -x["gf"], -x["gd"], x["person"]))
+    rows.sort(key=lambda x: (-x["points"], -x["gd"], -x["gf"], x["person"]))
     for i, row in enumerate(rows, 1):
         row["rank"] = i
     return rows, champion_owner
