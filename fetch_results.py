@@ -112,7 +112,12 @@ def aggregate(events: list[dict], known_teams: set[str]) -> tuple[dict, list[str
 
     for ev in events:
         m = parse_match(ev)
-        if m is None or not m["completed"]:
+        if m is None:
+            continue
+        # Include in-progress matches so the table reflects live scores;
+        # the next cron pass will overwrite with the latest state, and
+        # ESPN flips to completed at full-time.
+        if not m["completed"] and not m["in_progress"]:
             continue
         a, b = m["teams"]
         for t in (a, b):
@@ -141,7 +146,7 @@ def aggregate(events: list[dict], known_teams: set[str]) -> tuple[dict, list[str
             # appear in the next round's match and get bumped from there.
             bump_stage(stats, a["name"], m["stage"])
             bump_stage(stats, b["name"], m["stage"])
-            if m["stage"] == "FINAL":
+            if m["stage"] == "FINAL" and m["completed"]:
                 if a["winner"]:
                     final_winner = a["name"]
                 elif b["winner"]:
