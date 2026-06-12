@@ -17,6 +17,16 @@ const matchesByStage = STAGE_ORDER.map((stage) => ({
     .sort((a, b) => a.date.localeCompare(b.date)),
 })).filter((g) => g.matches.length > 0);
 
+// Team records table: order by points, then GD, then GF, then FIFA rank.
+const teamsSorted = [...data.teams].sort((a, b) => {
+  if (b.groupPoints !== a.groupPoints) return b.groupPoints - a.groupPoints;
+  const aGD = a.gf - a.ga;
+  const bGD = b.gf - b.ga;
+  if (bGD !== aGD) return bGD - aGD;
+  if (b.gf !== a.gf) return b.gf - a.gf;
+  return a.fifa_rank - b.fifa_rank;
+});
+
 const fmtDate = (iso: string) => {
   if (!iso) return '';
   const d = new Date(iso + 'T00:00:00Z');
@@ -86,7 +96,7 @@ const ownerColor = (country: string) => {
   <section>
     <div class="section-head">
       <h2 class="label">Team Records</h2>
-      <span class="count">48 teams, ordered by FIFA rank</span>
+      <span class="count">48 teams, ordered by Pts, GD, GF</span>
     </div>
     {!hasScores && (
       <p class="lead">Aggregate win/draw/loss records fill in as results are synced.</p>
@@ -110,7 +120,7 @@ const ownerColor = (country: string) => {
           </tr>
         </thead>
         <tbody>
-          {data.teams.map((t, i) => (
+          {teamsSorted.map((t, i) => (
             <tr>
               <td class="num rank">{i + 1}</td>
               <td class="nowrap strong">

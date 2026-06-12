@@ -58,7 +58,7 @@ const fmtFullDate = (iso: string) => {
             const awayOwner = ownerName(m.away);
             return (
               <div class="match">
-                <span class="match-date">{stageLabel(m.stage)}{m.group && ` · ${m.group}`}</span>
+                <span class="match-date">{stageLabel(m.stage)}</span>
                 <span class={`match-side home${homeWin ? ' win' : ''}`}>
                   <span class="recap-owner">{homeOwner}</span>
                   <span class="match-name">{m.home}</span>
@@ -99,7 +99,7 @@ const fmtFullDate = (iso: string) => {
             const awayOwner = ownerName(m.away);
             return (
               <div class="match">
-                <span class="match-date">{stageLabel(m.stage)}{m.group && ` · ${m.group}`}</span>
+                <span class="match-date">{stageLabel(m.stage)}</span>
                 <span class={`match-side home${homeWin ? ' win' : ''}`}>
                   <span class="recap-owner">{homeOwner}</span>
                   <span class="match-name">{m.home}</span>
