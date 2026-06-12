@@ -59,6 +59,11 @@ def is_completed(event: dict) -> bool:
     return bool(t.get("completed")) or t.get("state") == "post"
 
 
+def is_in_progress(event: dict) -> bool:
+    """True for matches currently being played (includes halftime, ET)."""
+    return event.get("status", {}).get("type", {}).get("state") == "in"
+
+
 def parse_match(event: dict) -> dict | None:
     """Return a normalised match dict, or None if it isn't usable."""
     slug = event.get("season", {}).get("slug")
@@ -86,6 +91,7 @@ def parse_match(event: dict) -> dict | None:
     return {
         "stage": stage,
         "completed": is_completed(event),
+        "in_progress": is_in_progress(event),
         "date": (event.get("date") or "")[:10],  # YYYY-MM-DD
         "teams": teams,
     }
@@ -180,15 +186,18 @@ def build_matches(events: list[dict], known: set[str], groups: dict[str, str]) -
         if b["homeAway"] == "home" and a["homeAway"] != "home":
             a, b = b, a
         group = groups.get(a["name"], "") if m["stage"] == "GROUP" else ""
-        played = m["completed"]
+        # Populate scores for both completed and in-progress matches; the
+        # per-team aggregates in results.csv still only count completed
+        # matches, so standings don't churn between HT and FT.
+        has_score = m["completed"] or m["in_progress"]
         matches.append({
             "date": m["date"],
             "stage": m["stage"],
             "group": group,
             "home": a["name"],
-            "home_score": a["score"] if played else "",
+            "home_score": a["score"] if has_score else "",
             "away": b["name"],
-            "away_score": b["score"] if played else "",
+            "away_score": b["score"] if has_score else "",
         })
     matches.sort(key=lambda r: (r["date"], STAGE_ORDER.index(r["stage"]), r["home"]))
     return matches
