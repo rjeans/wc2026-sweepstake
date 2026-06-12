@@ -27,7 +27,7 @@ const podium = hasScores ? [data.players[1], data.players[0], data.players[2]] :
             <span class="medal" style={`background-color:${MEDALS[place - 1]}`}>{place}</span>
             <span class="podium-name">{p.name}</span>
             <span class="podium-pts">{p.points}<small>pts</small></span>
-            <span class="podium-meta">{stageLabel(p.best)} &middot; GF {p.gf}</span>
+            <span class="podium-meta">{stageLabel(p.best)} &middot; GD {fmtSigned(p.gd)}</span>
           </div>
         );
       })}
