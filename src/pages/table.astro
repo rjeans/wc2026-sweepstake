@@ -46,8 +46,8 @@ const podium = hasScores ? [data.players[1], data.players[0], data.players[2]] :
             <th class="num">#</th>
             <th>Player</th>
             <th class="num">Points</th>
-            <th class="num">GF</th>
             <th class="num">GD</th>
+            <th class="num">GF</th>
             <th>Best Run</th>
             <th class="num">Teams</th>
           </tr>
@@ -62,8 +62,8 @@ const podium = hasScores ? [data.players[1], data.players[0], data.players[2]] :
                 </span>
               </td>
               <td class="num strong">{p.points}</td>
-              <td class="num">{p.gf}</td>
               <td class="num">{fmtSigned(p.gd)}</td>
+              <td class="num">{p.gf}</td>
               <td class="nowrap"><span class="badge" style={stageStyle(p.best)}>{stageLabel(p.best)}</span></td>
               <td class="num">{p.teams.length === 0 ? <span class="muted">&mdash;</span> : p.teams.length}</td>
             </tr>
