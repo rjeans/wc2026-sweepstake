@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/WC2026Layout.astro';
-import { getTournamentData, stageLabel } from '../../lib/wc2026';
+import { getTournamentData } from '../../lib/wc2026';
 import { playerColor, flagCode } from '../../lib/wc2026-ui';
 
 export async function getStaticPaths() {
@@ -58,7 +58,6 @@ const fmtFullDate = (iso: string) => {
             const awayOwner = ownerName(m.away);
             return (
               <div class="match">
-                <span class="match-date">{stageLabel(m.stage)}</span>
                 <span class={`match-side home${homeWin ? ' win' : ''}`}>
                   <span class="recap-owner">{homeOwner}</span>
                   <span class="match-name">{m.home}</span>
@@ -99,7 +98,6 @@ const fmtFullDate = (iso: string) => {
             const awayOwner = ownerName(m.away);
             return (
               <div class="match">
-                <span class="match-date">{stageLabel(m.stage)}</span>
                 <span class={`match-side home${homeWin ? ' win' : ''}`}>
                   <span class="recap-owner">{homeOwner}</span>
                   <span class="match-name">{m.home}</span>
@@ -131,6 +129,12 @@ const fmtFullDate = (iso: string) => {
 </Layout>
 
 <style>
+  /* Tighten the match grid for recaps - no date column, more room for names. */
+  .recap-article :global(.match) { grid-template-columns: 1fr auto 1fr; }
+  @media (max-width: 520px) {
+    .recap-article :global(.match) { grid-template-columns: 1fr auto 1fr; }
+  }
+
   .recap-article { max-width: 720px; margin: 0 auto; }
   .recap-head { margin-bottom: 2rem; }
   .recap-title {
