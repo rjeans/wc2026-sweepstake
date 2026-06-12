@@ -50,6 +50,8 @@ export interface PlayerRow {
   teams: TeamRow[]; // sorted by tier ascending; empty pre-draw
 }
 
+export type MatchStatus = 'pre' | 'in' | 'post';
+
 export interface Match {
   date: string; // ISO date, e.g. 2026-06-11
   stage: Stage;
@@ -58,6 +60,7 @@ export interface Match {
   away: string;
   homeScore: number | null; // null = not yet played
   awayScore: number | null;
+  status: MatchStatus; // 'in' means currently being played
 }
 
 export type TournamentStatus =
@@ -71,6 +74,7 @@ export interface TournamentData {
   teams: TeamRow[];
   players: PlayerRow[];
   matches: Match[]; // chronological; empty until a matches.csv is synced
+  liveMatches: Match[]; // any matches currently in progress
   updatedAt: number; // epoch ms of the most recent data file
 }
 
@@ -164,15 +168,20 @@ function loadMatches(): Match[] {
     const n = parseInt(v);
     return Number.isNaN(n) ? null : n;
   };
-  return parseCsv(path).map((r) => ({
-    date: r.date ?? '',
-    stage: STAGE_ORDER.includes(r.stage as Stage) ? (r.stage as Stage) : 'GROUP',
-    group: r.group ?? '',
-    home: r.home,
-    away: r.away,
-    homeScore: toScore(r.home_score),
-    awayScore: toScore(r.away_score),
-  }));
+  return parseCsv(path).map((r) => {
+    const status: MatchStatus =
+      r.status === 'in' || r.status === 'post' ? r.status : 'pre';
+    return {
+      date: r.date ?? '',
+      stage: STAGE_ORDER.includes(r.stage as Stage) ? (r.stage as Stage) : 'GROUP',
+      group: r.group ?? '',
+      home: r.home,
+      away: r.away,
+      homeScore: toScore(r.home_score),
+      awayScore: toScore(r.away_score),
+      status,
+    };
+  });
 }
 
 // Most recent modification time across the synced data files, so the page can
@@ -272,7 +281,8 @@ export function getTournamentData(): TournamentData {
     p.rank = i + 1;
   });
 
-  return { status, teams: teamRows, players: playerRows, matches, updatedAt: dataUpdatedAt() };
+  const liveMatches = matches.filter((m) => m.status === 'in');
+  return { status, teams: teamRows, players: playerRows, matches, liveMatches, updatedAt: dataUpdatedAt() };
 }
 
 export function stageLabel(s: Stage): string {

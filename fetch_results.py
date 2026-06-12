@@ -92,6 +92,7 @@ def parse_match(event: dict) -> dict | None:
         "stage": stage,
         "completed": is_completed(event),
         "in_progress": is_in_progress(event),
+        "status": "post" if is_completed(event) else ("in" if is_in_progress(event) else "pre"),
         "date": (event.get("date") or "")[:10],  # YYYY-MM-DD
         "teams": teams,
     }
@@ -203,13 +204,14 @@ def build_matches(events: list[dict], known: set[str], groups: dict[str, str]) -
             "home_score": a["score"] if has_score else "",
             "away": b["name"],
             "away_score": b["score"] if has_score else "",
+            "status": m["status"],
         })
     matches.sort(key=lambda r: (r["date"], STAGE_ORDER.index(r["stage"]), r["home"]))
     return matches
 
 
 def write_matches(matches: list[dict], path: str) -> None:
-    cols = ["date", "stage", "group", "home", "home_score", "away", "away_score"]
+    cols = ["date", "stage", "group", "home", "home_score", "away", "away_score", "status"]
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()
