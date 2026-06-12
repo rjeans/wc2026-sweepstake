@@ -12,7 +12,7 @@ Colombia,0,0,0,0,0,GROUP
 Congo DR,0,0,0,0,0,GROUP
 Croatia,0,0,0,0,0,GROUP
 Curaçao,0,0,0,0,0,GROUP
-Czechia,0,0,0,0,0,GROUP
+Czechia,0,0,1,1,2,GROUP
 Ecuador,0,0,0,0,0,GROUP
 Egypt,0,0,0,0,0,GROUP
 England,0,0,0,0,0,GROUP
@@ -38,7 +38,7 @@ Saudi Arabia,0,0,0,0,0,GROUP
 Scotland,0,0,0,0,0,GROUP
 Senegal,0,0,0,0,0,GROUP
 South Africa,0,0,1,0,2,GROUP
-South Korea,0,0,0,0,0,GROUP
+South Korea,1,0,0,2,1,GROUP
 Spain,0,0,0,0,0,GROUP
 Sweden,0,0,0,0,0,GROUP
 Switzerland,0,0,0,0,0,GROUP
