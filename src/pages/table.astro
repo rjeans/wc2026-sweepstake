@@ -45,6 +45,7 @@ const podium = hasScores ? [data.players[1], data.players[0], data.players[2]] :
           <tr>
             <th class="num">#</th>
             <th>Player</th>
+            <th class="num">Pld</th>
             <th class="num">Points</th>
             <th class="num">GD</th>
             <th class="num">GF</th>
@@ -61,6 +62,7 @@ const podium = hasScores ? [data.players[1], data.players[0], data.players[2]] :
                   <span class="chip-dot"></span>{p.name}
                 </span>
               </td>
+              <td class="num">{p.played}</td>
               <td class="num strong">{p.points}</td>
               <td class="num">{fmtSigned(p.gd)}</td>
               <td class="num">{p.gf}</td>

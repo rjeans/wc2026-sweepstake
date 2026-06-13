@@ -43,6 +43,7 @@ export interface TeamRow extends Team {
 export interface PlayerRow {
   rank: number;
   name: string;
+  played: number; // total matches played across the player's six teams
   points: number;
   gf: number;
   gd: number;
@@ -255,14 +256,17 @@ export function getTournamentData(): TournamentData {
   const standingsByName = new Map(standings?.map((s) => [s.person, s]) ?? []);
   const playerRows: PlayerRow[] = PLAYERS.map((name) => {
     const s = standingsByName.get(name);
+    const owned = teamsByOwner.get(name) ?? [];
+    const played = owned.reduce((sum, t) => sum + t.gw + t.gd + t.gl, 0);
     return {
       rank: 0,
       name,
+      played,
       points: s?.points ?? 0,
       gf: s?.goals_for ?? 0,
       gd: s?.goal_diff ?? 0,
       best: (s?.best_run ?? 'GROUP') as Stage,
-      teams: teamsByOwner.get(name) ?? [],
+      teams: owned,
     };
   });
 
