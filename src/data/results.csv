@@ -31,7 +31,7 @@ Netherlands,0,0,0,0,0,GROUP
 New Zealand,0,0,0,0,0,GROUP
 Norway,0,0,0,0,0,GROUP
 Panama,0,0,0,0,0,GROUP
-Paraguay,0,0,1,0,2,GROUP
+Paraguay,0,0,1,1,4,GROUP
 Portugal,0,0,0,0,0,GROUP
 Qatar,0,0,0,0,0,GROUP
 Saudi Arabia,0,0,0,0,0,GROUP
@@ -44,6 +44,6 @@ Sweden,0,0,0,0,0,GROUP
 Switzerland,0,0,0,0,0,GROUP
 Tunisia,0,0,0,0,0,GROUP
 Türkiye,0,0,0,0,0,GROUP
-United States,1,0,0,2,0,GROUP
+United States,1,0,0,4,1,GROUP
 Uruguay,0,0,0,0,0,GROUP
 Uzbekistan,0,0,0,0,0,GROUP
