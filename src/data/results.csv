@@ -33,7 +33,7 @@ Norway,0,0,0,0,0,GROUP
 Panama,0,0,0,0,0,GROUP
 Paraguay,0,0,1,1,4,GROUP
 Portugal,0,0,0,0,0,GROUP
-Qatar,0,0,0,0,0,GROUP
+Qatar,0,0,1,0,1,GROUP
 Saudi Arabia,0,0,0,0,0,GROUP
 Scotland,0,0,0,0,0,GROUP
 Senegal,0,0,0,0,0,GROUP
@@ -41,7 +41,7 @@ South Africa,0,0,1,0,2,GROUP
 South Korea,1,0,0,2,1,GROUP
 Spain,0,0,0,0,0,GROUP
 Sweden,0,0,0,0,0,GROUP
-Switzerland,0,0,0,0,0,GROUP
+Switzerland,1,0,0,1,0,GROUP
 Tunisia,0,0,0,0,0,GROUP
 Türkiye,0,0,0,0,0,GROUP
 United States,1,0,0,4,1,GROUP
