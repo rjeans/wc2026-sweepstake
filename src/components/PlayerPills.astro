@@ -1,0 +1,70 @@
+---
+import { PLAYERS, playerSlug } from '../lib/wc2026';
+import { playerColor } from '../lib/wc2026-ui';
+
+interface Props {
+  active: 'all' | string; // 'all' or a player name
+}
+const { active } = Astro.props;
+const pills = [{ key: 'all', label: 'All', href: '/results', color: '#0f766e' }, ...PLAYERS.map((p) => ({
+  key: p,
+  label: p,
+  href: `/results/${playerSlug(p)}`,
+  color: playerColor(p),
+}))];
+---
+
+<nav class="pill-strip" aria-label="Filter results by player">
+  {pills.map((p) => {
+    const isActive = active === p.key;
+    return (
+      <a
+        href={p.href}
+        class={`pill${isActive ? ' pill-active' : ''}`}
+        style={`--accent:${p.color}`}
+        aria-current={isActive ? 'page' : undefined}
+      >
+        <span class="pill-dot"></span>
+        {p.label}
+      </a>
+    );
+  })}
+</nav>
+
+<style>
+  .pill-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .pill:hover { background: #f8fafc; color: #0f172a; }
+  .pill-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--accent);
+    flex: none;
+  }
+  .pill-active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 1px 6px rgba(15, 23, 42, 0.12);
+  }
+  .pill-active .pill-dot { background: rgba(255, 255, 255, 0.85); }
+</style>

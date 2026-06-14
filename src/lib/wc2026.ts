@@ -3,7 +3,9 @@ import { resolve } from 'path';
 
 const DATA_DIR = './src/data';
 
-const PLAYERS = ['Richard', 'Nichola', 'Emily', 'Henry', 'Sophie', 'Tega', 'Pete', 'Ella'];
+export const PLAYERS = ['Richard', 'Nichola', 'Emily', 'Henry', 'Sophie', 'Tega', 'Pete', 'Ella'] as const;
+export type PlayerName = (typeof PLAYERS)[number];
+export const playerSlug = (name: string) => name.toLowerCase();
 
 const GROUP_WIN = 3;
 const GROUP_DRAW = 1;

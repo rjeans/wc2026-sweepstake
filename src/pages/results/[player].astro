@@ -1,25 +1,48 @@
 ---
-import Layout from '../layouts/WC2026Layout.astro';
-import { getTournamentData, stageLabel, STAGE_ORDER, type Stage } from '../lib/wc2026';
-import { playerColor, tierStyle, stageStyle, flagCode } from '../lib/wc2026-ui';
-import PlayerPills from '../components/PlayerPills.astro';
+import Layout from '../../layouts/WC2026Layout.astro';
+import {
+  getTournamentData,
+  stageLabel,
+  STAGE_ORDER,
+  PLAYERS,
+  playerSlug,
+  type Stage,
+} from '../../lib/wc2026';
+import { playerColor, tierStyle, stageStyle, flagCode } from '../../lib/wc2026-ui';
+import PlayerPills from '../../components/PlayerPills.astro';
 
+export async function getStaticPaths() {
+  return PLAYERS.map((p) => ({ params: { player: playerSlug(p) }, props: { player: p } }));
+}
+
+interface Props { player: string }
+const { player } = Astro.props;
 const data = getTournamentData();
-const hasScores = data.status === 'in-progress' || data.status === 'complete';
 
-// Look up a team's owner/flag by country for the match list.
 const teamByCountry = new Map(data.teams.map((t) => [t.country, t]));
+const ownerOf = (country: string) => teamByCountry.get(country)?.owner ?? null;
+const ownerColor = (country: string) => {
+  const o = ownerOf(country);
+  return o ? playerColor(o) : '#cbd5e1';
+};
 
-// Group matches by stage, in tournament order; within a stage, by date.
+// Filter to this player's six teams.
+const ownedTeams = data.teams.filter((t) => t.owner === player);
+const ownedSet = new Set(ownedTeams.map((t) => t.country));
+
+// Filter to matches that involve any of those teams.
+const playerMatches = data.matches.filter(
+  (m) => ownedSet.has(m.home) || ownedSet.has(m.away),
+);
 const matchesByStage = STAGE_ORDER.map((stage) => ({
   stage,
-  matches: data.matches
+  matches: playerMatches
     .filter((m) => m.stage === stage)
     .sort((a, b) => a.date.localeCompare(b.date)),
 })).filter((g) => g.matches.length > 0);
 
-// Team records table: order by points, then GD, then GF, then FIFA rank.
-const teamsSorted = [...data.teams].sort((a, b) => {
+// Order the player's teams by points, then GD, then GF, then FIFA rank.
+const teamsSorted = [...ownedTeams].sort((a, b) => {
   if (b.groupPoints !== a.groupPoints) return b.groupPoints - a.groupPoints;
   const aGD = a.gf - a.ga;
   const bGD = b.gf - b.ga;
@@ -28,6 +51,10 @@ const teamsSorted = [...data.teams].sort((a, b) => {
   return a.fifa_rank - b.fifa_rank;
 });
 
+const playerStandings = data.players.find((p) => p.name === player);
+const played = playerMatches.filter((m) => m.status === 'post' || m.status === 'in').length;
+const total = playerMatches.length;
+
 const fmtDate = (iso: string) => {
   if (!iso) return '';
   const d = new Date(iso + 'T00:00:00Z');
@@ -35,28 +62,35 @@ const fmtDate = (iso: string) => {
     ? iso
     : new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(d);
 };
-const ownerColor = (country: string) => {
-  const owner = teamByCountry.get(country)?.owner;
-  return owner ? playerColor(owner) : '#cbd5e1';
-};
 ---
 
-<Layout title="Results" active="results">
-  <PlayerPills active="all" />
+<Layout title={`${player}'s results`} active="results">
+  <PlayerPills active={player} />
+
+  {playerStandings && (
+    <section class="player-summary" style={`--accent:${playerColor(player)}`}>
+      <div class="ps-name">
+        <span class="ps-dot"></span>{player}
+      </div>
+      <div class="ps-stats">
+        <span><strong>{playerStandings.points}</strong> pts</span>
+        <span>{playerStandings.played} played</span>
+        <span>GD {playerStandings.gd > 0 ? `+${playerStandings.gd}` : playerStandings.gd}</span>
+        <span>GF {playerStandings.gf}</span>
+        <span>Rank #{playerStandings.rank}</span>
+      </div>
+    </section>
+  )}
 
   {/* MATCH BY MATCH */}
   <section>
     <div class="section-head">
       <h2 class="label">Matches</h2>
-      <span class="count">{data.matches.length > 0 ? `${data.matches.length} played` : 'Fixtures'}</span>
+      <span class="count">{played} of {total} played</span>
     </div>
 
     {matchesByStage.length === 0 ? (
-      <p class="lead">
-        No matches played yet. Match-by-match results appear here once the tournament
-        kicks off on <strong>Thursday 11 June 2026</strong>. The coloured dot by each
-        team shows its owner.
-      </p>
+      <p class="lead">No matches yet for {player}'s six teams.</p>
     ) : (
       <div class="matches">
         {matchesByStage.map((g) => (
@@ -64,9 +98,9 @@ const ownerColor = (country: string) => {
             <h3 class="match-stage-head">{stageLabel(g.stage as Stage)}</h3>
             <div class="table-wrap">
               {g.matches.map((m) => {
-                const played = m.homeScore !== null && m.awayScore !== null;
-                const homeWin = played && (m.homeScore as number) > (m.awayScore as number);
-                const awayWin = played && (m.awayScore as number) > (m.homeScore as number);
+                const playedM = m.homeScore !== null && m.awayScore !== null;
+                const homeWin = playedM && (m.homeScore as number) > (m.awayScore as number);
+                const awayWin = playedM && (m.awayScore as number) > (m.homeScore as number);
                 return (
                   <div class="match">
                     <span class="match-date">{fmtDate(m.date)}</span>
@@ -77,7 +111,7 @@ const ownerColor = (country: string) => {
                         <img class="flag" src={`https://flagcdn.com/w40/${flagCode(m.home)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(m.home)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
                       )}
                     </span>
-                    <span class="match-score">{played ? `${m.homeScore} - ${m.awayScore}` : 'v'}</span>
+                    <span class="match-score">{playedM ? `${m.homeScore} - ${m.awayScore}` : 'v'}</span>
                     <span class={`match-side away${awayWin ? ' win' : ''}`}>
                       {flagCode(m.away) && (
                         <img class="flag" src={`https://flagcdn.com/w40/${flagCode(m.away)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(m.away)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
@@ -98,12 +132,9 @@ const ownerColor = (country: string) => {
   {/* TEAM RECORDS */}
   <section>
     <div class="section-head">
-      <h2 class="label">Team Records</h2>
-      <span class="count">48 teams, ordered by Pts, GD, GF</span>
+      <h2 class="label">Squad records</h2>
+      <span class="count">{ownedTeams.length} teams, ordered by Pts, GD, GF</span>
     </div>
-    {!hasScores && (
-      <p class="lead">Aggregate win/draw/loss records fill in as results are synced.</p>
-    )}
     <div class="table-wrap">
       <table>
         <thead>
@@ -112,7 +143,6 @@ const ownerColor = (country: string) => {
             <th>Country</th>
             <th>Grp</th>
             <th class="num">FIFA</th>
-            <th>Owner</th>
             <th class="num">Pld</th>
             <th class="num">W</th>
             <th class="num">D</th>
@@ -138,15 +168,6 @@ const ownerColor = (country: string) => {
               </td>
               <td><span class="group">{t.group}</span></td>
               <td class="num">{t.fifa_rank}</td>
-              <td class="nowrap">
-                {t.owner ? (
-                  <span class="chip" style={`--accent:${playerColor(t.owner)}`}>
-                    <span class="chip-dot"></span>{t.owner}
-                  </span>
-                ) : (
-                  <span class="muted">&mdash;</span>
-                )}
-              </td>
               <td class="num">{t.gw + t.gd + t.gl}</td>
               <td class="num">{t.gw}</td>
               <td class="num">{t.gd}</td>
@@ -162,3 +183,42 @@ const ownerColor = (country: string) => {
     </div>
   </section>
 </Layout>
+
+<style>
+  .player-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.25rem;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.75rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+  }
+  .ps-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 1.05rem;
+  }
+  .ps-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+  .ps-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    color: #475569;
+    font-size: 0.9rem;
+  }
+  .ps-stats strong { color: #0f172a; font-size: 1.1rem; font-weight: 800; }
+</style>
