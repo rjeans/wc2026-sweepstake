@@ -1,0 +1,199 @@
+---
+import Layout from '../../layouts/WC2026Layout.astro';
+import { loadPredictions } from '../../lib/predictions';
+import { playerColor, flagCode } from '../../lib/wc2026-ui';
+
+const pred = loadPredictions();
+
+const fmtPct = (p: number) => `${(p * 100).toFixed(1)}%`;
+const fmtOdds = (o: number | null | undefined) =>
+  o == null ? '—' : o < 100 ? o.toFixed(2) : o < 1000 ? o.toFixed(0) : '—';
+const fmtPts = (n: number) => n.toFixed(1);
+
+// Movement arrow: P(win)/P(champion) deltas in percentage points.
+// Threshold above the 50k-trial sampling-error floor (~0.2pp).
+function arrowProb(delta: number | undefined): { glyph: string; cls: string; label: string } {
+  if (delta == null) return { glyph: '–', cls: 'm-flat', label: '' };
+  const pp = delta * 100;
+  if (pp > 0.3) return { glyph: '▲', cls: 'm-up', label: `+${pp.toFixed(1)}pp` };
+  if (pp < -0.3) return { glyph: '▼', cls: 'm-down', label: `${pp.toFixed(1)}pp` };
+  return { glyph: '–', cls: 'm-flat', label: '0' };
+}
+// Odds drift: lower decimal odds = shorter price = upward movement in market terms.
+function arrowOdds(delta: number | undefined): { glyph: string; cls: string } {
+  if (delta == null) return { glyph: '–', cls: 'm-flat' };
+  if (delta < -0.2) return { glyph: '▲', cls: 'm-up' };
+  if (delta > 0.2) return { glyph: '▼', cls: 'm-down' };
+  return { glyph: '–', cls: 'm-flat' };
+}
+
+const compareLabel = pred?.comparison_date
+  ? new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })
+      .format(new Date(pred.comparison_date + 'T00:00:00Z'))
+  : null;
+---
+
+<Layout title="Odds" active="odds">
+  <section>
+    <div class="section-head">
+      <h2 class="label">Sweepstake Odds</h2>
+      <span class="count">
+        {pred ? `${pred.trials.toLocaleString()} simulations` : 'No data yet'}
+      </span>
+    </div>
+
+    {!pred && (
+      <p class="lead">Predictions appear here after the first sim run. Try <code>python3 predict.py</code> locally, or wait for the cron.</p>
+    )}
+
+    {pred && (
+      <>
+        <p class="lead">
+          Decimal odds for each player to top the sweepstake table at the end of the tournament,
+          based on <strong>{pred.trials.toLocaleString()}</strong> Monte Carlo simulated tournaments
+          seeded with <strong>{pred.locked_group_matches}</strong> completed group matches.
+          {compareLabel && <> Arrows compare to the snapshot from <strong>{compareLabel}</strong>.</>}
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="num">#</th>
+                <th>Player</th>
+                <th class="num">Odds</th>
+                <th class="num">P(win)</th>
+                <th class="num">P(top 3)</th>
+                <th class="num">E[pts]</th>
+                <th class="num">P(owns winner)</th>
+                <th>Move</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pred.predictions.map((p, i) => {
+                const arr = arrowProb(p.delta_p_win);
+                return (
+                  <tr class={i === 0 ? 'top' : ''}>
+                    <td class="num rank">{i + 1}</td>
+                    <td class="nowrap">
+                      <span class="chip" style={`--accent:${playerColor(p.player)}`}>
+                        <span class="chip-dot"></span>{p.player}
+                      </span>
+                    </td>
+                    <td class="num strong">{fmtOdds(p.odds_decimal)}</td>
+                    <td class="num">{fmtPct(p.p_win)}</td>
+                    <td class="num">{fmtPct(p.p_top3)}</td>
+                    <td class="num">{fmtPts(p.expected_points)}</td>
+                    <td class="num">{fmtPct(p.p_owns_champion)}</td>
+                    <td class={`move ${arr.cls}`} title={arr.label}>{arr.glyph} <small>{arr.label}</small></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </>
+    )}
+  </section>
+
+  {pred && (
+    <section>
+      <div class="section-head">
+        <h2 class="label">Team Odds</h2>
+        <span class="count">48 teams, by chance of winning the World Cup</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="num">#</th>
+              <th>Country</th>
+              <th>Grp</th>
+              <th class="num">FIFA</th>
+              <th>Owner</th>
+              <th class="num">Odds</th>
+              <th class="num">P(QF)</th>
+              <th class="num">P(SF)</th>
+              <th class="num">P(F)</th>
+              <th class="num">P(W)</th>
+              <th class="num">E[pts]</th>
+              <th>Move</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pred.teams.map((t, i) => {
+              const arr = arrowProb(t.delta_p_champion);
+              return (
+                <tr>
+                  <td class="num rank">{i + 1}</td>
+                  <td class="nowrap strong">
+                    <span class="team">
+                      {flagCode(t.country) && (
+                        <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
+                      )}
+                      {t.country}
+                    </span>
+                  </td>
+                  <td><span class="group">{t.group}</span></td>
+                  <td class="num">{t.fifa_rank}</td>
+                  <td class="nowrap">
+                    {t.owner ? (
+                      <span class="chip" style={`--accent:${playerColor(t.owner)}`}>
+                        <span class="chip-dot"></span>{t.owner}
+                      </span>
+                    ) : <span class="muted">—</span>}
+                  </td>
+                  <td class="num strong">{fmtOdds(t.odds_decimal)}</td>
+                  <td class="num">{fmtPct(t.p_qf)}</td>
+                  <td class="num">{fmtPct(t.p_sf)}</td>
+                  <td class="num">{fmtPct(t.p_final)}</td>
+                  <td class="num">{fmtPct(t.p_champion)}</td>
+                  <td class="num">{fmtPts(t.expected_points)}</td>
+                  <td class={`move ${arr.cls}`} title={arr.label}>{arr.glyph}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )}
+
+  <section>
+    <h2 class="label">Methodology</h2>
+    <div class="prose">
+      <p>
+        For every remaining group fixture the model draws a result from a Poisson goals
+        distribution scaled by the gap in FIFA points between the two teams (same
+        approach as the calibration sim that picked the 80-point champion bonus).
+        Completed matches stay as they happened.
+      </p>
+      <p>
+        After the group stage the top two of each group plus the eight best
+        third-placed teams advance. The knockout bracket is drawn at random in each
+        simulation - once ESPN publishes the official bracket post-group-stage we'll
+        swap that in, which will tighten the favourites' odds.
+      </p>
+      <p>
+        Each player's score in each simulation is their six teams' group points plus
+        the cumulative progression bonus of the deepest stage each team reached.
+        Probabilities, expected points and decimal odds come from aggregating across
+        all simulations. Arrows show the change since the most recent dated snapshot,
+        rounded to the nearest 0.3 percentage points to keep sampling noise from
+        flickering them.
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .move {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .move small { font-weight: 500; color: inherit; opacity: 0.7; margin-left: 0.15rem; }
+  .m-up { color: #16a34a; }
+  .m-down { color: #dc2626; }
+  .m-flat { color: #cbd5e1; }
+  .prose p { margin: 0 0 0.8rem; }
+</style>
