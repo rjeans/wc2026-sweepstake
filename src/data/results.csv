@@ -1,7 +1,7 @@
 country,gw,gd,gl,gf,ga,stage
 Algeria,0,0,0,0,0,GROUP
 Argentina,0,0,0,0,0,GROUP
-Australia,0,1,0,0,0,GROUP
+Australia,1,0,0,1,0,GROUP
 Austria,0,0,0,0,0,GROUP
 Belgium,0,0,0,0,0,GROUP
 Bosnia-Herzegovina,0,1,0,1,1,GROUP
@@ -43,7 +43,7 @@ Spain,0,0,0,0,0,GROUP
 Sweden,0,0,0,0,0,GROUP
 Switzerland,0,1,0,1,1,GROUP
 Tunisia,0,0,0,0,0,GROUP
-Türkiye,0,1,0,0,0,GROUP
+Türkiye,0,0,1,0,1,GROUP
 United States,1,0,0,4,1,GROUP
 Uruguay,0,0,0,0,0,GROUP
 Uzbekistan,0,0,0,0,0,GROUP
