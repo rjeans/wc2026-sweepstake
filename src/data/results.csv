@@ -3,7 +3,7 @@ Algeria,0,0,0,0,0,GROUP
 Argentina,0,0,0,0,0,GROUP
 Australia,1,0,0,2,0,GROUP
 Austria,0,0,0,0,0,GROUP
-Belgium,0,0,0,0,0,GROUP
+Belgium,0,0,1,0,1,GROUP
 Bosnia-Herzegovina,0,1,0,1,1,GROUP
 Brazil,0,1,0,1,1,GROUP
 Canada,0,1,0,1,1,GROUP
@@ -14,7 +14,7 @@ Croatia,0,0,0,0,0,GROUP
 Curaçao,0,0,1,1,7,GROUP
 Czechia,0,0,1,1,2,GROUP
 Ecuador,0,0,1,0,1,GROUP
-Egypt,0,0,0,0,0,GROUP
+Egypt,1,0,0,1,0,GROUP
 England,0,0,0,0,0,GROUP
 France,0,0,0,0,0,GROUP
 Germany,1,0,0,7,1,GROUP
