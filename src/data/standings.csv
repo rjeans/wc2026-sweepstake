@@ -1,9 +1,9 @@
 rank,person,points,goals_for,goal_diff,best_run
 1,Richard,7,5,0,GROUP
-2,Ella,7,6,-2,GROUP
-3,Sophie,5,3,2,GROUP
-4,Emily,5,4,1,GROUP
-5,Tega,4,9,5,GROUP
-6,Nichola,4,6,4,GROUP
-7,Pete,4,5,-6,GROUP
+2,Sophie,5,3,2,GROUP
+3,Emily,5,4,1,GROUP
+4,Ella,5,6,-3,GROUP
+5,Pete,5,6,-5,GROUP
+6,Tega,4,9,5,GROUP
+7,Nichola,4,6,4,GROUP
 8,Henry,1,1,-4,GROUP
