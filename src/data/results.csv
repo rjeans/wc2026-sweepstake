@@ -13,7 +13,7 @@ Congo DR,0,0,0,0,0,GROUP
 Croatia,0,0,0,0,0,GROUP
 Curaçao,0,0,1,1,7,GROUP
 Czechia,0,0,1,1,2,GROUP
-Ecuador,0,1,0,0,0,GROUP
+Ecuador,0,0,1,0,1,GROUP
 Egypt,0,0,0,0,0,GROUP
 England,0,0,0,0,0,GROUP
 France,0,0,0,0,0,GROUP
@@ -22,7 +22,7 @@ Ghana,0,0,0,0,0,GROUP
 Haiti,0,0,1,0,1,GROUP
 Iran,0,0,0,0,0,GROUP
 Iraq,0,0,0,0,0,GROUP
-Ivory Coast,0,1,0,0,0,GROUP
+Ivory Coast,1,0,0,1,0,GROUP
 Japan,0,1,0,2,2,GROUP
 Jordan,0,0,0,0,0,GROUP
 Mexico,1,0,0,2,0,GROUP
