@@ -1,5 +1,9 @@
 {
+<<<<<<< Updated upstream
   "generated_at": "2026-06-16T03:22:56Z",
+=======
+  "generated_at": "2026-06-16T05:09:08Z",
+>>>>>>> Stashed changes
   "trials": 50000,
   "locked_group_matches": 16,
   "locked_ko_matches": 0,
@@ -7,6 +11,7 @@
   "predictions": [
     {
       "player": "Richard",
+<<<<<<< Updated upstream
       "p_win": 0.20176,
       "p_top3": 0.4871,
       "expected_points": 85.96302,
@@ -100,6 +105,101 @@
       "delta_p_win": 0.002679999999999988,
       "delta_expected_points": 0.34845999999998867,
       "delta_odds_decimal": -0.45262272915967827
+=======
+      "p_win": 0.20314,
+      "p_top3": 0.48814,
+      "expected_points": 85.89726,
+      "max_points_seen": 213,
+      "p_owns_champion": 0.20098,
+      "odds_decimal": 4.9227133996258745,
+      "delta_p_win": 0.00381999999999999,
+      "delta_expected_points": 0.3490600000000086,
+      "delta_odds_decimal": -0.09434459756457336
+    },
+    {
+      "player": "Nichola",
+      "p_win": 0.18746,
+      "p_top3": 0.4395,
+      "expected_points": 81.559,
+      "max_points_seen": 216,
+      "p_owns_champion": 0.19212,
+      "odds_decimal": 5.33447135388883,
+      "delta_p_win": -0.014600000000000002,
+      "delta_expected_points": -5.942040000000006,
+      "delta_odds_decimal": 0.3854463118221165
+    },
+    {
+      "player": "Ella",
+      "p_win": 0.17598,
+      "p_top3": 0.3846,
+      "expected_points": 77.25158,
+      "max_points_seen": 198,
+      "p_owns_champion": 0.18992,
+      "odds_decimal": 5.6824639163541315,
+      "delta_p_win": 0.007060000000000011,
+      "delta_expected_points": 1.0174400000000077,
+      "delta_odds_decimal": -0.23749819588835042
+    },
+    {
+      "player": "Henry",
+      "p_win": 0.10994,
+      "p_top3": 0.32042,
+      "expected_points": 71.76044,
+      "max_points_seen": 215,
+      "p_owns_champion": 0.11788,
+      "odds_decimal": 9.095870474804439,
+      "delta_p_win": 0.00015999999999999348,
+      "delta_expected_points": 1.3118000000000052,
+      "delta_odds_decimal": -0.013256870795851583
+    },
+    {
+      "player": "Sophie",
+      "p_win": 0.0853,
+      "p_top3": 0.40422,
+      "expected_points": 78.56716,
+      "max_points_seen": 215,
+      "p_owns_champion": 0.07106,
+      "odds_decimal": 11.723329425556859,
+      "delta_p_win": 0.003280000000000005,
+      "delta_expected_points": 0.46681999999999846,
+      "delta_odds_decimal": -0.468818830965942
+    },
+    {
+      "player": "Tega",
+      "p_win": 0.08082,
+      "p_top3": 0.315,
+      "expected_points": 72.31688,
+      "max_points_seen": 213,
+      "p_owns_champion": 0.07814,
+      "odds_decimal": 12.373174956693887,
+      "delta_p_win": 0.00204,
+      "delta_expected_points": 1.09178,
+      "delta_odds_decimal": -0.32040209331880654
+    },
+    {
+      "player": "Emily",
+      "p_win": 0.08054,
+      "p_top3": 0.35198,
+      "expected_points": 75.3967,
+      "max_points_seen": 219,
+      "p_owns_champion": 0.07372,
+      "odds_decimal": 12.416190712689346,
+      "delta_p_win": -0.00010000000000000286,
+      "delta_expected_points": 0.12351999999999919,
+      "delta_odds_decimal": 0.015397061895695785
+    },
+    {
+      "player": "Pete",
+      "p_win": 0.07682,
+      "p_top3": 0.29614,
+      "expected_points": 71.11038,
+      "max_points_seen": 210,
+      "p_owns_champion": 0.07618,
+      "odds_decimal": 13.017443374121322,
+      "delta_p_win": -0.0016599999999999948,
+      "delta_expected_points": -0.8710799999999921,
+      "delta_odds_decimal": 0.2753434760581204
+>>>>>>> Stashed changes
     }
   ],
   "teams": [
@@ -108,6 +208,7 @@
       "owner": "Nichola",
       "group": "I",
       "fifa_rank": 1,
+<<<<<<< Updated upstream
       "p_qualify": 0.98548,
       "p_r16": 0.77786,
       "p_qf": 0.58314,
@@ -119,12 +220,26 @@
       "delta_p_champion": -0.004480000000000012,
       "delta_expected_points": -0.28788000000000125,
       "delta_odds_decimal": 0.1446515303305329
+=======
+      "p_qualify": 0.98568,
+      "p_r16": 0.7781,
+      "p_qf": 0.58502,
+      "p_sf": 0.4147,
+      "p_final": 0.27994,
+      "p_champion": 0.17804,
+      "expected_points": 36.0858,
+      "odds_decimal": 5.616715344866322,
+      "delta_p_champion": 0.0006400000000000017,
+      "delta_expected_points": 0.06589999999999918,
+      "delta_odds_decimal": -0.02026323461507573
+>>>>>>> Stashed changes
     },
     {
       "country": "Argentina",
       "owner": "Richard",
       "group": "J",
       "fifa_rank": 3,
+<<<<<<< Updated upstream
       "p_qualify": 0.99146,
       "p_r16": 0.78114,
       "p_qf": 0.5833,
@@ -136,12 +251,26 @@
       "delta_p_champion": -0.0011400000000000021,
       "delta_expected_points": -0.06671999999999656,
       "delta_odds_decimal": 0.03751156935770705
+=======
+      "p_qualify": 0.99098,
+      "p_r16": 0.78382,
+      "p_qf": 0.58238,
+      "p_sf": 0.41226,
+      "p_final": 0.27608,
+      "p_champion": 0.17692,
+      "expected_points": 36.31538,
+      "odds_decimal": 5.652272213429799,
+      "delta_p_champion": 0.0022599999999999842,
+      "delta_expected_points": 0.04672000000000054,
+      "delta_odds_decimal": -0.07313715333992477
+>>>>>>> Stashed changes
     },
     {
       "country": "Spain",
       "owner": "Ella",
       "group": "H",
       "fifa_rank": 2,
+<<<<<<< Updated upstream
       "p_qualify": 0.97238,
       "p_r16": 0.7669,
       "p_qf": 0.57572,
@@ -153,12 +282,26 @@
       "delta_p_champion": 0.0006400000000000017,
       "delta_expected_points": 0.0962600000000009,
       "delta_odds_decimal": -0.021488224755012553
+=======
+      "p_qualify": 0.97286,
+      "p_r16": 0.76784,
+      "p_qf": 0.5744,
+      "p_sf": 0.40624,
+      "p_final": 0.27314,
+      "p_champion": 0.1726,
+      "expected_points": 34.15356,
+      "odds_decimal": 5.793742757821553,
+      "delta_p_champion": 0.0029599999999999904,
+      "delta_expected_points": 0.06579999999999586,
+      "delta_odds_decimal": -0.10109336573421146
+>>>>>>> Stashed changes
     },
     {
       "country": "England",
       "owner": "Henry",
       "group": "L",
       "fifa_rank": 4,
+<<<<<<< Updated upstream
       "p_qualify": 0.98456,
       "p_r16": 0.72386,
       "p_qf": 0.49604,
@@ -170,12 +313,26 @@
       "delta_p_champion": 0.0005799999999999972,
       "delta_expected_points": 0.04972000000000065,
       "delta_odds_decimal": -0.05578104776965809
+=======
+      "p_qualify": 0.98464,
+      "p_r16": 0.72336,
+      "p_qf": 0.49784,
+      "p_sf": 0.31714,
+      "p_final": 0.18794,
+      "p_champion": 0.10228,
+      "expected_points": 29.63756,
+      "odds_decimal": 9.777082518576456,
+      "delta_p_champion": -0.0013400000000000079,
+      "delta_expected_points": -0.04797999999999902,
+      "delta_odds_decimal": 0.12643592525470382
+>>>>>>> Stashed changes
     },
     {
       "country": "Brazil",
       "owner": "Emily",
       "group": "C",
       "fifa_rank": 6,
+<<<<<<< Updated upstream
       "p_qualify": 0.98162,
       "p_r16": 0.64628,
       "p_qf": 0.38552,
@@ -187,12 +344,26 @@
       "delta_p_champion": -0.0008599999999999997,
       "delta_expected_points": -0.16332000000000235,
       "delta_odds_decimal": 0.375010814265341
+=======
+      "p_qualify": 0.98066,
+      "p_r16": 0.64456,
+      "p_qf": 0.39092,
+      "p_sf": 0.21314,
+      "p_final": 0.10448,
+      "p_champion": 0.04732,
+      "expected_points": 23.06494,
+      "odds_decimal": 21.132713440405748,
+      "delta_p_champion": -0.00025999999999999635,
+      "delta_expected_points": -0.0923000000000016,
+      "delta_odds_decimal": 0.11547930841751608
+>>>>>>> Stashed changes
     },
     {
       "country": "Portugal",
       "owner": "Sophie",
       "group": "K",
       "fifa_rank": 5,
+<<<<<<< Updated upstream
       "p_qualify": 0.95536,
       "p_r16": 0.6312,
       "p_qf": 0.3801,
@@ -204,12 +375,26 @@
       "delta_p_champion": 0.0015599999999999989,
       "delta_expected_points": 0.15797999999999845,
       "delta_odds_decimal": -0.7260402527886001
+=======
+      "p_qualify": 0.95454,
+      "p_r16": 0.63084,
+      "p_qf": 0.38028,
+      "p_sf": 0.2077,
+      "p_final": 0.10248,
+      "p_champion": 0.04588,
+      "expected_points": 22.9596,
+      "odds_decimal": 21.795989537925024,
+      "delta_p_champion": 0.0006399999999999947,
+      "delta_expected_points": 0.13393999999999906,
+      "delta_odds_decimal": -0.3083429112350089
+>>>>>>> Stashed changes
     },
     {
       "country": "Morocco",
       "owner": "Tega",
       "group": "C",
       "fifa_rank": 7,
+<<<<<<< Updated upstream
       "p_qualify": 0.98094,
       "p_r16": 0.6408,
       "p_qf": 0.38208,
@@ -221,12 +406,26 @@
       "delta_p_champion": 0.0003999999999999976,
       "delta_expected_points": 0.03819999999999979,
       "delta_odds_decimal": -0.20438011103562204
+=======
+      "p_qualify": 0.97936,
+      "p_r16": 0.63596,
+      "p_qf": 0.378,
+      "p_sf": 0.2038,
+      "p_final": 0.09958,
+      "p_champion": 0.04296,
+      "expected_points": 22.554,
+      "odds_decimal": 23.277467411545626,
+      "delta_p_champion": -0.0012800000000000034,
+      "delta_expected_points": -0.10640000000000072,
+      "delta_odds_decimal": 0.6734891113647947
+>>>>>>> Stashed changes
     },
     {
       "country": "Netherlands",
       "owner": "Pete",
       "group": "F",
       "fifa_rank": 8,
+<<<<<<< Updated upstream
       "p_qualify": 0.93882,
       "p_r16": 0.6054,
       "p_qf": 0.35798,
@@ -238,12 +437,26 @@
       "delta_p_champion": 0.0020600000000000063,
       "delta_expected_points": 0.10612000000000066,
       "delta_odds_decimal": -1.3857272781087424
+=======
+      "p_qualify": 0.93782,
+      "p_r16": 0.60592,
+      "p_qf": 0.35682,
+      "p_sf": 0.18898,
+      "p_final": 0.09014,
+      "p_champion": 0.0395,
+      "expected_points": 21.11338,
+      "odds_decimal": 25.31645569620253,
+      "delta_p_champion": 0.0002600000000000033,
+      "delta_expected_points": 0.17505999999999844,
+      "delta_odds_decimal": -0.16774409992387262
+>>>>>>> Stashed changes
     },
     {
       "country": "Belgium",
       "owner": "Pete",
       "group": "G",
       "fifa_rank": 9,
+<<<<<<< Updated upstream
       "p_qualify": 0.96618,
       "p_r16": 0.60924,
       "p_qf": 0.34804,
@@ -255,12 +468,26 @@
       "delta_p_champion": 0.0004400000000000029,
       "delta_expected_points": 0.03643999999999892,
       "delta_odds_decimal": -0.38108699869737706
+=======
+      "p_qualify": 0.96462,
+      "p_r16": 0.6083,
+      "p_qf": 0.34594,
+      "p_sf": 0.17784,
+      "p_final": 0.0804,
+      "p_champion": 0.033,
+      "expected_points": 20.69356,
+      "odds_decimal": 30.3030303030303,
+      "delta_p_champion": -0.00102,
+      "delta_expected_points": -1.1111599999999981,
+      "delta_odds_decimal": 0.9085564641120207
+>>>>>>> Stashed changes
     },
     {
       "country": "Germany",
       "owner": "Tega",
       "group": "E",
       "fifa_rank": 10,
+<<<<<<< Updated upstream
       "p_qualify": 0.9986,
       "p_r16": 0.62104,
       "p_qf": 0.34534,
@@ -272,12 +499,26 @@
       "delta_p_champion": 0.00032000000000000084,
       "delta_expected_points": 0.0033799999999999386,
       "delta_odds_decimal": -0.3090214565185576
+=======
+      "p_qualify": 0.99864,
+      "p_r16": 0.61788,
+      "p_qf": 0.34664,
+      "p_sf": 0.17392,
+      "p_final": 0.07824,
+      "p_champion": 0.03202,
+      "expected_points": 22.17086,
+      "odds_decimal": 31.230480949406623,
+      "delta_p_champion": 0.000959999999999999,
+      "delta_expected_points": 0.08566000000000074,
+      "delta_odds_decimal": -0.9652692115721244
+>>>>>>> Stashed changes
     },
     {
       "country": "Croatia",
       "owner": "Sophie",
       "group": "L",
       "fifa_rank": 11,
+<<<<<<< Updated upstream
       "p_qualify": 0.92366,
       "p_r16": 0.54564,
       "p_qf": 0.29108,
@@ -289,12 +530,26 @@
       "delta_p_champion": 0.00028000000000000247,
       "delta_expected_points": 0.06533999999999907,
       "delta_odds_decimal": -0.529320178970714
+=======
+      "p_qualify": 0.92378,
+      "p_r16": 0.54752,
+      "p_qf": 0.28884,
+      "p_sf": 0.13762,
+      "p_final": 0.0579,
+      "p_champion": 0.0216,
+      "expected_points": 18.45186,
+      "odds_decimal": 46.29629629629629,
+      "delta_p_champion": 0.0008000000000000021,
+      "delta_expected_points": 0.06540000000000035,
+      "delta_odds_decimal": -1.7806267806267897
+>>>>>>> Stashed changes
     },
     {
       "country": "Colombia",
       "owner": "Emily",
       "group": "K",
       "fifa_rank": 13,
+<<<<<<< Updated upstream
       "p_qualify": 0.89914,
       "p_r16": 0.51188,
       "p_qf": 0.26046,
@@ -306,12 +561,26 @@
       "delta_p_champion": -0.00068,
       "delta_expected_points": -0.03137999999999863,
       "delta_odds_decimal": 2.3931527676107933
+=======
+      "p_qualify": 0.8982,
+      "p_r16": 0.51244,
+      "p_qf": 0.26144,
+      "p_sf": 0.1165,
+      "p_final": 0.04604,
+      "p_champion": 0.01602,
+      "expected_points": 17.27238,
+      "odds_decimal": 62.421972534332085,
+      "delta_p_champion": -0.0007400000000000011,
+      "delta_expected_points": -0.029420000000001778,
+      "delta_odds_decimal": 2.7561014126137096
+>>>>>>> Stashed changes
     },
     {
       "country": "Mexico",
       "owner": "Richard",
       "group": "A",
       "fifa_rank": 15,
+<<<<<<< Updated upstream
       "p_qualify": 0.9864,
       "p_r16": 0.55386,
       "p_qf": 0.27452,
@@ -323,12 +592,43 @@
       "delta_p_champion": 0.0002199999999999997,
       "delta_expected_points": 0.05209999999999937,
       "delta_odds_decimal": -0.9662005480992235
+=======
+      "p_qualify": 0.98592,
+      "p_r16": 0.5462,
+      "p_qf": 0.27106,
+      "p_sf": 0.11806,
+      "p_final": 0.0447,
+      "p_champion": 0.0155,
+      "expected_points": 19.19196,
+      "odds_decimal": 64.51612903225806,
+      "delta_p_champion": 0.0005400000000000005,
+      "delta_expected_points": 0.07296000000000191,
+      "delta_odds_decimal": -2.3287907538381916
+    },
+    {
+      "country": "United States",
+      "owner": "Ella",
+      "group": "D",
+      "fifa_rank": 16,
+      "p_qualify": 0.98748,
+      "p_r16": 0.53768,
+      "p_qf": 0.26204,
+      "p_sf": 0.1103,
+      "p_final": 0.04142,
+      "p_champion": 0.01346,
+      "expected_points": 18.49996,
+      "odds_decimal": 74.29420505200595,
+      "delta_p_champion": -0.0008400000000000005,
+      "delta_expected_points": -0.011439999999996786,
+      "delta_odds_decimal": 4.364135121936016
+>>>>>>> Stashed changes
     },
     {
       "country": "Senegal",
       "owner": "Henry",
       "group": "I",
       "fifa_rank": 14,
+<<<<<<< Updated upstream
       "p_qualify": 0.83936,
       "p_r16": 0.46648,
       "p_qf": 0.23398,
@@ -357,12 +657,26 @@
       "delta_p_champion": -0.0003799999999999984,
       "delta_expected_points": 0.007360000000002032,
       "delta_odds_decimal": 2.113553439530122
+=======
+      "p_qualify": 0.83568,
+      "p_r16": 0.46512,
+      "p_qf": 0.2288,
+      "p_sf": 0.10052,
+      "p_final": 0.03892,
+      "p_champion": 0.01298,
+      "expected_points": 15.3715,
+      "odds_decimal": 77.04160246533128,
+      "delta_p_champion": -0.0011400000000000004,
+      "delta_expected_points": -0.05960000000000143,
+      "delta_odds_decimal": 6.2200727202887975
+>>>>>>> Stashed changes
     },
     {
       "country": "Uruguay",
       "owner": "Nichola",
       "group": "H",
       "fifa_rank": 17,
+<<<<<<< Updated upstream
       "p_qualify": 0.82544,
       "p_r16": 0.44796,
       "p_qf": 0.21204,
@@ -374,12 +688,26 @@
       "delta_p_champion": 0.0014999999999999996,
       "delta_expected_points": 3.1121599999999994,
       "delta_odds_decimal": -15.807710790554154
+=======
+      "p_qualify": 0.82164,
+      "p_r16": 0.44684,
+      "p_qf": 0.2147,
+      "p_sf": 0.0897,
+      "p_final": 0.034,
+      "p_champion": 0.01048,
+      "expected_points": 14.10518,
+      "odds_decimal": 95.41984732824427,
+      "delta_p_champion": -0.0005800000000000007,
+      "delta_expected_points": -2.09788,
+      "delta_odds_decimal": 5.0039341275209495
+>>>>>>> Stashed changes
     },
     {
       "country": "Japan",
       "owner": "Emily",
       "group": "F",
       "fifa_rank": 18,
+<<<<<<< Updated upstream
       "p_qualify": 0.87322,
       "p_r16": 0.4594,
       "p_qf": 0.21058,
@@ -391,12 +719,26 @@
       "delta_p_champion": 0.00068,
       "delta_expected_points": 0.16751999999999967,
       "delta_odds_decimal": -7.673142196865754
+=======
+      "p_qualify": 0.8756,
+      "p_r16": 0.4606,
+      "p_qf": 0.21378,
+      "p_sf": 0.08646,
+      "p_final": 0.03152,
+      "p_champion": 0.00956,
+      "expected_points": 15.1711,
+      "odds_decimal": 104.60251046025104,
+      "delta_p_champion": 0.0,
+      "delta_expected_points": 0.1044799999999988,
+      "delta_odds_decimal": 0.0
+>>>>>>> Stashed changes
     },
     {
       "country": "Switzerland",
       "owner": "Richard",
       "group": "B",
       "fifa_rank": 19,
+<<<<<<< Updated upstream
       "p_qualify": 0.88772,
       "p_r16": 0.45094,
       "p_qf": 0.20184,
@@ -408,12 +750,43 @@
       "delta_p_champion": 0.00045999999999999947,
       "delta_expected_points": 0.015219999999999345,
       "delta_odds_decimal": -7.6654401962352665
+=======
+      "p_qualify": 0.88574,
+      "p_r16": 0.44704,
+      "p_qf": 0.19902,
+      "p_sf": 0.07876,
+      "p_final": 0.02684,
+      "p_champion": 0.00814,
+      "expected_points": 14.87058,
+      "odds_decimal": 122.85012285012286,
+      "delta_p_champion": 0.00016000000000000042,
+      "delta_expected_points": 0.004160000000000608,
+      "delta_odds_decimal": -2.463160357897209
+    },
+    {
+      "country": "Iran",
+      "owner": "Nichola",
+      "group": "G",
+      "fifa_rank": 21,
+      "p_qualify": 0.6305,
+      "p_r16": 0.2909,
+      "p_qf": 0.11666,
+      "p_sf": 0.0398,
+      "p_final": 0.01212,
+      "p_champion": 0.00306,
+      "expected_points": 9.80714,
+      "odds_decimal": 326.79738562091507,
+      "delta_p_champion": -0.00146,
+      "delta_expected_points": -3.964039999999999,
+      "delta_odds_decimal": 105.5584475678177
+>>>>>>> Stashed changes
     },
     {
       "country": "South Korea",
       "owner": "Pete",
       "group": "A",
       "fifa_rank": 25,
+<<<<<<< Updated upstream
       "p_qualify": 0.95198,
       "p_r16": 0.40688,
       "p_qf": 0.14886,
@@ -442,12 +815,26 @@
       "delta_p_champion": -0.0012600000000000003,
       "delta_expected_points": -4.00408,
       "delta_odds_decimal": 106.93190304840792
+=======
+      "p_qualify": 0.95196,
+      "p_r16": 0.40844,
+      "p_qf": 0.15006,
+      "p_sf": 0.04662,
+      "p_final": 0.01246,
+      "p_champion": 0.0028,
+      "expected_points": 14.8586,
+      "odds_decimal": 357.14285714285717,
+      "delta_p_champion": -0.00031999999999999997,
+      "delta_expected_points": -0.00852000000000075,
+      "delta_odds_decimal": 36.63003663003667
+>>>>>>> Stashed changes
     },
     {
       "country": "Austria",
       "owner": "Tega",
       "group": "J",
       "fifa_rank": 23,
+<<<<<<< Updated upstream
       "p_qualify": 0.73294,
       "p_r16": 0.3223,
       "p_qf": 0.11856,
@@ -459,12 +846,26 @@
       "delta_p_champion": 0.00012000000000000031,
       "delta_expected_points": 0.060379999999998546,
       "delta_odds_decimal": -22.309808879304
+=======
+      "p_qualify": 0.73644,
+      "p_r16": 0.32358,
+      "p_qf": 0.11994,
+      "p_sf": 0.0397,
+      "p_final": 0.0106,
+      "p_champion": 0.00236,
+      "expected_points": 11.0596,
+      "odds_decimal": 423.728813559322,
+      "delta_p_champion": -3.999999999999967e-05,
+      "delta_expected_points": 0.06777999999999906,
+      "delta_odds_decimal": 7.062146892655335
+>>>>>>> Stashed changes
     },
     {
       "country": "Australia",
       "owner": "Sophie",
       "group": "D",
       "fifa_rank": 27,
+<<<<<<< Updated upstream
       "p_qualify": 0.95222,
       "p_r16": 0.39382,
       "p_qf": 0.13624,
@@ -476,12 +877,26 @@
       "delta_p_champion": -0.00031999999999999997,
       "delta_expected_points": -0.022459999999998814,
       "delta_odds_decimal": 67.69907760006771
+=======
+      "p_qualify": 0.95052,
+      "p_r16": 0.3938,
+      "p_qf": 0.1394,
+      "p_sf": 0.04176,
+      "p_final": 0.01074,
+      "p_champion": 0.00224,
+      "expected_points": 14.25498,
+      "odds_decimal": 446.42857142857144,
+      "delta_p_champion": -4.0000000000000105e-05,
+      "delta_expected_points": 0.07507999999999981,
+      "delta_odds_decimal": 7.832080200501252
+>>>>>>> Stashed changes
     },
     {
       "country": "Ecuador",
       "owner": "Ella",
       "group": "E",
       "fifa_rank": 24,
+<<<<<<< Updated upstream
       "p_qualify": 0.7233,
       "p_r16": 0.31518,
       "p_qf": 0.1175,
@@ -510,12 +925,26 @@
       "delta_p_champion": 0.00011999999999999988,
       "delta_expected_points": 0.06956000000000007,
       "delta_odds_decimal": -33.274179236912175
+=======
+      "p_qualify": 0.72076,
+      "p_r16": 0.31478,
+      "p_qf": 0.11546,
+      "p_sf": 0.03768,
+      "p_final": 0.01048,
+      "p_champion": 0.00208,
+      "expected_points": 10.0941,
+      "odds_decimal": 480.76923076923083,
+      "delta_p_champion": 0.00011999999999999988,
+      "delta_expected_points": 0.02921999999999869,
+      "delta_odds_decimal": -29.43485086342224
+>>>>>>> Stashed changes
     },
     {
       "country": "Egypt",
       "owner": "Ella",
       "group": "G",
       "fifa_rank": 29,
+<<<<<<< Updated upstream
       "p_qualify": 0.85632,
       "p_r16": 0.33986,
       "p_qf": 0.11428,
@@ -527,12 +956,60 @@
       "delta_p_champion": 7.999999999999999e-05,
       "delta_expected_points": -0.01346000000000025,
       "delta_odds_decimal": -25.262094227611442
+=======
+      "p_qualify": 0.85376,
+      "p_r16": 0.34308,
+      "p_qf": 0.11382,
+      "p_sf": 0.033,
+      "p_final": 0.00786,
+      "p_champion": 0.00178,
+      "expected_points": 11.99834,
+      "odds_decimal": 561.7977528089888,
+      "delta_p_champion": 0.00031999999999999997,
+      "delta_expected_points": 0.8741400000000006,
+      "delta_odds_decimal": -123.13375404032638
+    },
+    {
+      "country": "T\u00fcrkiye",
+      "owner": "Henry",
+      "group": "D",
+      "fifa_rank": 22,
+      "p_qualify": 0.4899,
+      "p_r16": 0.21804,
+      "p_qf": 0.08362,
+      "p_sf": 0.02666,
+      "p_final": 0.00704,
+      "p_champion": 0.00136,
+      "expected_points": 7.5072,
+      "odds_decimal": 735.2941176470588,
+      "delta_p_champion": -0.0007199999999999997,
+      "delta_expected_points": -0.0025800000000000267,
+      "delta_odds_decimal": 254.52488687782795
+    },
+    {
+      "country": "Canada",
+      "owner": "Henry",
+      "group": "B",
+      "fifa_rank": 30,
+      "p_qualify": 0.69602,
+      "p_r16": 0.27294,
+      "p_qf": 0.08972,
+      "p_sf": 0.02472,
+      "p_final": 0.00584,
+      "p_champion": 0.00124,
+      "expected_points": 9.81806,
+      "odds_decimal": 806.4516129032259,
+      "delta_p_champion": 0.0,
+      "delta_expected_points": 0.07639999999999958,
+      "delta_odds_decimal": 0.0
+>>>>>>> Stashed changes
     },
     {
       "country": "Algeria",
       "owner": "Sophie",
       "group": "J",
       "fifa_rank": 28,
+<<<<<<< Updated upstream
       "p_qualify": 0.67412,
       "p_r16": 0.27432,
       "p_qf": 0.09468,
@@ -578,12 +1055,26 @@
       "delta_p_champion": -2.0000000000000052e-05,
       "delta_expected_points": -0.07880000000000109,
       "delta_odds_decimal": 26.427061310782392
+=======
+      "p_qualify": 0.67674,
+      "p_r16": 0.27238,
+      "p_qf": 0.09496,
+      "p_sf": 0.02716,
+      "p_final": 0.0067,
+      "p_champion": 0.0012,
+      "expected_points": 9.71424,
+      "odds_decimal": 833.3333333333334,
+      "delta_p_champion": 7.999999999999999e-05,
+      "delta_expected_points": 0.07357999999999976,
+      "delta_odds_decimal": -59.52380952380952
+>>>>>>> Stashed changes
     },
     {
       "country": "Norway",
       "owner": "Pete",
       "group": "I",
       "fifa_rank": 31,
+<<<<<<< Updated upstream
       "p_qualify": 0.533,
       "p_r16": 0.20732,
       "p_qf": 0.06686,
@@ -595,12 +1086,43 @@
       "delta_p_champion": 0.00023999999999999998,
       "delta_expected_points": 0.2222799999999996,
       "delta_odds_decimal": -450.11252813203305
+=======
+      "p_qualify": 0.5293,
+      "p_r16": 0.20144,
+      "p_qf": 0.06578,
+      "p_sf": 0.01792,
+      "p_final": 0.00362,
+      "p_champion": 0.00084,
+      "expected_points": 7.54974,
+      "odds_decimal": 1190.4761904761904,
+      "delta_p_champion": 0.00018000000000000004,
+      "delta_expected_points": 0.02226000000000017,
+      "delta_odds_decimal": -324.6753246753249
+    },
+    {
+      "country": "Ivory Coast",
+      "owner": "Emily",
+      "group": "E",
+      "fifa_rank": 34,
+      "p_qualify": 0.9636,
+      "p_r16": 0.34336,
+      "p_qf": 0.10178,
+      "p_sf": 0.02524,
+      "p_final": 0.00492,
+      "p_champion": 0.00082,
+      "expected_points": 13.66948,
+      "odds_decimal": 1219.5121951219512,
+      "delta_p_champion": 0.00013999999999999993,
+      "delta_expected_points": 0.07136000000000031,
+      "delta_odds_decimal": -251.07604017216636
+>>>>>>> Stashed changes
     },
     {
       "country": "Panama",
       "owner": "Tega",
       "group": "L",
       "fifa_rank": 33,
+<<<<<<< Updated upstream
       "p_qualify": 0.60318,
       "p_r16": 0.21756,
       "p_qf": 0.06468,
@@ -612,12 +1134,43 @@
       "delta_p_champion": 0.00019999999999999998,
       "delta_expected_points": 0.11021999999999998,
       "delta_odds_decimal": -768.049155145929
+=======
+      "p_qualify": 0.60284,
+      "p_r16": 0.21882,
+      "p_qf": 0.06576,
+      "p_sf": 0.01722,
+      "p_final": 0.00342,
+      "p_champion": 0.0006,
+      "expected_points": 8.23878,
+      "odds_decimal": 1666.6666666666667,
+      "delta_p_champion": 0.00013999999999999993,
+      "delta_expected_points": 0.10449999999999982,
+      "delta_odds_decimal": -507.24637681159425
+    },
+    {
+      "country": "Sweden",
+      "owner": "Nichola",
+      "group": "F",
+      "fifa_rank": 38,
+      "p_qualify": 0.93206,
+      "p_r16": 0.30186,
+      "p_qf": 0.08112,
+      "p_sf": 0.0181,
+      "p_final": 0.00324,
+      "p_champion": 0.00052,
+      "expected_points": 11.5287,
+      "odds_decimal": 1923.0769230769233,
+      "delta_p_champion": -0.0001200000000000001,
+      "delta_expected_points": -0.015819999999999723,
+      "delta_odds_decimal": 360.57692307692355
+>>>>>>> Stashed changes
     },
     {
       "country": "Scotland",
       "owner": "Richard",
       "group": "C",
       "fifa_rank": 43,
+<<<<<<< Updated upstream
       "p_qualify": 0.71578,
       "p_r16": 0.22574,
       "p_qf": 0.06056,
@@ -646,12 +1199,26 @@
       "delta_p_champion": -0.00043999999999999996,
       "delta_expected_points": -0.07384000000000057,
       "delta_odds_decimal": 1659.1251885369531
+=======
+      "p_qualify": 0.71482,
+      "p_r16": 0.22516,
+      "p_qf": 0.05736,
+      "p_sf": 0.01236,
+      "p_final": 0.00188,
+      "p_champion": 0.0003,
+      "expected_points": 9.43052,
+      "odds_decimal": 3333.3333333333335,
+      "delta_p_champion": -8.000000000000005e-05,
+      "delta_expected_points": 0.1677199999999992,
+      "delta_odds_decimal": 701.7543859649127
+>>>>>>> Stashed changes
     },
     {
       "country": "Czechia",
       "owner": "Tega",
       "group": "A",
       "fifa_rank": 41,
+<<<<<<< Updated upstream
       "p_qualify": 0.45714,
       "p_r16": 0.1452,
       "p_qf": 0.03762,
@@ -663,12 +1230,26 @@
       "delta_p_champion": 7.999999999999997e-05,
       "delta_expected_points": 0.08359999999999967,
       "delta_odds_decimal": -1709.401709401709
+=======
+      "p_qualify": 0.46204,
+      "p_r16": 0.14624,
+      "p_qf": 0.03772,
+      "p_sf": 0.00766,
+      "p_final": 0.00142,
+      "p_champion": 0.0002,
+      "expected_points": 5.8633,
+      "odds_decimal": 5000.0,
+      "delta_p_champion": -0.00012000000000000002,
+      "delta_expected_points": 0.020620000000000083,
+      "delta_odds_decimal": 1875.0000000000005
+>>>>>>> Stashed changes
     },
     {
       "country": "Qatar",
       "owner": "Sophie",
       "group": "B",
       "fifa_rank": 55,
+<<<<<<< Updated upstream
       "p_qualify": 0.64346,
       "p_r16": 0.16682,
       "p_qf": 0.03578,
@@ -680,12 +1261,26 @@
       "delta_p_champion": 1.9999999999999998e-05,
       "delta_expected_points": 0.05746000000000073,
       "delta_odds_decimal": -2499.999999999998
+=======
+      "p_qualify": 0.64942,
+      "p_r16": 0.16678,
+      "p_qf": 0.03454,
+      "p_sf": 0.0058,
+      "p_final": 0.00076,
+      "p_champion": 0.00014,
+      "expected_points": 8.04454,
+      "odds_decimal": 7142.857142857143,
+      "delta_p_champion": 7.999999999999999e-05,
+      "delta_expected_points": 0.06883999999999979,
+      "delta_odds_decimal": -9523.809523809525
+>>>>>>> Stashed changes
     },
     {
       "country": "Paraguay",
       "owner": "Richard",
       "group": "D",
       "fifa_rank": 40,
+<<<<<<< Updated upstream
       "p_qualify": 0.27806,
       "p_r16": 0.08956,
       "p_qf": 0.02444,
@@ -731,12 +1326,26 @@
       "delta_p_champion": 1.9999999999999998e-05,
       "delta_expected_points": 0.09379999999999988,
       "delta_odds_decimal": -8333.333333333328
+=======
+      "p_qualify": 0.2746,
+      "p_r16": 0.08582,
+      "p_qf": 0.0227,
+      "p_sf": 0.00442,
+      "p_final": 0.00082,
+      "p_champion": 0.00012,
+      "expected_points": 4.1705,
+      "odds_decimal": 8333.333333333334,
+      "delta_p_champion": 0.0,
+      "delta_expected_points": 0.02085999999999988,
+      "delta_odds_decimal": 0.0
+>>>>>>> Stashed changes
     },
     {
       "country": "Congo DR",
       "owner": "Pete",
       "group": "K",
       "fifa_rank": 45,
+<<<<<<< Updated upstream
       "p_qualify": 0.40966,
       "p_r16": 0.11574,
       "p_qf": 0.02668,
@@ -748,12 +1357,155 @@
       "delta_p_champion": -0.00018,
       "delta_expected_points": 0.03620000000000001,
       "delta_odds_decimal": 12500.0
+=======
+      "p_qualify": 0.4117,
+      "p_r16": 0.12078,
+      "p_qf": 0.02782,
+      "p_sf": 0.00488,
+      "p_final": 0.00086,
+      "p_champion": 4e-05,
+      "expected_points": 5.5291,
+      "odds_decimal": 24999.999999999996,
+      "delta_p_champion": -6e-05,
+      "delta_expected_points": 0.038119999999999266,
+      "delta_odds_decimal": 14999.999999999996
+    },
+    {
+      "country": "Saudi Arabia",
+      "owner": "Henry",
+      "group": "H",
+      "fifa_rank": 61,
+      "p_qualify": 0.46542,
+      "p_r16": 0.10536,
+      "p_qf": 0.01874,
+      "p_sf": 0.00256,
+      "p_final": 0.0002,
+      "p_champion": 2e-05,
+      "expected_points": 5.76254,
+      "odds_decimal": 49999.99999999999,
+      "delta_p_champion": 2e-05,
+      "delta_expected_points": 1.3426
+    },
+    {
+      "country": "Uzbekistan",
+      "owner": "Nichola",
+      "group": "K",
+      "fifa_rank": 50,
+      "p_qualify": 0.35648,
+      "p_r16": 0.09728,
+      "p_qf": 0.02108,
+      "p_sf": 0.00388,
+      "p_final": 0.0003,
+      "p_champion": 2e-05,
+      "expected_points": 4.826,
+      "odds_decimal": 49999.99999999999,
+      "delta_p_champion": 0.0,
+      "delta_expected_points": 0.05153999999999925,
+      "delta_odds_decimal": 0.0
+    },
+    {
+      "country": "South Africa",
+      "owner": "Henry",
+      "group": "A",
+      "fifa_rank": 60,
+      "p_qualify": 0.26588,
+      "p_r16": 0.06388,
+      "p_qf": 0.01218,
+      "p_sf": 0.0017,
+      "p_final": 0.0001,
+      "p_champion": 0.0,
+      "expected_points": 3.66358,
+      "odds_decimal": null,
+      "delta_p_champion": -2e-05,
+      "delta_expected_points": 0.0029599999999998516
+    },
+    {
+      "country": "Bosnia-Herzegovina",
+      "owner": "Nichola",
+      "group": "B",
+      "fifa_rank": 64,
+      "p_qualify": 0.4093,
+      "p_r16": 0.07884,
+      "p_qf": 0.01156,
+      "p_sf": 0.00166,
+      "p_final": 0.00022,
+      "p_champion": 0.0,
+      "expected_points": 5.20618,
+      "odds_decimal": null,
+      "delta_p_champion": -4e-05,
+      "delta_expected_points": 0.01825999999999972
+    },
+    {
+      "country": "Haiti",
+      "owner": "Ella",
+      "group": "C",
+      "fifa_rank": 82,
+      "p_qualify": 0.02474,
+      "p_r16": 0.0028,
+      "p_qf": 0.00034,
+      "p_sf": 0.0,
+      "p_final": 0.0,
+      "p_champion": 0.0,
+      "expected_points": 0.48552,
+      "odds_decimal": null,
+      "delta_p_champion": 0.0,
+      "delta_expected_points": 0.017199999999999993
+    },
+    {
+      "country": "Cura\u00e7ao",
+      "owner": "Pete",
+      "group": "E",
+      "fifa_rank": 83,
+      "p_qualify": 0.05996,
+      "p_r16": 0.00684,
+      "p_qf": 0.0006,
+      "p_sf": 2e-05,
+      "p_final": 0.0,
+      "p_champion": 0.0,
+      "expected_points": 1.366,
+      "odds_decimal": null,
+      "delta_p_champion": 0.0,
+      "delta_expected_points": 0.01316000000000006
+    },
+    {
+      "country": "Tunisia",
+      "owner": "Ella",
+      "group": "F",
+      "fifa_rank": 46,
+      "p_qualify": 0.10356,
+      "p_r16": 0.03054,
+      "p_qf": 0.0074,
+      "p_sf": 0.00132,
+      "p_final": 0.00022,
+      "p_champion": 0.0,
+      "expected_points": 2.0201,
+      "odds_decimal": null,
+      "delta_p_champion": -6e-05,
+      "delta_expected_points": 0.04251999999999989
+    },
+    {
+      "country": "New Zealand",
+      "owner": "Tega",
+      "group": "G",
+      "fifa_rank": 85,
+      "p_qualify": 0.1391,
+      "p_r16": 0.01502,
+      "p_qf": 0.00128,
+      "p_sf": 4e-05,
+      "p_final": 2e-05,
+      "p_champion": 0.0,
+      "expected_points": 2.43034,
+      "odds_decimal": null,
+      "delta_p_champion": 0.0,
+      "delta_expected_points": 0.9196200000000001
+>>>>>>> Stashed changes
     },
     {
       "country": "Cape Verde",
       "owner": "Sophie",
       "group": "H",
       "fifa_rank": 68,
+<<<<<<< Updated upstream
       "p_qualify": 0.4075,
       "p_r16": 0.07166,
       "p_qf": 0.01004,
@@ -764,12 +1516,41 @@
       "odds_decimal": 49999.99999999999,
       "delta_p_champion": 2e-05,
       "delta_expected_points": -0.0015599999999995617
+=======
+      "p_qualify": 0.41202,
+      "p_r16": 0.07328,
+      "p_qf": 0.00982,
+      "p_sf": 0.00098,
+      "p_final": 6e-05,
+      "p_champion": 0.0,
+      "expected_points": 5.14194,
+      "odds_decimal": null,
+      "delta_p_champion": 0.0,
+      "delta_expected_points": 0.04997999999999969
+    },
+    {
+      "country": "Iraq",
+      "owner": "Emily",
+      "group": "I",
+      "fifa_rank": 57,
+      "p_qualify": 0.23878,
+      "p_r16": 0.06056,
+      "p_qf": 0.01262,
+      "p_sf": 0.0025,
+      "p_final": 0.00028,
+      "p_champion": 0.0,
+      "expected_points": 3.43682,
+      "odds_decimal": null,
+      "delta_p_champion": -2e-05,
+      "delta_expected_points": 0.04612000000000016
+>>>>>>> Stashed changes
     },
     {
       "country": "Jordan",
       "owner": "Emily",
       "group": "J",
       "fifa_rank": 63,
+<<<<<<< Updated upstream
       "p_qualify": 0.19362,
       "p_r16": 0.03832,
       "p_qf": 0.00594,
@@ -892,12 +1673,25 @@
       "odds_decimal": null,
       "delta_p_champion": -6e-05,
       "delta_expected_points": 0.07742000000000004
+=======
+      "p_qualify": 0.1926,
+      "p_r16": 0.03752,
+      "p_qf": 0.00584,
+      "p_sf": 0.00082,
+      "p_final": 6e-05,
+      "p_champion": 0.0,
+      "expected_points": 2.78198,
+      "odds_decimal": null,
+      "delta_p_champion": 0.0,
+      "delta_expected_points": 0.023279999999999745
+>>>>>>> Stashed changes
     },
     {
       "country": "Ghana",
       "owner": "Richard",
       "group": "L",
       "fifa_rank": 73,
+<<<<<<< Updated upstream
       "p_qualify": 0.12002,
       "p_r16": 0.01846,
       "p_qf": 0.00224,
@@ -908,6 +1702,18 @@
       "odds_decimal": null,
       "delta_p_champion": 0.0,
       "delta_expected_points": 0.07599999999999985
+=======
+      "p_qualify": 0.12134,
+      "p_r16": 0.01986,
+      "p_qf": 0.0024,
+      "p_sf": 0.00018,
+      "p_final": 0.0,
+      "p_champion": 0.0,
+      "expected_points": 1.91832,
+      "odds_decimal": null,
+      "delta_p_champion": 0.0,
+      "delta_expected_points": 0.036640000000000006
+>>>>>>> Stashed changes
     }
   ]
 }
