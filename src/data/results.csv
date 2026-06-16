@@ -16,7 +16,7 @@ Czechia,0,0,1,1,2,GROUP
 Ecuador,0,0,1,0,1,GROUP
 Egypt,0,1,0,1,1,GROUP
 England,0,0,0,0,0,GROUP
-France,0,0,0,0,0,GROUP
+France,0,1,0,0,0,GROUP
 Germany,1,0,0,7,1,GROUP
 Ghana,0,0,0,0,0,GROUP
 Haiti,0,0,1,0,1,GROUP
@@ -36,7 +36,7 @@ Portugal,0,0,0,0,0,GROUP
 Qatar,0,1,0,1,1,GROUP
 Saudi Arabia,0,1,0,1,1,GROUP
 Scotland,1,0,0,1,0,GROUP
-Senegal,0,0,0,0,0,GROUP
+Senegal,0,1,0,0,0,GROUP
 South Africa,0,0,1,0,2,GROUP
 South Korea,1,0,0,2,1,GROUP
 Spain,0,1,0,0,0,GROUP
