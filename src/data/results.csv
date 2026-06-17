@@ -1,6 +1,6 @@
 country,gw,gd,gl,gf,ga,stage
-Algeria,0,0,0,0,0,GROUP
-Argentina,0,0,0,0,0,GROUP
+Algeria,0,0,1,0,1,GROUP
+Argentina,1,0,0,1,0,GROUP
 Australia,1,0,0,2,0,GROUP
 Austria,0,0,0,0,0,GROUP
 Belgium,0,1,0,1,1,GROUP
