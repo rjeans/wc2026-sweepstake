@@ -1,15 +1,9 @@
 rank,person,points,goals_for,goal_diff,best_run
 1,Richard,10,8,3,GROUP
 2,Nichola,9,12,6,GROUP
-3,Pete,8,10,-2,GROUP
-<<<<<<< Updated upstream
-4,Tega,5,11,5,GROUP
+3,Tega,8,12,6,GROUP
+4,Pete,8,10,-2,GROUP
 5,Sophie,5,3,-1,GROUP
-6,Emily,5,5,-2,GROUP
-=======
-4,Tega,6,11,5,GROUP
-5,Emily,6,5,-2,GROUP
-6,Sophie,5,3,-1,GROUP
->>>>>>> Stashed changes
-7,Ella,5,6,-3,GROUP
+6,Ella,5,6,-3,GROUP
+7,Emily,5,5,-3,GROUP
 8,Henry,2,3,-6,GROUP

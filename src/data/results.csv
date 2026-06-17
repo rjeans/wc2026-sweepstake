@@ -2,7 +2,7 @@ country,gw,gd,gl,gf,ga,stage
 Algeria,0,0,1,0,3,GROUP
 Argentina,1,0,0,3,0,GROUP
 Australia,1,0,0,2,0,GROUP
-Austria,0,1,0,0,0,GROUP
+Austria,1,0,0,1,0,GROUP
 Belgium,0,1,0,1,1,GROUP
 Bosnia-Herzegovina,0,1,0,1,1,GROUP
 Brazil,0,1,0,1,1,GROUP
@@ -24,7 +24,7 @@ Iran,0,1,0,2,2,GROUP
 Iraq,0,0,1,1,4,GROUP
 Ivory Coast,1,0,0,1,0,GROUP
 Japan,0,1,0,2,2,GROUP
-Jordan,0,1,0,0,0,GROUP
+Jordan,0,0,1,0,1,GROUP
 Mexico,1,0,0,2,0,GROUP
 Morocco,0,1,0,1,1,GROUP
 Netherlands,0,1,0,2,2,GROUP
