@@ -21,7 +21,7 @@ Germany,1,0,0,7,1,GROUP
 Ghana,0,0,0,0,0,GROUP
 Haiti,0,0,1,0,1,GROUP
 Iran,0,1,0,2,2,GROUP
-Iraq,0,0,1,1,2,GROUP
+Iraq,0,0,1,1,4,GROUP
 Ivory Coast,1,0,0,1,0,GROUP
 Japan,0,1,0,2,2,GROUP
 Jordan,0,0,0,0,0,GROUP
@@ -29,7 +29,7 @@ Mexico,1,0,0,2,0,GROUP
 Morocco,0,1,0,1,1,GROUP
 Netherlands,0,1,0,2,2,GROUP
 New Zealand,0,1,0,2,2,GROUP
-Norway,1,0,0,2,1,GROUP
+Norway,1,0,0,4,1,GROUP
 Panama,0,0,0,0,0,GROUP
 Paraguay,0,0,1,1,4,GROUP
 Portugal,0,0,0,0,0,GROUP
