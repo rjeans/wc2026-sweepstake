@@ -33,13 +33,17 @@ jobs:
         with:
           node-version: "24"
 
-      # fetch_results.py / scoring.py are standard-library only - no pip install.
+      # fetch_results.py / scoring.py / scrape_elo.py / predict.py are stdlib-only.
       - name: Fetch results + fixtures from ESPN
         run: |
           python fetch_results.py \
             --teams src/data/teams.csv \
             --output src/data/results.csv \
             --matches src/data/matches.csv
+
+      - name: Refresh Elo ratings (best effort)
+        continue-on-error: true
+        run: python scrape_elo.py
 
       - name: Compute standings (if the draw has happened)
         run: |

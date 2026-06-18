@@ -164,9 +164,12 @@ const compareLabel = pred?.comparison_date
     <div class="prose">
       <p>
         For every remaining group fixture the model draws a result from a Poisson goals
-        distribution scaled by the gap in FIFA points between the two teams (same
-        approach as the calibration sim that picked the 80-point champion bonus).
-        Completed matches stay as they happened.
+        distribution scaled by the gap in
+        <a href="https://www.eloratings.net">World Football Elo Ratings</a>
+        between the two teams (refreshed daily). Completed matches stay as they happened.
+        Elo is purpose-built for outcome prediction and accounts for recent form, so
+        teams like England, Colombia and Norway score more realistically than under
+        the FIFA points used in earlier versions of this model.
       </p>
       <p>
         After the group stage the top two of each group plus the eight best

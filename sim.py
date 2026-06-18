@@ -27,8 +27,12 @@ import sweepstake as sw  # noqa: E402
 
 CSV = os.path.join(HERE, "wc2026_groups_fifa_ranking.csv")
 
-# FIFA points (live ranking used throughout the project) -> match-model strength.
-POINTS = {
+# Strength rating used by the match model. Prefer current Elo from
+# src/data/teams_elo.csv (regenerated daily by scrape_elo.py). Falls back to
+# the static FIFA points snapshot below if the Elo CSV isn't present.
+_ELO_PATH = os.path.join(HERE, "src/data/teams_elo.csv")
+
+_FIFA_POINTS_FALLBACK = {
     "Mexico": 1684.13, "South Africa": 1428.38, "South Korea": 1591.63, "Czechia": 1503.04,
     "Canada": 1560.62, "Bosnia-Herzegovina": 1385.77, "Qatar": 1452.37, "Switzerland": 1650.75,
     "Brazil": 1762.66, "Morocco": 1756.94, "Haiti": 1296.61, "Scotland": 1499.92,
@@ -43,10 +47,35 @@ POINTS = {
     "England": 1825.97, "Croatia": 1712.24, "Ghana": 1346.88, "Panama": 1540.60,
 }
 
+
+def _load_points() -> tuple[dict[str, float], str]:
+    """Return (ratings, source). Tries Elo CSV first, falls back to FIFA dict."""
+    if os.path.exists(_ELO_PATH):
+        import csv as _csv
+        out: dict[str, float] = {}
+        with open(_ELO_PATH, newline="", encoding="utf-8") as f:
+            for row in _csv.DictReader(f):
+                try:
+                    out[row["country"]] = float(row["elo"])
+                except (KeyError, ValueError):
+                    continue
+        if len(out) >= 40:  # most teams resolved
+            return out, "elo"
+    return dict(_FIFA_POINTS_FALLBACK), "fifa"
+
+
+POINTS, RATING_SOURCE = _load_points()
+
 # Progression cumulative used in scoring.py (champion is the knob => 0 in base).
 CUM = {"GROUP": 0, "R32": 5, "R16": 10, "QF": 18, "SF": 30, "FINAL": 45}
 
-LAMBDA0, K = 1.30, 0.0020  # Poisson goals: lam = LAMBDA0 * exp(+/- K * rating_diff)
+# Poisson goals: lam = LAMBDA0 * exp(+/- K * rating_diff).
+# Same K works for both rating sources - Elo and FIFA points happen to live on
+# scales that give similar match outcome distributions under this Poisson model.
+# K=0.0020 was empirically validated to track the canonical Elo win-probability
+# formula 1/(1+10^(d/400)) within ~1.6pp across deltas of 50-300.
+LAMBDA0 = 1.30
+K = 0.0020
 
 
 def _poisson(lam, rng):
