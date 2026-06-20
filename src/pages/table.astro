@@ -1,13 +1,25 @@
 ---
 import Layout from '../layouts/WC2026Layout.astro';
 import { getTournamentData, stageLabel } from '../lib/wc2026';
-import { playerColor, stageStyle, fmtSigned, MEDALS } from '../lib/wc2026-ui';
+import { playerColor, stageStyle, tierStyle, flagCode, fmtSigned, MEDALS } from '../lib/wc2026-ui';
 
 const data = getTournamentData();
 const hasScores = data.status === 'in-progress' || data.status === 'complete';
 
 // Podium display order: 2nd, 1st, 3rd (winner centre).
 const podium = hasScores ? [data.players[1], data.players[0], data.players[2]] : [];
+
+// Per-team points breakdown: for each player, their six teams ordered by the
+// points they contribute. Bars are scaled against the single biggest team
+// contribution anywhere, so they're comparable across players.
+const breakdown = data.players.map((p) => ({
+  player: p,
+  teams: [...p.teams].sort((a, b) => b.points - a.points || a.tier - b.tier),
+}));
+const maxTeamPoints = Math.max(
+  1,
+  ...data.players.flatMap((p) => p.teams.map((t) => t.points)),
+);
 ---
 
 <Layout title="Overall Table" active="table">
@@ -74,4 +86,97 @@ const podium = hasScores ? [data.players[1], data.players[0], data.players[2]] :
       </table>
     </div>
   </section>
+
+  {hasScores && (
+    <section>
+      <div class="section-head">
+        <h2 class="label">Points by team</h2>
+        <span class="count">where each player's total comes from</span>
+      </div>
+      <div class="breakdown">
+        {breakdown.map(({ player, teams }) => (
+          <div class="bd-card" style={`--accent:${playerColor(player.name)}`}>
+            <div class="bd-head">
+              <span class="chip" style={`--accent:${playerColor(player.name)}`}>
+                <span class="chip-dot"></span>{player.name}
+              </span>
+              <span class="bd-total">{player.points}<small>pts</small></span>
+            </div>
+            <ul class="bd-teams">
+              {teams.map((t) => (
+                <li class={`bd-team${t.points === 0 ? ' zero' : ''}`}>
+                  <span class="tier-dot" style={tierStyle(t.tier)}>{t.tier}</span>
+                  {flagCode(t.country) && (
+                    <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
+                  )}
+                  <span class="bd-name">{t.country}</span>
+                  <span class="bd-bar">
+                    <span class="bd-fill" style={`width:${(t.points / maxTeamPoints) * 100}%;background-color:${playerColor(player.name)}`}></span>
+                  </span>
+                  <span class="bd-pts">{t.points}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
 </Layout>
+
+<style>
+  .breakdown {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+  .bd-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+    padding: 0.85rem 1rem 0.95rem;
+  }
+  .bd-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-bottom: 0.55rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .bd-total { font-size: 1.25rem; font-weight: 800; color: var(--accent); }
+  .bd-total small { font-size: 0.65rem; font-weight: 600; color: #94a3b8; margin-left: 0.15rem; }
+  .bd-teams { list-style: none; margin: 0; padding: 0; }
+  .bd-team {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.28rem 0;
+  }
+  .bd-team.zero { opacity: 0.55; }
+  .bd-name {
+    flex: none;
+    width: 6.5rem;
+    font-size: 0.85rem;
+    color: #0f172a;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .bd-bar {
+    flex: 1;
+    height: 6px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    overflow: hidden;
+  }
+  .bd-fill { display: block; height: 100%; border-radius: 999px; min-width: 2px; }
+  .bd-pts { font-weight: 800; color: #0f172a; font-size: 0.9rem; text-align: right; min-width: 1.6rem; }
+  @media (max-width: 640px) {
+    .breakdown { grid-template-columns: 1fr; }
+  }
+</style>

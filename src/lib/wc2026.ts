@@ -23,6 +23,18 @@ const STAGE_LABEL: Record<Stage, string> = {
   CHAMPION: 'Champion',
 };
 
+// Cumulative progression bonus a team keeps once it reaches a round. Mirrors the
+// cumulative of INCREMENT in scoring.py — keep the two in sync.
+const STAGE_BONUS: Record<Stage, number> = {
+  GROUP: 0,
+  R32: 5,
+  R16: 10,
+  QF: 18,
+  SF: 30,
+  FINAL: 45,
+  CHAMPION: 80,
+};
+
 export interface Team {
   group: string;
   group_rank: number;
@@ -39,6 +51,7 @@ export interface TeamRow extends Team {
   gf: number;
   ga: number;
   groupPoints: number;
+  points: number; // total contribution to owner's score: group points + progression bonus
   stage: Stage;
 }
 
@@ -233,6 +246,7 @@ export function getTournamentData(): TournamentData {
     const gl = result?.gl ?? 0;
     const gf = result?.gf ?? 0;
     const ga = result?.ga ?? 0;
+    const groupPoints = gw * GROUP_WIN + gd * GROUP_DRAW;
     return {
       ...t,
       owner: allocation?.get(t.country) ?? null,
@@ -242,7 +256,8 @@ export function getTournamentData(): TournamentData {
       gl,
       gf,
       ga,
-      groupPoints: gw * GROUP_WIN + gd * GROUP_DRAW,
+      groupPoints,
+      points: groupPoints + STAGE_BONUS[stage],
       stage,
     };
   });

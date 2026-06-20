@@ -1,22 +1,11 @@
 ---
 import Layout from '../layouts/WC2026Layout.astro';
-import { getTournamentData, stageLabel, STAGE_ORDER, type Stage } from '../lib/wc2026';
-import { playerColor, tierStyle, stageStyle, flagCode } from '../lib/wc2026-ui';
+import { getTournamentData, stageLabel, playerSlug, type Stage } from '../lib/wc2026';
+import { playerColor, tierStyle, stageStyle, fmtSigned, flagCode } from '../lib/wc2026-ui';
 import PlayerPills from '../components/PlayerPills.astro';
 
 const data = getTournamentData();
 const hasScores = data.status === 'in-progress' || data.status === 'complete';
-
-// Look up a team's owner/flag by country for the match list.
-const teamByCountry = new Map(data.teams.map((t) => [t.country, t]));
-
-// Group matches by stage, in tournament order; within a stage, by date.
-const matchesByStage = STAGE_ORDER.map((stage) => ({
-  stage,
-  matches: data.matches
-    .filter((m) => m.stage === stage)
-    .sort((a, b) => a.date.localeCompare(b.date)),
-})).filter((g) => g.matches.length > 0);
 
 // Team records table: order by points, then GD, then GF, then FIFA rank.
 const teamsSorted = [...data.teams].sort((a, b) => {
@@ -27,75 +16,54 @@ const teamsSorted = [...data.teams].sort((a, b) => {
   if (b.gf !== a.gf) return b.gf - a.gf;
   return a.fifa_rank - b.fifa_rank;
 });
-
-const fmtDate = (iso: string) => {
-  if (!iso) return '';
-  const d = new Date(iso + 'T00:00:00Z');
-  return Number.isNaN(d.getTime())
-    ? iso
-    : new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(d);
-};
-const ownerColor = (country: string) => {
-  const owner = teamByCountry.get(country)?.owner;
-  return owner ? playerColor(owner) : '#cbd5e1';
-};
 ---
 
 <Layout title="Results" active="results">
   <PlayerPills active="all" />
 
-  {/* MATCH BY MATCH */}
+  {/* TABLE LEVEL — pick a player to drill into their teams and matches */}
   <section>
     <div class="section-head">
-      <h2 class="label">Matches</h2>
-      <span class="count">{data.matches.length > 0 ? `${data.matches.length} played` : 'Fixtures'}</span>
+      <h2 class="label">Overall Table</h2>
+      <span class="count">tap a player to drill into teams &amp; matches</span>
     </div>
-
-    {matchesByStage.length === 0 ? (
-      <p class="lead">
-        No matches played yet. Match-by-match results appear here once the tournament
-        kicks off on <strong>Thursday 11 June 2026</strong>. The coloured dot by each
-        team shows its owner.
-      </p>
-    ) : (
-      <div class="matches">
-        {matchesByStage.map((g) => (
-          <div class="match-stage">
-            <h3 class="match-stage-head">{stageLabel(g.stage as Stage)}</h3>
-            <div class="table-wrap">
-              {g.matches.map((m) => {
-                const played = m.homeScore !== null && m.awayScore !== null;
-                const homeWin = played && (m.homeScore as number) > (m.awayScore as number);
-                const awayWin = played && (m.awayScore as number) > (m.homeScore as number);
-                return (
-                  <div class="match">
-                    <span class="match-date">{fmtDate(m.date)}</span>
-                    <span class={`match-side home${homeWin ? ' win' : ''}`}>
-                      <span class="match-name">{m.home}</span>
-                      <span class="owner-dot" style={`background-color:${ownerColor(m.home)}`}></span>
-                      {flagCode(m.home) && (
-                        <img class="flag" src={`https://flagcdn.com/w40/${flagCode(m.home)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(m.home)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
-                      )}
-                    </span>
-                    <span class="match-score">{played ? `${m.homeScore} - ${m.awayScore}` : 'v'}</span>
-                    <span class={`match-side away${awayWin ? ' win' : ''}`}>
-                      {flagCode(m.away) && (
-                        <img class="flag" src={`https://flagcdn.com/w40/${flagCode(m.away)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(m.away)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
-                      )}
-                      <span class="owner-dot" style={`background-color:${ownerColor(m.away)}`}></span>
-                      <span class="match-name">{m.away}</span>
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-    )}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th>Player</th>
+            <th class="num">Pld</th>
+            <th class="num">Points</th>
+            <th class="num">GD</th>
+            <th class="num">GF</th>
+            <th>Best Run</th>
+            <th aria-label="Drill in"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.players.map((p) => (
+            <tr class={`drillable${hasScores && p.rank <= 3 ? ' top' : ''}`}>
+              <td class="num rank">{p.rank}</td>
+              <td class="nowrap">
+                <a class="player-link" href={`/results/${playerSlug(p.name)}`} style={`--accent:${playerColor(p.name)}`}>
+                  <span class="chip-dot"></span>{p.name}
+                </a>
+              </td>
+              <td class="num">{p.played}</td>
+              <td class="num strong">{p.points}</td>
+              <td class="num">{fmtSigned(p.gd)}</td>
+              <td class="num">{p.gf}</td>
+              <td class="nowrap"><span class="badge" style={stageStyle(p.best)}>{stageLabel(p.best)}</span></td>
+              <td class="num"><a class="drill-cta" href={`/results/${playerSlug(p.name)}`} aria-label={`${p.name} breakdown`}>&rsaquo;</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   </section>
 
-  {/* TEAM RECORDS */}
+  {/* TEAM RECORDS — all 48 teams */}
   <section>
     <div class="section-head">
       <h2 class="label">Team Records</h2>
@@ -140,9 +108,9 @@ const ownerColor = (country: string) => {
               <td class="num">{t.fifa_rank}</td>
               <td class="nowrap">
                 {t.owner ? (
-                  <span class="chip" style={`--accent:${playerColor(t.owner)}`}>
+                  <a class="player-link" href={`/results/${playerSlug(t.owner)}`} style={`--accent:${playerColor(t.owner)}`}>
                     <span class="chip-dot"></span>{t.owner}
-                  </span>
+                  </a>
                 ) : (
                   <span class="muted">&mdash;</span>
                 )}
@@ -162,3 +130,31 @@ const ownerColor = (country: string) => {
     </div>
   </section>
 </Layout>
+
+<style>
+  .player-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    color: #0f172a;
+    text-decoration: none;
+  }
+  .player-link:hover { color: var(--accent); text-decoration: underline; }
+  .player-link .chip-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: var(--accent);
+    flex: none;
+  }
+  .drillable { cursor: pointer; }
+  .drill-cta {
+    color: #94a3b8;
+    font-size: 1.3rem;
+    line-height: 1;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .drillable:hover .drill-cta { color: #0f766e; }
+</style>
