@@ -80,3 +80,19 @@ make group points heavier or the title "guaranteed", explain the consequence
   change the calibration — always re-run `sim.py` afterwards.
 - Improve the match model in `sim.py` (e.g. use the official 2026 bracket instead
   of a random knockout draw); note this shifts the calibrated bonus.
+
+## Recaps
+
+Daily recaps live in `src/content/recaps/<YYYY-MM-DD>.md` (frontmatter:
+`title`, `pubDate`, optional `summary`). They are hand-authored — there is no
+generator. House style: short paragraphs, **bold** the actors, frame matches by
+owner ("Tega's Germany beat Emily's Ivory Coast").
+
+**Every recap must include an `## Odds watch` section** summarising the `/odds`
+market: the favourite and their decimal price, the chasing pack, the biggest
+mover(s), and any table-vs-market divergence (a team can climb the points table
+yet drift in the odds, because the odds price each player's *ceiling*, not their
+current points). Pull the numbers from `src/data/predictions.json` (or run
+`python3 predict.py`); compare against the snapshot in `predictions_history/`.
+Flag that mid-tier *title* odds are noisy until the official knockout bracket
+replaces the random draw.
