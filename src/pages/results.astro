@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/WC2026Layout.astro';
 import { getTournamentData, stageLabel, playerSlug, type Stage } from '../lib/wc2026';
-import { playerColor, tierStyle, stageStyle, fmtSigned, flagCode } from '../lib/wc2026-ui';
+import { playerColor, tierStyle, stageStyle, flagCode } from '../lib/wc2026-ui';
 import PlayerPills from '../components/PlayerPills.astro';
 
 const data = getTournamentData();
@@ -18,55 +18,13 @@ const teamsSorted = [...data.teams].sort((a, b) => {
 });
 ---
 
-<Layout title="Results" active="results">
+<Layout title="Team scores" active="results">
   <PlayerPills active="all" />
 
-  {/* TABLE LEVEL — pick a player to drill into their teams and matches */}
+  {/* TEAM SCORES — all 48 teams; tap an owner (or a pill) for their breakdown */}
   <section>
     <div class="section-head">
-      <h2 class="label">Overall Table</h2>
-      <span class="count">tap a player to drill into teams &amp; matches</span>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="num">#</th>
-            <th>Player</th>
-            <th class="num">Pld</th>
-            <th class="num">Points</th>
-            <th class="num">GD</th>
-            <th class="num">GF</th>
-            <th>Best Run</th>
-            <th aria-label="Drill in"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.players.map((p) => (
-            <tr class={`drillable${hasScores && p.rank <= 3 ? ' top' : ''}`}>
-              <td class="num rank">{p.rank}</td>
-              <td class="nowrap">
-                <a class="player-link" href={`/results/${playerSlug(p.name)}`} style={`--accent:${playerColor(p.name)}`}>
-                  <span class="chip-dot"></span>{p.name}
-                </a>
-              </td>
-              <td class="num">{p.played}</td>
-              <td class="num strong">{p.points}</td>
-              <td class="num">{fmtSigned(p.gd)}</td>
-              <td class="num">{p.gf}</td>
-              <td class="nowrap"><span class="badge" style={stageStyle(p.best)}>{stageLabel(p.best)}</span></td>
-              <td class="num"><a class="drill-cta" href={`/results/${playerSlug(p.name)}`} aria-label={`${p.name} breakdown`}>&rsaquo;</a></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  {/* TEAM RECORDS — all 48 teams */}
-  <section>
-    <div class="section-head">
-      <h2 class="label">Team Records</h2>
+      <h2 class="label">Team scores</h2>
       <span class="count">48 teams, ordered by Pts, GD, GF</span>
     </div>
     {!hasScores && (
@@ -148,13 +106,4 @@ const teamsSorted = [...data.teams].sort((a, b) => {
     background: var(--accent);
     flex: none;
   }
-  .drillable { cursor: pointer; }
-  .drill-cta {
-    color: #94a3b8;
-    font-size: 1.3rem;
-    line-height: 1;
-    text-decoration: none;
-    font-weight: 700;
-  }
-  .drillable:hover .drill-cta { color: #0f766e; }
 </style>
