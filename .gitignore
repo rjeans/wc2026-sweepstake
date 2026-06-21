@@ -11,3 +11,7 @@ __pycache__/
 # Misc
 .DS_Store
 files.zip
+
+# Stray script output: running fetch_results.py from the repo root (without
+# --matches/--output) writes here. Canonical data lives in src/data/.
+/matches.csv
