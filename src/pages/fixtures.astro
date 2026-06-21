@@ -10,18 +10,33 @@ const ownerColor = (country: string) => {
   return owner ? playerColor(owner) : '#cbd5e1';
 };
 
-// Group every fixture by calendar day, in chronological order.
-const days: { date: string; matches: typeof data.matches }[] = [];
-const dayIndex = new Map<string, number>();
-for (const m of [...data.matches].sort((a, b) => a.date.localeCompare(b.date))) {
-  if (!dayIndex.has(m.date)) {
-    dayIndex.set(m.date, days.length);
-    days.push({ date: m.date, matches: [] });
+// Group a set of matches by calendar day. `dir` orders the days; matches within
+// a day keep their (chronological) source order thanks to a stable sort.
+function groupByDay(matches: typeof data.matches, dir: 'asc' | 'desc') {
+  const days: { date: string; matches: typeof data.matches }[] = [];
+  const idx = new Map<string, number>();
+  const sorted = [...matches].sort((a, b) =>
+    dir === 'asc' ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date),
+  );
+  for (const m of sorted) {
+    if (!idx.has(m.date)) {
+      idx.set(m.date, days.length);
+      days.push({ date: m.date, matches: [] });
+    }
+    days[idx.get(m.date)!].matches.push(m);
   }
-  days[dayIndex.get(m.date)!].matches.push(m);
+  return days;
 }
 
-const totalPlayed = data.matches.filter((m) => m.status === 'post').length;
+// Upcoming = not yet finished (live + scheduled), soonest first so the next
+// fixtures sit at the top. Results = finished, most recent first.
+const upcoming = data.matches.filter((m) => m.status !== 'post');
+const played = data.matches.filter((m) => m.status === 'post');
+
+const panels = [
+  { key: 'upcoming', days: groupByDay(upcoming, 'asc'), empty: 'No fixtures left — the tournament is done.' },
+  { key: 'results', days: groupByDay(played, 'desc'), empty: 'No results yet. The first kick-off is Thursday 11 June 2026.' },
+] as const;
 
 const fmtDay = (iso: string) => {
   if (!iso) return '';
@@ -38,59 +53,123 @@ const fmtDay = (iso: string) => {
   <section>
     <div class="section-head">
       <h2 class="label">Fixtures &amp; Results</h2>
-      <span class="count">{totalPlayed} of {data.matches.length} played</span>
+      <span class="count">{played.length} of {data.matches.length} played</span>
     </div>
 
-    {days.length === 0 ? (
-      <p class="lead">
-        The full match schedule appears here once it&rsquo;s synced. Each fixture shows
-        the owners of the two teams as coloured dots.
-      </p>
-    ) : (
-      <div class="days">
-        {days.map((day) => (
-          <div class="day">
-            <h3 class="day-head">{fmtDay(day.date)}</h3>
-            <div class="table-wrap">
-              {day.matches.map((m) => {
-                const played = m.homeScore !== null && m.awayScore !== null;
-                const live = m.status === 'in';
-                const homeWin = played && (m.homeScore as number) > (m.awayScore as number);
-                const awayWin = played && (m.awayScore as number) > (m.homeScore as number);
-                const tag = m.group ? m.group : stageLabel(m.stage as Stage);
-                return (
-                  <div class="match">
-                    <span class="match-tag">{tag}</span>
-                    <span class={`match-side home${homeWin ? ' win' : ''}`}>
-                      <span class="match-name">{m.home}</span>
-                      <span class="owner-dot" style={`background-color:${ownerColor(m.home)}`}></span>
-                      {flagCode(m.home) && (
-                        <img class="flag" src={`https://flagcdn.com/w40/${flagCode(m.home)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(m.home)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
-                      )}
-                    </span>
-                    <span class={`match-score${live ? ' live' : ''}`}>
-                      {played ? `${m.homeScore} - ${m.awayScore}` : 'v'}
-                      {live && <span class="live-pip">LIVE</span>}
-                    </span>
-                    <span class={`match-side away${awayWin ? ' win' : ''}`}>
-                      {flagCode(m.away) && (
-                        <img class="flag" src={`https://flagcdn.com/w40/${flagCode(m.away)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(m.away)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
-                      )}
-                      <span class="owner-dot" style={`background-color:${ownerColor(m.away)}`}></span>
-                      <span class="match-name">{m.away}</span>
-                    </span>
-                  </div>
-                );
-              })}
+    {/* CSS-only toggle: Upcoming is shown by default so the next games need no scroll. */}
+    <input type="radio" name="fxview" id="fx-upcoming" class="fx-radio" checked />
+    <input type="radio" name="fxview" id="fx-results" class="fx-radio" />
+    <div class="fx-seg" role="tablist">
+      <label for="fx-upcoming">Upcoming <span class="fx-n">{upcoming.length}</span></label>
+      <label for="fx-results">Results <span class="fx-n">{played.length}</span></label>
+    </div>
+
+    {panels.map((panel) => (
+      <div class={`fx-panel fx-panel-${panel.key}`}>
+        {panel.days.length === 0 ? (
+          <p class="lead">{panel.empty}</p>
+        ) : (
+          panel.days.map((day) => (
+            <div class="day">
+              <h3 class="day-head">{fmtDay(day.date)}</h3>
+              <div class="table-wrap">
+                {day.matches.map((m) => {
+                  const hasScore = m.homeScore !== null && m.awayScore !== null;
+                  const live = m.status === 'in';
+                  const homeWin = hasScore && (m.homeScore as number) > (m.awayScore as number);
+                  const awayWin = hasScore && (m.awayScore as number) > (m.homeScore as number);
+                  const tag = m.group ? m.group : stageLabel(m.stage as Stage);
+                  return (
+                    <div class="match">
+                      <span class="match-tag">{tag}</span>
+                      <span class={`match-side home${homeWin ? ' win' : ''}`}>
+                        <span class="match-name">{m.home}</span>
+                        <span class="owner-dot" style={`background-color:${ownerColor(m.home)}`}></span>
+                        {flagCode(m.home) && (
+                          <img class="flag" src={`https://flagcdn.com/w40/${flagCode(m.home)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(m.home)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
+                        )}
+                      </span>
+                      <span class={`match-score${live ? ' live' : ''}`}>
+                        {hasScore ? `${m.homeScore} - ${m.awayScore}` : 'v'}
+                        {live && <span class="live-pip">LIVE</span>}
+                      </span>
+                      <span class={`match-side away${awayWin ? ' win' : ''}`}>
+                        {flagCode(m.away) && (
+                          <img class="flag" src={`https://flagcdn.com/w40/${flagCode(m.away)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(m.away)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
+                        )}
+                        <span class="owner-dot" style={`background-color:${ownerColor(m.away)}`}></span>
+                        <span class="match-name">{m.away}</span>
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
-    )}
+    ))}
   </section>
 </Layout>
 
 <style>
+  /* Visually-hidden but still focusable radios drive the toggle. */
+  .fx-radio {
+    position: absolute;
+    width: 1px; height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .fx-seg {
+    display: inline-flex;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    margin-bottom: 1.5rem;
+    background: #eef2f6;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+  }
+  .fx-seg label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #64748b;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .fx-seg label:hover { color: #0f172a; }
+  .fx-n {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.05rem 0.4rem;
+    border-radius: 999px;
+    background: #e2e8f0;
+    color: #475569;
+  }
+  /* Active tab + matching panel visibility, driven by the checked radio. */
+  #fx-upcoming:checked ~ .fx-seg label[for='fx-upcoming'],
+  #fx-results:checked ~ .fx-seg label[for='fx-results'] {
+    background: #0f766e;
+    color: #fff;
+    box-shadow: 0 1px 6px rgba(15, 118, 110, 0.3);
+  }
+  #fx-upcoming:checked ~ .fx-seg label[for='fx-upcoming'] .fx-n,
+  #fx-results:checked ~ .fx-seg label[for='fx-results'] .fx-n {
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+  }
+  .fx-radio:focus-visible ~ .fx-seg label {
+    outline: 2px solid #0f766e;
+    outline-offset: 2px;
+  }
+  .fx-panel { display: none; }
+  #fx-upcoming:checked ~ .fx-panel-upcoming { display: block; }
+  #fx-results:checked ~ .fx-panel-results { display: block; }
+
   .day { margin-bottom: 1.75rem; }
   .day-head {
     margin: 0 0 0.6rem;

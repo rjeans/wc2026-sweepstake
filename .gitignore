@@ -12,6 +12,8 @@ __pycache__/
 .DS_Store
 files.zip
 
-# Stray script output: running fetch_results.py from the repo root (without
-# --matches/--output) writes here. Canonical data lives in src/data/.
+# Stray script output: running fetch_results.py / scoring.py from the repo root
+# (without --matches/--output) writes here. Canonical data lives in src/data/;
+# results.csv is also the local working file described in the README.
 /matches.csv
+/results.csv
