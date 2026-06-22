@@ -18,13 +18,13 @@ const teamsSorted = [...data.teams].sort((a, b) => {
 });
 ---
 
-<Layout title="Team scores" active="results">
+<Layout title="Team Scores" active="results">
   <PlayerPills active="all" />
 
   {/* TEAM SCORES — all 48 teams; tap an owner (or a pill) for their breakdown */}
   <section>
     <div class="section-head">
-      <h2 class="label">Team scores</h2>
+      <h2 class="label">Team Scores</h2>
       <span class="count">48 teams, ordered by Pts, GD, GF</span>
     </div>
     {!hasScores && (
