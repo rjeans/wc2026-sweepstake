@@ -99,7 +99,48 @@ def load_real_matches(path: str):
     return locked_groups, dict(locked_kos)
 
 
-def simulate_one(teams, by_group, locked_groups, locked_kos, rng):
+def load_ko_fixtures(path: str) -> dict[str, list[tuple[str, str]]]:
+    """Per knockout stage, the published (home, away) pairings - played or not.
+
+    This is the official bracket as ESPN publishes it: once the group stage
+    ends the R32 fixtures appear here with concrete teams, and each later round
+    fills in as its participants are decided. The simulator honours these
+    pairings instead of drawing the bracket at random. Rows whose teams aren't
+    real qualifiers yet (placeholders, or future rounds) simply won't match the
+    teams still alive, so those rounds fall back to a random draw.
+    """
+    fixtures: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    if not os.path.exists(path):
+        return dict(fixtures)
+    with open(path, newline="", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            stage = r["stage"].strip()
+            if not stage or stage == "GROUP":
+                continue
+            home, away = r["home"].strip(), r["away"].strip()
+            if home and away:
+                fixtures[stage].append((home, away))
+    return dict(fixtures)
+
+
+def _order_by_pairings(alive, pairings):
+    """If `pairings` exactly partitions `alive`, return it bracket-ordered as
+    [a0, b0, a1, b1, ...] so adjacent entries are the published matchups.
+    Returns None if the pairings don't cover exactly this set of teams (e.g. the
+    round isn't published yet, or its participants aren't decided)."""
+    aset = set(alive)
+    ordered, used = [], set()
+    for a, b in pairings:
+        if a in aset and b in aset and a not in used and b not in used:
+            ordered += [a, b]
+            used.add(a)
+            used.add(b)
+    if len(ordered) == len(alive) and used == aset:
+        return ordered
+    return None
+
+
+def simulate_one(teams, by_group, locked_groups, locked_kos, ko_fixtures, rng):
     """Run one full-tournament simulation seeded with locked-in matches."""
     stage = {t["country"]: "GROUP" for t in teams}
     gpts: dict[str, int] = {}
@@ -144,16 +185,17 @@ def simulate_one(teams, by_group, locked_groups, locked_kos, rng):
     for c in qualifiers:
         stage[c] = "R32"
 
-    # Knockout. Until ESPN publishes the official bracket we shuffle the
-    # qualifiers; once group stage ends we can replace with the real pairings.
-    # When a KO match is already played in matches.csv (locked_kos) we use the
-    # actual winner instead of simulating.
+    # Knockout. We honour the official bracket as published in matches.csv: for
+    # each round, if its fixtures pair up exactly the teams still alive we use
+    # those matchups; otherwise (no fixtures yet, or participants not yet
+    # decided) we fall back to a random draw. A KO match already played in
+    # matches.csv (locked_kos) uses the actual winner instead of simulating.
     ko_lookup: dict[str, dict[tuple[str, str], str | None]] = {
         s: {(h, a): w for (h, a, _, _, w) in rows} for s, rows in locked_kos.items()
     }
 
-    def _ko_winner(stage_key: str, a: str, b: str) -> str:
-        lk = ko_lookup.get(stage_key, {})
+    def _ko_winner(match_stage: str, a: str, b: str) -> str:
+        lk = ko_lookup.get(match_stage, {})
         if (a, b) in lk and lk[(a, b)] is not None:
             return lk[(a, b)]
         if (b, a) in lk and lk[(b, a)] is not None:
@@ -161,16 +203,22 @@ def simulate_one(teams, by_group, locked_groups, locked_kos, rng):
         w, _, _ = smod._play(a, b, rng, knockout=True)
         return w
 
+    # (match_stage, stage the winners advance to). match_stage is the key used
+    # in matches.csv / locked_kos - the round being PLAYED, not reached.
     alive = qualifiers[:]
-    rng.shuffle(alive)
-    for nxt in ["R16", "QF", "SF", "FINAL", "CHAMPION"]:
+    for match_stage, nxt in [("R32", "R16"), ("R16", "QF"), ("QF", "SF"),
+                             ("SF", "FINAL"), ("FINAL", "CHAMPION")]:
+        ordered = _order_by_pairings(alive, ko_fixtures.get(match_stage, []))
+        if ordered is not None:
+            alive = ordered            # official bracket pairings for this round
+        else:
+            rng.shuffle(alive)         # bracket not available - random draw
         winners = []
         for i in range(0, len(alive), 2):
-            winners.append(_ko_winner(nxt, alive[i], alive[i + 1]))
+            winners.append(_ko_winner(match_stage, alive[i], alive[i + 1]))
         for w in winners:
             stage[w] = nxt
         alive = winners
-        rng.shuffle(alive)
 
     return stage, gpts, gf, ga
 
@@ -184,7 +232,7 @@ def score_player(owned, stage, gpts, gf, ga):
     return pts, gf_sum, gd_sum
 
 
-def run(trials: int, teams, by_group, allocation, locked_groups, locked_kos, rng):
+def run(trials: int, teams, by_group, allocation, locked_groups, locked_kos, ko_fixtures, rng):
     players_teams: dict[str, list[str]] = defaultdict(list)
     for country, owner in allocation.items():
         players_teams[owner].append(country)
@@ -202,7 +250,7 @@ def run(trials: int, teams, by_group, allocation, locked_groups, locked_kos, rng
     team_pts_sum: dict[str, float] = defaultdict(float)
 
     for _ in range(trials):
-        stage, gpts, gf, ga = simulate_one(teams, by_group, locked_groups, locked_kos, rng)
+        stage, gpts, gf, ga = simulate_one(teams, by_group, locked_groups, locked_kos, ko_fixtures, rng)
         # Per-team
         for c in all_teams:
             s = stage.get(c, "GROUP")
@@ -324,6 +372,7 @@ def main(argv=None) -> int:
     teams = load_teams(args.teams)
     allocation = load_allocation(args.allocation)
     locked_groups, locked_kos = load_real_matches(args.matches)
+    ko_fixtures = load_ko_fixtures(args.matches)
 
     by_group: dict[str, list[str]] = defaultdict(list)
     for t in teams:
@@ -332,7 +381,7 @@ def main(argv=None) -> int:
 
     rng = random.Random(args.seed) if args.seed is not None else random.Random()
 
-    predictions, team_predictions = run(args.trials, teams, by_group, allocation, locked_groups, locked_kos, rng)
+    predictions, team_predictions = run(args.trials, teams, by_group, allocation, locked_groups, locked_kos, ko_fixtures, rng)
 
     # Movement: compare to the most recent dated snapshot that isn't today.
     today_iso = datetime.date.today().isoformat()
