@@ -67,7 +67,7 @@ def _load_points() -> tuple[dict[str, float], str]:
 POINTS, RATING_SOURCE = _load_points()
 
 # Progression cumulative used in scoring.py (champion is the knob => 0 in base).
-CUM = {"GROUP": 0, "R32": 5, "R16": 10, "QF": 18, "SF": 30, "FINAL": 45}
+CUM = {"GROUP": 0, "R32": 5, "R16": 10, "QF": 20, "SF": 40, "FINAL": 80}
 
 # Poisson goals: lam = LAMBDA0 * exp(+/- K * rating_diff).
 # Same K works for both rating sources - Elo and FIFA points happen to live on
@@ -190,7 +190,7 @@ def main(argv=None):
     for q in (0.50, 0.75, 0.90, 0.95, 0.99):
         print(f"  {int(q*100):>2}% of tournaments -> champion >= {needed[min(n-1, int(q*n))]}")
     print("\nP(winner's owner tops table) by champion value:")
-    for B in (45, 60, 75, 80, 90, 120, 220):
+    for B in (80, 120, 160, 200, 240, 320, 440):
         print(f"  champion={B:>3}: {sum(v <= B for v in needed)/n*100:5.1f}%")
     print("\nNote: model-dependent (Poisson goals + random knockout draw); treat as approximate.")
     return 0

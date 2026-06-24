@@ -29,10 +29,10 @@ const STAGE_BONUS: Record<Stage, number> = {
   GROUP: 0,
   R32: 5,
   R16: 10,
-  QF: 18,
-  SF: 30,
-  FINAL: 45,
-  CHAMPION: 80,
+  QF: 20,
+  SF: 40,
+  FINAL: 80,
+  CHAMPION: 160,
 };
 
 export interface Team {

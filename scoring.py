@@ -5,32 +5,34 @@ World Cup 2026 sweepstake scoring  -  single points table.
 Scoring
 -------
 Group stage (per match):   win = 3, draw = 1   (max 9 per team)
-Knockout progression (cumulative bonus a team keeps once it reaches a round):
-    qualify / reach R32 :   5
-    reach last 16       :  10
-    reach quarter-final :  18
-    reach semi-final    :  30
-    reach final         :  45
-    WIN THE CUP         :  80     <- calibrated to ~90% (see below)
+Knockout progression (cumulative bonus a team keeps once it reaches a round).
+This is the "doubling" ladder - each round is worth ~as much as the whole run
+up to it, so deep runs dominate group points:
+    qualify / reach R32 :    5
+    reach last 16       :   10
+    reach quarter-final :   20
+    reach semi-final    :   40
+    reach final         :   80
+    WIN THE CUP         :  160     <- calibrated to ~99.7% (see below)
 
 A person's score = sum over their 6 teams of (group points + progression bonus).
 Table is sorted by points, then goal difference, then goals for.
 
-Calibration: "probably certain", not certain
----------------------------------------------
-The title is worth 80 (i.e. +35 over reaching the final). A Monte Carlo of
-9,000 simulated tournaments (FIFA-points match model, random knockout draw,
-balanced allocation) puts the WINNER'S OWNER top of the table about 92% of the
-time at this value. The trade-off curve:
+Calibration: progression-weighted, near-certain
+-----------------------------------------------
+The ladder doubles each round, so the title is decisive: the cup is worth 160.
+A Monte Carlo of 9,000 simulated tournaments (Elo / FIFA-points match model,
+random knockout draw, balanced allocation) puts the WINNER'S OWNER top of the
+table about 99.7% of the time at this value. The trade-off curve under this
+ladder:
 
-    champion worth  45 -> 43% | 60 -> 69% | 75 -> 90% | 80 -> ~92%
-                    90 -> 97% | 120 -> 99.9% | 220 -> 100% (worst-case proof)
+    champion worth  80 -> 50% | 120 -> 92% | 160 -> ~99.7% | 200+ -> 100%
 
-So in roughly 1 tournament in 12, a "broad" portfolio (several deep runs spread
-across someone's six teams) can pip the winner's owner. That is by design: you
-asked for ~90%, not the lopsided certainty that 220 would force. The figure is
-model-dependent (a different match model shifts the 90% point a few units);
-the constant is at the top of the file if you want to dial it.
+So only about 1 tournament in ~300 lets a "broad" portfolio (several deep runs
+spread across someone's six teams) pip the winner's owner. This is deliberate:
+the owner chose progression-weighted near-certainty over the earlier ~90%
+balance (which had the cup at 80). The figure is model-dependent; the constants
+are at the top of the file if you want to dial it.
 
 Usage
 -----
@@ -51,7 +53,7 @@ GROUP_WIN, GROUP_DRAW, GROUP_MATCHES = 3, 1, 3
 
 STAGE_ORDER = ["GROUP", "R32", "R16", "QF", "SF", "FINAL", "CHAMPION"]
 INCREMENT = {
-    "GROUP": 0, "R32": 5, "R16": 5, "QF": 8, "SF": 12, "FINAL": 15, "CHAMPION": 35,
+    "GROUP": 0, "R32": 5, "R16": 5, "QF": 10, "SF": 20, "FINAL": 40, "CHAMPION": 80,
 }
 LOSERS_AT = {"FINAL": 1, "SF": 2, "QF": 4, "R16": 8, "R32": 16}
 
@@ -66,8 +68,8 @@ STAGE_ALIASES = {
     "CHAMPIONS": "CHAMPION",
 }
 
-# Simulated P(winner's owner tops the table) at this champion value (~92%).
-CALIBRATED_PROBABILITY = 0.92
+# Simulated P(winner's owner tops the table) at this champion value (~99.7%).
+CALIBRATED_PROBABILITY = 0.997
 
 
 def cumulative(stage: str) -> int:
@@ -164,8 +166,8 @@ def print_table(rows, champion_owner):
         else:
             top = rows[0]["person"]
             print(f"UPSET: {top} pipped {champion_owner} (the winner's owner). "
-                  f"This is the ~{round((1-CALIBRATED_PROBABILITY)*100)}% tail "
-                  "the 90%-calibration accepts.")
+                  f"This is the ~{(1-CALIBRATED_PROBABILITY)*100:.1f}% tail "
+                  "the progression-weighted calibration accepts.")
     else:
         print("No champion decided yet - running table.")
 
@@ -186,10 +188,10 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     champ, rival = worst_case()
-    print(f"Champion worth {champ}; calibrated to ~{round(CALIBRATED_PROBABILITY*100)}% "
+    print(f"Champion worth {champ}; calibrated to ~{CALIBRATED_PROBABILITY*100:.1f}% "
           "chance the winner's owner finishes top (simulated).")
-    print(f"(Worst-case pathological draw could reach {rival}; making it certain would "
-          "need champion ~220. You chose ~90%.)\n")
+    print(f"(Worst-case pathological draw could reach {rival}; this progression-weighted "
+          "ladder is near-certain by design, not the earlier ~90% balance.)\n")
 
     owners, teams_of = load_alloc(args.alloc)
     results = load_results(args.results)

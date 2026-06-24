@@ -46,13 +46,16 @@ Scoring (`scoring.py`):
 - Progression bonuses are **cumulative** (a team keeps points for every round it
   clears). `STAGE_ORDER` and `INCREMENT` define this.
 - The table sorts by **points, then goals for, then goal difference**.
-- The champion bonus is **calibrated, not arbitrary**. It is currently 80
-  (`INCREMENT["CHAMPION"] = 35`, cumulative 80), giving ~92% chance the winner's
-  owner tops the table. **If you touch any scoring constant, you MUST re-run
-  `sim.py` and reset `INCREMENT["CHAMPION"]` to match the desired probability**,
-  then update `CALIBRATED_PROBABILITY` and the docstring/table to stay honest.
-- `worst_case()` reports the mathematically-certain threshold (~220). Don't
-  delete it — it documents the trade-off between "certain" and "~90% certain".
+- The champion bonus is **calibrated, not arbitrary**. The progression ladder
+  now **doubles** each round (cumulative 5/10/20/40/80/160); the cup is 160
+  (`INCREMENT["CHAMPION"] = 80`), giving ~99.7% chance the winner's owner tops
+  the table. **If you touch any scoring constant, you MUST re-run `sim.py` and
+  reset the relevant `INCREMENT` values to match the desired probability**, then
+  update `CALIBRATED_PROBABILITY` and the docstring/table to stay honest. The
+  same ladder is mirrored in `predict.py` (`INCREMENT`), `sim.py` (`CUM`) and
+  `src/lib/wc2026.ts` (`STAGE_BONUS`) — keep all four in sync.
+- `worst_case()` reports the mathematically-certain threshold (now ~274). Don't
+  delete it — it documents the trade-off between "certain" and "~99.7% certain".
 
 ## Key facts / context
 
@@ -67,10 +70,11 @@ Scoring (`scoring.py`):
 ## The core design tension (so you don't "fix" it)
 
 Group points spread across six teams pull against guaranteeing the winner's
-owner wins. The 80-point champion bonus is the deliberate ~90% compromise the
-owner chose over the lopsided ~220 that certainty would require. If asked to
-make group points heavier or the title "guaranteed", explain the consequence
-(bigger champion bonus, re-calibration) rather than silently changing balance.
+owner wins. As of 24 Jun 2026 the owner chose the **progression-weighted
+"doubling" ladder** (cup worth 160) for ~99.7% near-certainty, deliberately
+moving away from the earlier ~90% balance (cup 80). The upset is now rare by
+design. If asked to rebalance again, explain the consequence (re-calibration
+across the four mirrored constant sets) rather than silently changing it.
 
 ## Typical tasks you may be asked to do
 

@@ -33,7 +33,7 @@ import sim as smod  # POINTS, LAMBDA0, K, _poisson, _play
 
 # Must match scoring.py
 GROUP_WIN, GROUP_DRAW = 3, 1
-INCREMENT = {"GROUP": 0, "R32": 5, "R16": 5, "QF": 8, "SF": 12, "FINAL": 15, "CHAMPION": 35}
+INCREMENT = {"GROUP": 0, "R32": 5, "R16": 5, "QF": 10, "SF": 20, "FINAL": 40, "CHAMPION": 80}
 STAGE_ORDER = ["GROUP", "R32", "R16", "QF", "SF", "FINAL", "CHAMPION"]
 CUM = {}
 total = 0
