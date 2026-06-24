@@ -48,8 +48,8 @@ date,stage,group,home,home_score,away,away_score,status
 2026-06-23,GROUP,K,Portugal,5,Uzbekistan,0,post
 2026-06-24,GROUP,B,Bosnia-Herzegovina,3,Qatar,1,post
 2026-06-24,GROUP,K,Colombia,1,Congo DR,0,post
-2026-06-24,GROUP,C,Morocco,,Haiti,,pre
-2026-06-24,GROUP,C,Scotland,,Brazil,,pre
+2026-06-24,GROUP,C,Morocco,0,Haiti,1,in
+2026-06-24,GROUP,C,Scotland,0,Brazil,1,in
 2026-06-24,GROUP,B,Switzerland,2,Canada,1,post
 2026-06-25,GROUP,E,Curaçao,,Ivory Coast,,pre
 2026-06-25,GROUP,A,Czechia,,Mexico,,pre
