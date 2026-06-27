@@ -61,18 +61,21 @@ date,stage,group,home,home_score,away,away_score,status
 2026-06-26,GROUP,D,Paraguay,0,Australia,0,post
 2026-06-26,GROUP,I,Senegal,5,Iraq,0,post
 2026-06-26,GROUP,D,Türkiye,3,United States,2,post
-2026-06-27,GROUP,H,Cape Verde,0,Saudi Arabia,0,in
+2026-06-27,GROUP,H,Cape Verde,0,Saudi Arabia,0,post
 2026-06-27,GROUP,K,Colombia,,Portugal,,pre
 2026-06-27,GROUP,K,Congo DR,,Uzbekistan,,pre
 2026-06-27,GROUP,L,Croatia,,Ghana,,pre
-2026-06-27,GROUP,G,Egypt,,Iran,,pre
-2026-06-27,GROUP,G,New Zealand,,Belgium,,pre
+2026-06-27,GROUP,G,Egypt,1,Iran,0,in
+2026-06-27,GROUP,G,New Zealand,0,Belgium,0,in
 2026-06-27,GROUP,L,Panama,,England,,pre
-2026-06-27,GROUP,H,Uruguay,0,Spain,1,in
+2026-06-27,GROUP,H,Uruguay,0,Spain,1,post
 2026-06-28,GROUP,J,Algeria,,Austria,,pre
 2026-06-28,GROUP,J,Jordan,,Argentina,,pre
 2026-06-28,R32,,South Africa,,Canada,,pre
 2026-06-29,R32,,Brazil,,Japan,,pre
+2026-06-29,R32,,Germany,,Paraguay,,pre
+2026-06-30,R32,,France,,Sweden,,pre
 2026-06-30,R32,,Ivory Coast,,Norway,,pre
 2026-06-30,R32,,Netherlands,,Morocco,,pre
 2026-07-02,R32,,United States,,Bosnia-Herzegovina,,pre
+2026-07-03,R32,,Argentina,,Cape Verde,,pre
