@@ -69,8 +69,8 @@ date,stage,group,home,home_score,away,away_score,status
 2026-06-27,GROUP,G,New Zealand,1,Belgium,5,post
 2026-06-27,GROUP,L,Panama,0,England,2,post
 2026-06-27,GROUP,H,Uruguay,0,Spain,1,post
-2026-06-28,GROUP,J,Algeria,1,Austria,1,in
-2026-06-28,GROUP,J,Jordan,0,Argentina,2,in
+2026-06-28,GROUP,J,Algeria,3,Austria,3,post
+2026-06-28,GROUP,J,Jordan,1,Argentina,3,post
 2026-06-28,R32,,South Africa,,Canada,,pre
 2026-06-29,R32,,Brazil,,Japan,,pre
 2026-06-29,R32,,Germany,,Paraguay,,pre
@@ -81,7 +81,9 @@ date,stage,group,home,home_score,away,away_score,status
 2026-07-01,R32,,England,,Congo DR,,pre
 2026-07-01,R32,,Mexico,,Ecuador,,pre
 2026-07-02,R32,,Portugal,,Croatia,,pre
+2026-07-02,R32,,Spain,,Austria,,pre
 2026-07-02,R32,,United States,,Bosnia-Herzegovina,,pre
 2026-07-03,R32,,Argentina,,Cape Verde,,pre
 2026-07-03,R32,,Australia,,Egypt,,pre
+2026-07-03,R32,,Switzerland,,Algeria,,pre
 2026-07-04,R32,,Colombia,,Ghana,,pre
