@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/WC2026Layout.astro';
-import { getTournamentData, stageLabel, type Stage } from '../lib/wc2026';
-import { playerColor, flagCode } from '../lib/wc2026-ui';
+import { getTournamentData, type Stage } from '../lib/wc2026';
+import { playerColor, flagCode, stageStyle, stageShort } from '../lib/wc2026-ui';
 
 const data = getTournamentData();
 const teamByCountry = new Map(data.teams.map((t) => [t.country, t]));
@@ -78,10 +78,14 @@ const fmtDay = (iso: string) => {
                   const live = m.status === 'in';
                   const homeWin = hasScore && (m.homeScore as number) > (m.awayScore as number);
                   const awayWin = hasScore && (m.awayScore as number) > (m.homeScore as number);
-                  const tag = m.group ? m.group : stageLabel(m.stage as Stage);
+                  const stage = m.stage as Stage;
                   return (
                     <div class="match">
-                      <span class="match-tag">{tag}</span>
+                      {m.group ? (
+                        <span class="match-tag">{m.group}</span>
+                      ) : (
+                        <span class="match-tag ko" style={stageStyle(stage)}>{stageShort(stage)}</span>
+                      )}
                       <span class={`match-side home${homeWin ? ' win' : ''}`}>
                         <span class="match-name">{m.home}</span>
                         <span class="owner-dot" style={`background-color:${ownerColor(m.home)}`}></span>

@@ -262,6 +262,12 @@ export function getTournamentData(): TournamentData {
     const gf = result?.gf ?? 0;
     const ga = result?.ga ?? 0;
     const groupPoints = gw * GROUP_WIN + gd * GROUP_DRAW;
+    // Deepest round actually reached = the deeper of the results-derived stage
+    // and the bracket appearance. Reaching a round (incl. qualifying for the
+    // R32) banks its progression bonus immediately, before results catch up.
+    const bracket = koByCountry.get(t.country) ?? 'GROUP';
+    const reached: Stage =
+      STAGE_ORDER.indexOf(bracket) > STAGE_ORDER.indexOf(stage) ? bracket : stage;
     return {
       ...t,
       owner: allocation?.get(t.country) ?? null,
@@ -272,9 +278,9 @@ export function getTournamentData(): TournamentData {
       gf,
       ga,
       groupPoints,
-      points: groupPoints + STAGE_BONUS[stage],
+      points: groupPoints + STAGE_BONUS[reached],
       stage,
-      koReached: koByCountry.get(t.country) ?? 'GROUP',
+      koReached: reached,
     };
   });
   teamRows.sort((a, b) => a.fifa_rank - b.fifa_rank);

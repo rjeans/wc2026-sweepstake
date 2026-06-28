@@ -51,6 +51,7 @@ jobs:
             python scoring.py \
               --alloc src/data/allocation.csv \
               --results src/data/results.csv \
+              --matches src/data/matches.csv \
               --output src/data/standings.csv
           else
             echo "::notice::No allocation.csv yet - skipping scoring (pre-draw)."

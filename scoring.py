@@ -47,6 +47,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import os
 import sys
 
 GROUP_WIN, GROUP_DRAW, GROUP_MATCHES = 3, 1, 3
@@ -122,6 +123,28 @@ def load_results(path):
     return res
 
 
+def load_ko_rounds(path):
+    """Deepest knockout round each team appears in, from the bracket fixtures.
+
+    A team that reaches a round (including qualifying for the R32) banks that
+    round's progression bonus immediately - the published bracket tells us this
+    before the per-team results feed marks the stage. Returns {country: stage}.
+    """
+    rounds = {}
+    if not path or not os.path.exists(path):
+        return rounds
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            st = norm_stage(row.get("stage"))
+            if st == "GROUP":
+                continue
+            i = STAGE_ORDER.index(st)
+            for c in (row.get("home", "").strip(), row.get("away", "").strip()):
+                if c and i > STAGE_ORDER.index(rounds.get(c, "GROUP")):
+                    rounds[c] = st
+    return rounds
+
+
 def team_points(r):
     return r["gw"] * GROUP_WIN + r["gd"] * GROUP_DRAW + cumulative(r["stage"])
 
@@ -184,6 +207,9 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description="WC2026 sweepstake scorer")
     ap.add_argument("--alloc", default="sample_allocation.csv")
     ap.add_argument("--results", required=True)
+    ap.add_argument("--matches", default=None,
+                    help="matches.csv; credits progression bonuses from the bracket "
+                         "as teams reach each round (e.g. +5 on qualifying for the R32)")
     ap.add_argument("--output", default=None)
     args = ap.parse_args(argv)
 
@@ -195,6 +221,16 @@ def main(argv=None):
 
     owners, teams_of = load_alloc(args.alloc)
     results = load_results(args.results)
+
+    # Credit progression from the bracket: a team that has reached a round (incl.
+    # qualifying for the R32) banks that round's bonus even before the results
+    # feed marks its stage. Use the deeper of the two.
+    ko_rounds = load_ko_rounds(args.matches)
+    for c, br in ko_rounds.items():
+        r = results.get(c)
+        if r and STAGE_ORDER.index(br) > STAGE_ORDER.index(r["stage"]):
+            r["stage"] = br
+
     unknown = set(results) - set(owners)
     if unknown:
         print(f"Note: results for unallocated teams ignored: {sorted(unknown)}\n")
