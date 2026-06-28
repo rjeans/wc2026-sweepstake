@@ -133,15 +133,31 @@ def load_ko_rounds(path):
     rounds = {}
     if not path or not os.path.exists(path):
         return rounds
+
+    def credit(c, st):
+        if c and STAGE_ORDER.index(st) > STAGE_ORDER.index(rounds.get(c, "GROUP")):
+            rounds[c] = st
+
     with open(path, newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
             st = norm_stage(row.get("stage"))
             if st == "GROUP":
                 continue
             i = STAGE_ORDER.index(st)
-            for c in (row.get("home", "").strip(), row.get("away", "").strip()):
-                if c and i > STAGE_ORDER.index(rounds.get(c, "GROUP")):
-                    rounds[c] = st
+            home, away = row.get("home", "").strip(), row.get("away", "").strip()
+            # Both teams have reached this round (they are in the tie).
+            credit(home, st)
+            credit(away, st)
+            # A completed knockout win advances the winner to the next round.
+            hs, as_ = row.get("home_score", "").strip(), row.get("away_score", "").strip()
+            if (row.get("status") or "").strip() == "post" and hs and as_ and i + 1 < len(STAGE_ORDER):
+                try:
+                    h, a = int(hs), int(as_)
+                except ValueError:
+                    continue
+                winner = home if h > a else away if a > h else None
+                if winner:
+                    credit(winner, STAGE_ORDER[i + 1])
     return rounds
 
 

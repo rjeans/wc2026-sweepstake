@@ -243,13 +243,19 @@ export function getTournamentData(): TournamentData {
   // This reflects qualification as soon as the bracket is drawn, before the
   // results-derived `stage` catches up. GROUP = not (yet) through.
   const koByCountry = new Map<string, Stage>();
+  const creditKo = (c: string, s: Stage) => {
+    const cur = koByCountry.get(c);
+    if (!cur || STAGE_ORDER.indexOf(s) > STAGE_ORDER.indexOf(cur)) koByCountry.set(c, s);
+  };
   for (const m of matches) {
     if (m.stage === 'GROUP') continue;
-    for (const c of [m.home, m.away]) {
-      const cur = koByCountry.get(c);
-      if (!cur || STAGE_ORDER.indexOf(m.stage) > STAGE_ORDER.indexOf(cur)) {
-        koByCountry.set(c, m.stage);
-      }
+    const i = STAGE_ORDER.indexOf(m.stage);
+    // Both teams have reached this round; a completed win advances the winner.
+    creditKo(m.home, m.stage);
+    creditKo(m.away, m.stage);
+    if (m.status === 'post' && m.homeScore !== null && m.awayScore !== null && i + 1 < STAGE_ORDER.length) {
+      const winner = m.homeScore > m.awayScore ? m.home : m.awayScore > m.homeScore ? m.away : null;
+      if (winner) creditKo(winner, STAGE_ORDER[i + 1]);
     }
   }
 
