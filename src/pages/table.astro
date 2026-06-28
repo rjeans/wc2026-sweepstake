@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/WC2026Layout.astro';
 import { getTournamentData, stageLabel } from '../lib/wc2026';
-import { playerColor, stageStyle, tierStyle, flagCode, fmtSigned, MEDALS } from '../lib/wc2026-ui';
+import { playerColor, stageStyle, stageShort, tierStyle, flagCode, fmtSigned, MEDALS } from '../lib/wc2026-ui';
 
 const data = getTournamentData();
 const hasScores = data.status === 'in-progress' || data.status === 'complete';
@@ -94,13 +94,18 @@ const maxTeamPoints = Math.max(
         <span class="count">where each player's total comes from</span>
       </div>
       <div class="breakdown">
-        {breakdown.map(({ player, teams }) => (
+        {breakdown.map(({ player, teams }) => {
+          const through = teams.filter((t) => t.koReached !== 'GROUP').length;
+          return (
           <div class="bd-card" style={`--accent:${playerColor(player.name)}`}>
             <div class="bd-head">
               <span class="chip" style={`--accent:${playerColor(player.name)}`}>
                 <span class="chip-dot"></span>{player.name}
               </span>
-              <span class="bd-total">{player.points}<small>pts</small></span>
+              <span class="bd-meta">
+                {through > 0 && <span class="bd-through">{through} in KO</span>}
+                <span class="bd-total">{player.points}<small>pts</small></span>
+              </span>
             </div>
             <ul class="bd-teams">
               {teams.map((t) => (
@@ -110,6 +115,9 @@ const maxTeamPoints = Math.max(
                     <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
                   )}
                   <span class="bd-name">{t.country}</span>
+                  {t.koReached !== 'GROUP' && (
+                    <span class="ko-badge" style={stageStyle(t.koReached)}>{stageShort(t.koReached)}</span>
+                  )}
                   <span class="bd-bar">
                     <span class="bd-fill" style={`width:${(t.points / maxTeamPoints) * 100}%;background-color:${playerColor(player.name)}`}></span>
                   </span>
@@ -118,7 +126,8 @@ const maxTeamPoints = Math.max(
               ))}
             </ul>
           </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   )}
@@ -147,9 +156,28 @@ const maxTeamPoints = Math.max(
     margin-bottom: 0.5rem;
     border-bottom: 1px solid #f1f5f9;
   }
+  .bd-meta { display: inline-flex; align-items: baseline; gap: 0.5rem; }
+  .bd-through {
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #0e7490;
+    background: #cffafe;
+    padding: 0.1rem 0.4rem;
+    border-radius: 999px;
+  }
   .bd-total { font-size: 1.25rem; font-weight: 800; color: var(--accent); }
   .bd-total small { font-size: 0.65rem; font-weight: 600; color: #94a3b8; margin-left: 0.15rem; }
   .bd-teams { list-style: none; margin: 0; padding: 0; }
+  .ko-badge {
+    flex: none;
+    padding: 0.05rem 0.35rem;
+    border-radius: 5px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
   .bd-team {
     display: flex;
     align-items: center;

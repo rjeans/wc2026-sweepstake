@@ -43,6 +43,12 @@ const STAGE_BADGE: Record<Stage, { bg: string; fg: string }> = {
 };
 export const stageStyle = (s: Stage) => `background-color:${STAGE_BADGE[s].bg};color:${STAGE_BADGE[s].fg};`;
 
+// Compact knockout label for inline "made the last 32 / 16 / …" badges.
+const STAGE_SHORT: Record<Stage, string> = {
+  GROUP: '', R32: 'R32', R16: 'R16', QF: 'QF', SF: 'SF', FINAL: 'Final', CHAMPION: 'Winner',
+};
+export const stageShort = (s: Stage) => STAGE_SHORT[s];
+
 export const MEDALS = ['#e0aa3e', '#9ca3af', '#b87333'];
 
 // Country -> ISO 3166-1 alpha-2 (flagcdn); UK home nations use the gb-* subdivisions.

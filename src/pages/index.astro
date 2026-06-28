@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/WC2026Layout.astro';
 import { getTournamentData } from '../lib/wc2026';
-import { playerColor, flagCode } from '../lib/wc2026-ui';
+import { playerColor, flagCode, stageStyle, stageShort } from '../lib/wc2026-ui';
 
 const data = getTournamentData();
+const through = data.teams.filter((t) => t.koReached !== 'GROUP').length;
 ---
 
 <Layout title="Teams" active="teams">
@@ -34,7 +35,7 @@ const data = getTournamentData();
   <section>
     <div class="section-head">
       <h2 class="label">Selected Teams</h2>
-      <span class="count">8 players, one team per tier</span>
+      <span class="count">{through > 0 ? `${through} through to the knockouts` : '8 players, one team per tier'}</span>
     </div>
     <div class="table-wrap">
       <table>
@@ -62,11 +63,14 @@ const data = getTournamentData();
                 return (
                   <td class="nowrap">
                     {t ? (
-                      <span class="team">
+                      <span class={`team${through > 0 && t.koReached === 'GROUP' ? ' out' : ''}`}>
                         {flagCode(t.country) && (
                           <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
                         )}
                         {t.country}
+                        {t.koReached !== 'GROUP' && (
+                          <span class="ko-badge" style={stageStyle(t.koReached)}>{stageShort(t.koReached)}</span>
+                        )}
                       </span>
                     ) : (
                       <span class="muted">&mdash;</span>
@@ -81,3 +85,18 @@ const data = getTournamentData();
     </div>
   </section>
 </Layout>
+
+<style>
+  /* Knockout-qualification badge on each team. */
+  .ko-badge {
+    flex: none;
+    padding: 0.05rem 0.35rem;
+    border-radius: 5px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+  /* Once the bracket is set, fade the teams that didn't make it through. */
+  .team.out { opacity: 0.45; }
+  .team.out .flag { filter: grayscale(1); }
+</style>

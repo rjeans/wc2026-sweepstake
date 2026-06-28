@@ -53,6 +53,7 @@ export interface TeamRow extends Team {
   groupPoints: number;
   points: number; // total contribution to owner's score: group points + progression bonus
   stage: Stage;
+  koReached: Stage; // deepest knockout round the team appears in the fixtures (GROUP = not through)
 }
 
 export interface PlayerRow {
@@ -238,6 +239,20 @@ export function getTournamentData(): TournamentData {
     .sort((a, b) => a.fifa_rank - b.fifa_rank)
     .forEach((t, i) => tierByCountry.set(t.country, Math.floor(i / 8) + 1));
 
+  // Deepest knockout round each team appears in across the published fixtures.
+  // This reflects qualification as soon as the bracket is drawn, before the
+  // results-derived `stage` catches up. GROUP = not (yet) through.
+  const koByCountry = new Map<string, Stage>();
+  for (const m of matches) {
+    if (m.stage === 'GROUP') continue;
+    for (const c of [m.home, m.away]) {
+      const cur = koByCountry.get(c);
+      if (!cur || STAGE_ORDER.indexOf(m.stage) > STAGE_ORDER.indexOf(cur)) {
+        koByCountry.set(c, m.stage);
+      }
+    }
+  }
+
   const teamRows: TeamRow[] = teams.map((t) => {
     const result = results?.get(t.country);
     const stage: Stage = result?.stage ?? 'GROUP';
@@ -259,6 +274,7 @@ export function getTournamentData(): TournamentData {
       groupPoints,
       points: groupPoints + STAGE_BONUS[stage],
       stage,
+      koReached: koByCountry.get(t.country) ?? 'GROUP',
     };
   });
   teamRows.sort((a, b) => a.fifa_rank - b.fifa_rank);
