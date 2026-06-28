@@ -80,7 +80,7 @@ const teamsSorted = [...data.teams].sort((a, b) => {
               <td class="num">{t.gf}</td>
               <td class="num">{t.ga}</td>
               <td class="num strong">{t.groupPoints}</td>
-              <td class="nowrap"><span class="badge" style={stageStyle(t.stage)}>{stageLabel(t.stage)}</span></td>
+              <td class="nowrap"><span class="badge" style={stageStyle(t.koReached)}>{stageLabel(t.koReached)}</span></td>
             </tr>
           ))}
         </tbody>

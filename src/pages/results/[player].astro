@@ -3,6 +3,7 @@ import Layout from '../../layouts/WC2026Layout.astro';
 import {
   getTournamentData,
   stageLabel,
+  STAGE_ORDER,
   PLAYERS,
   playerSlug,
   type Stage,
@@ -29,6 +30,13 @@ const playerRow = data.players.find((p) => p.name === player);
 // This player's teams, ordered by points contributed (then strength tier).
 const ownedTeams = [...data.teams.filter((t) => t.owner === player)].sort(
   (a, b) => b.points - a.points || a.tier - b.tier,
+);
+
+// Deepest knockout round any of this player's teams has reached (from the
+// bracket), used for the summary "best run" so it leads the results-derived one.
+const bestKo = ownedTeams.reduce(
+  (best, t) => (STAGE_ORDER.indexOf(t.koReached) > STAGE_ORDER.indexOf(best) ? t.koReached : best),
+  'GROUP' as Stage,
 );
 
 // All matches a given team appears in, chronological.
@@ -88,7 +96,7 @@ const fmtDate = (iso: string) => {
         <span>{playerRow.played} played</span>
         <span>GD {fmtSigned(playerRow.gd)}</span>
         <span>GF {playerRow.gf}</span>
-        <span>{stageLabel(playerRow.best)}</span>
+        <span>{stageLabel(bestKo)}</span>
       </div>
     </section>
   )}
@@ -123,8 +131,8 @@ const fmtDate = (iso: string) => {
                   <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
                 )}
                 <span class="dn-text">{t.country}</span>
-                {t.stage !== 'GROUP' && (
-                  <span class="badge" style={stageStyle(t.stage)}>{stageLabel(t.stage)}</span>
+                {t.koReached !== 'GROUP' && (
+                  <span class="badge" style={stageStyle(t.koReached)}>{stageLabel(t.koReached)}</span>
                 )}
               </span>
               <span class="num">{t.gw + t.gd + t.gl}</span>
