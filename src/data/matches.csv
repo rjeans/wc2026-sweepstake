@@ -62,8 +62,8 @@ date,stage,group,home,home_score,away,away_score,status
 2026-06-26,GROUP,I,Senegal,5,Iraq,0,post
 2026-06-26,GROUP,D,Türkiye,3,United States,2,post
 2026-06-27,GROUP,H,Cape Verde,0,Saudi Arabia,0,post
-2026-06-27,GROUP,K,Colombia,0,Portugal,0,in
-2026-06-27,GROUP,K,Congo DR,0,Uzbekistan,1,in
+2026-06-27,GROUP,K,Colombia,0,Portugal,0,post
+2026-06-27,GROUP,K,Congo DR,3,Uzbekistan,1,post
 2026-06-27,GROUP,L,Croatia,2,Ghana,1,post
 2026-06-27,GROUP,G,Egypt,1,Iran,1,post
 2026-06-27,GROUP,G,New Zealand,1,Belgium,5,post
@@ -77,7 +77,11 @@ date,stage,group,home,home_score,away,away_score,status
 2026-06-30,R32,,France,,Sweden,,pre
 2026-06-30,R32,,Ivory Coast,,Norway,,pre
 2026-06-30,R32,,Netherlands,,Morocco,,pre
+2026-07-01,R32,,Belgium,,Senegal,,pre
+2026-07-01,R32,,England,,Congo DR,,pre
 2026-07-01,R32,,Mexico,,Ecuador,,pre
+2026-07-02,R32,,Portugal,,Croatia,,pre
 2026-07-02,R32,,United States,,Bosnia-Herzegovina,,pre
 2026-07-03,R32,,Argentina,,Cape Verde,,pre
 2026-07-03,R32,,Australia,,Egypt,,pre
+2026-07-04,R32,,Colombia,,Ghana,,pre
