@@ -1,6 +1,6 @@
 ---
 // A team's full match history (group + knockout), used inside drill-down rows.
-import type { TournamentData, Stage } from '../lib/wc2026';
+import { STAGE_ORDER, STAGE_BONUS, type TournamentData, type Stage } from '../lib/wc2026';
 import { flagCode, playerColor, stageShort } from '../lib/wc2026-ui';
 
 interface Props { country: string; data: TournamentData }
@@ -12,9 +12,35 @@ const ownerColor = (c: string) => {
   return o ? playerColor(o) : '#cbd5e1';
 };
 
+const team = data.teams.find((t) => t.country === country);
+const reachedIdx = team ? STAGE_ORDER.indexOf(team.koReached) : 0;
+
 const matches = data.matches
   .filter((m) => m.home === country || m.away === country)
   .sort((a, b) => a.date.localeCompare(b.date));
+
+// The qualification (+5 R32) bonus is attributed to the last group match.
+const groupMatches = matches.filter((m) => m.stage === 'GROUP');
+const lastGroup = groupMatches.length ? groupMatches[groupMatches.length - 1] : null;
+
+// Points this match contributed to the team's total:
+//   group: win 3 / draw 1 / loss 0, plus +5 on the last group game if it
+//   qualified; knockout: the advancement increment when the team wins.
+function matchPoints(m: (typeof matches)[number]): { pts: number; qualified: boolean } | null {
+  const home = m.home === country;
+  const my = home ? m.homeScore : m.awayScore;
+  const opp = home ? m.awayScore : m.homeScore;
+  if (m.status !== 'post' || my === null || opp === null) return null;
+  if (m.stage === 'GROUP') {
+    let pts = my > opp ? 3 : my === opp ? 1 : 0;
+    const qualified = m === lastGroup && reachedIdx >= STAGE_ORDER.indexOf('R32');
+    if (qualified) pts += STAGE_BONUS.R32;
+    return { pts, qualified };
+  }
+  const i = STAGE_ORDER.indexOf(m.stage);
+  const won = my > opp && i + 1 < STAGE_ORDER.length;
+  return { pts: won ? STAGE_BONUS[STAGE_ORDER[i + 1]] - STAGE_BONUS[m.stage] : 0, qualified: false };
+}
 
 const fmtDate = (iso: string) => {
   if (!iso) return '';
@@ -37,6 +63,7 @@ const fmtDate = (iso: string) => {
       const played = my !== null && opp !== null;
       const res = !played ? '' : (my as number) > (opp as number) ? 'W' : (my as number) < (opp as number) ? 'L' : 'D';
       const tag = m.group ? m.group : stageShort(m.stage as Stage);
+      const mp = matchPoints(m);
       return (
         <div class={`tm-row${played ? '' : ' tm-future'}`}>
           <span class="tm-tag">{tag}</span>
@@ -51,6 +78,11 @@ const fmtDate = (iso: string) => {
           </span>
           <span class={`tm-score${m.status === 'in' ? ' live' : ''}`}>{played ? `${my} - ${opp}` : '—'}</span>
           {res && <span class={`tm-res tm-${res}`}>{res}</span>}
+          {mp && (
+            <span class={`tm-pts${mp.pts === 0 ? ' nil' : ''}`}>
+              +{mp.pts}{mp.qualified && <small>R32</small>}
+            </span>
+          )}
         </div>
       );
     })
@@ -99,4 +131,7 @@ const fmtDate = (iso: string) => {
   .tm-W { background: #dcfce7; color: #15803d; }
   .tm-D { background: #fef9c3; color: #a16207; }
   .tm-L { background: #fee2e2; color: #b91c1c; }
+  .tm-pts { flex: none; min-width: 2.2rem; text-align: right; font-weight: 800; font-size: 0.78rem; color: #0f766e; }
+  .tm-pts.nil { color: #cbd5e1; }
+  .tm-pts small { font-size: 0.52rem; font-weight: 800; color: #0e7490; margin-left: 0.1rem; vertical-align: super; }
 </style>

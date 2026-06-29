@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/WC2026Layout.astro';
-import { getTournamentData, stageLabel } from '../lib/wc2026';
+import { getTournamentData, stageLabel, STAGE_ORDER, STAGE_BONUS, type Stage } from '../lib/wc2026';
 import { playerColor, stageStyle, stageShort, tierStyle, flagCode, fmtSigned, MEDALS } from '../lib/wc2026-ui';
 import TeamMatches from '../components/TeamMatches.astro';
 
@@ -20,6 +20,31 @@ const breakdown = data.players.map((p) => ({
 const maxTeamPoints = Math.max(
   1,
   ...data.players.flatMap((p) => p.teams.map((t) => t.points)),
+);
+
+// Points-by-round: split each player's total into group points and the
+// progression bonus banked at each knockout round (count of teams that reached
+// that round x its increment).
+const STAGE_COLS: { key: Stage; label: string }[] = [
+  { key: 'GROUP', label: 'Group' }, { key: 'R32', label: 'R32' }, { key: 'R16', label: 'R16' },
+  { key: 'QF', label: 'QF' }, { key: 'SF', label: 'SF' }, { key: 'FINAL', label: 'Final' },
+  { key: 'CHAMPION', label: 'Cup' },
+];
+const pointsByStage = (p: (typeof data.players)[number]) => {
+  const b: Record<Stage, number> = { GROUP: 0, R32: 0, R16: 0, QF: 0, SF: 0, FINAL: 0, CHAMPION: 0 };
+  for (const t of p.teams) {
+    b.GROUP += t.groupPoints;
+    const ri = STAGE_ORDER.indexOf(t.koReached);
+    for (let s = 1; s < STAGE_ORDER.length; s++) {
+      if (ri >= s) b[STAGE_ORDER[s]] += STAGE_BONUS[STAGE_ORDER[s]] - STAGE_BONUS[STAGE_ORDER[s - 1]];
+    }
+  }
+  return b;
+};
+const roundRows = data.players.map((p) => ({ name: p.name, total: p.points, by: pointsByStage(p) }));
+// Only show knockout columns once they carry points (Group always shown).
+const activeStages = STAGE_COLS.filter(
+  (c) => c.key === 'GROUP' || roundRows.some((r) => r.by[c.key] > 0),
 );
 ---
 
@@ -87,6 +112,41 @@ const maxTeamPoints = Math.max(
       </table>
     </div>
   </section>
+
+  {hasScores && (
+    <section>
+      <div class="section-head">
+        <h2 class="label">Points by round</h2>
+        <span class="count">group points vs knockout bonuses</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Player</th>
+              {activeStages.map((s) => <th class="num">{s.label}</th>)}
+              <th class="num">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {roundRows.map((r) => (
+              <tr>
+                <td class="nowrap">
+                  <span class="chip" style={`--accent:${playerColor(r.name)}`}>
+                    <span class="chip-dot"></span>{r.name}
+                  </span>
+                </td>
+                {activeStages.map((s) => (
+                  <td class="num">{r.by[s.key] > 0 ? r.by[s.key] : <span class="muted">&mdash;</span>}</td>
+                ))}
+                <td class="num strong">{r.total}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )}
 
   {hasScores && (
     <section>

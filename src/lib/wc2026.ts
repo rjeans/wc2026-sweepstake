@@ -25,7 +25,7 @@ const STAGE_LABEL: Record<Stage, string> = {
 
 // Cumulative progression bonus a team keeps once it reaches a round. Mirrors the
 // cumulative of INCREMENT in scoring.py — keep the two in sync.
-const STAGE_BONUS: Record<Stage, number> = {
+export const STAGE_BONUS: Record<Stage, number> = {
   GROUP: 0,
   R32: 5,
   R16: 10,
