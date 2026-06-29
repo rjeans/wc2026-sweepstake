@@ -54,6 +54,8 @@ export interface TeamRow extends Team {
   points: number; // total contribution to owner's score: group points + progression bonus
   stage: Stage;
   koReached: Stage; // deepest knockout round the team appears in the fixtures (GROUP = not through)
+  // Played/won/drawn/lost/goals across ALL matches (group + completed knockout).
+  record: { p: number; w: number; d: number; l: number; gf: number; ga: number };
 }
 
 export interface PlayerRow {
@@ -247,15 +249,28 @@ export function getTournamentData(): TournamentData {
     const cur = koByCountry.get(c);
     if (!cur || STAGE_ORDER.indexOf(s) > STAGE_ORDER.indexOf(cur)) koByCountry.set(c, s);
   };
+  // Win/draw/loss/goals from completed knockout matches, added to group records.
+  type Rec = { p: number; w: number; d: number; l: number; gf: number; ga: number };
+  const koStats = new Map<string, Rec>();
+  const bumpKo = (c: string, gf: number, ga: number) => {
+    const s = koStats.get(c) ?? { p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0 };
+    s.p += 1; s.gf += gf; s.ga += ga;
+    if (gf > ga) s.w += 1; else if (gf < ga) s.l += 1; else s.d += 1;
+    koStats.set(c, s);
+  };
   for (const m of matches) {
     if (m.stage === 'GROUP') continue;
     const i = STAGE_ORDER.indexOf(m.stage);
     // Both teams have reached this round; a completed win advances the winner.
     creditKo(m.home, m.stage);
     creditKo(m.away, m.stage);
-    if (m.status === 'post' && m.homeScore !== null && m.awayScore !== null && i + 1 < STAGE_ORDER.length) {
-      const winner = m.homeScore > m.awayScore ? m.home : m.awayScore > m.homeScore ? m.away : null;
-      if (winner) creditKo(winner, STAGE_ORDER[i + 1]);
+    if (m.status === 'post' && m.homeScore !== null && m.awayScore !== null) {
+      bumpKo(m.home, m.homeScore, m.awayScore);
+      bumpKo(m.away, m.awayScore, m.homeScore);
+      if (i + 1 < STAGE_ORDER.length) {
+        const winner = m.homeScore > m.awayScore ? m.home : m.awayScore > m.homeScore ? m.away : null;
+        if (winner) creditKo(winner, STAGE_ORDER[i + 1]);
+      }
     }
   }
 
@@ -274,6 +289,7 @@ export function getTournamentData(): TournamentData {
     const bracket = koByCountry.get(t.country) ?? 'GROUP';
     const reached: Stage =
       STAGE_ORDER.indexOf(bracket) > STAGE_ORDER.indexOf(stage) ? bracket : stage;
+    const ko = koStats.get(t.country) ?? { p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0 };
     return {
       ...t,
       owner: allocation?.get(t.country) ?? null,
@@ -287,6 +303,14 @@ export function getTournamentData(): TournamentData {
       points: groupPoints + STAGE_BONUS[reached],
       stage,
       koReached: reached,
+      record: {
+        p: gw + gd + gl + ko.p,
+        w: gw + ko.w,
+        d: gd + ko.d,
+        l: gl + ko.l,
+        gf: gf + ko.gf,
+        ga: ga + ko.ga,
+      },
     };
   });
   teamRows.sort((a, b) => a.fifa_rank - b.fifa_rank);
@@ -302,7 +326,7 @@ export function getTournamentData(): TournamentData {
   const playerRows: PlayerRow[] = PLAYERS.map((name) => {
     const s = standingsByName.get(name);
     const owned = teamsByOwner.get(name) ?? [];
-    const played = owned.reduce((sum, t) => sum + t.gw + t.gd + t.gl, 0);
+    const played = owned.reduce((sum, t) => sum + t.record.p, 0);
     return {
       rank: 0,
       name,

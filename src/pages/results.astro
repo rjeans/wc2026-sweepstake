@@ -7,13 +7,13 @@ import PlayerPills from '../components/PlayerPills.astro';
 const data = getTournamentData();
 const hasScores = data.status === 'in-progress' || data.status === 'complete';
 
-// Team records table: order by points, then GD, then GF, then FIFA rank.
+// Team records table: order by total points, then GD, then GF, then FIFA rank.
 const teamsSorted = [...data.teams].sort((a, b) => {
-  if (b.groupPoints !== a.groupPoints) return b.groupPoints - a.groupPoints;
-  const aGD = a.gf - a.ga;
-  const bGD = b.gf - b.ga;
+  if (b.points !== a.points) return b.points - a.points;
+  const aGD = a.record.gf - a.record.ga;
+  const bGD = b.record.gf - b.record.ga;
   if (bGD !== aGD) return bGD - aGD;
-  if (b.gf !== a.gf) return b.gf - a.gf;
+  if (b.record.gf !== a.record.gf) return b.record.gf - a.record.gf;
   return a.fifa_rank - b.fifa_rank;
 });
 ---
@@ -73,13 +73,13 @@ const teamsSorted = [...data.teams].sort((a, b) => {
                   <span class="muted">&mdash;</span>
                 )}
               </td>
-              <td class="num">{t.gw + t.gd + t.gl}</td>
-              <td class="num">{t.gw}</td>
-              <td class="num">{t.gd}</td>
-              <td class="num">{t.gl}</td>
-              <td class="num">{t.gf}</td>
-              <td class="num">{t.ga}</td>
-              <td class="num strong">{t.groupPoints}</td>
+              <td class="num">{t.record.p}</td>
+              <td class="num">{t.record.w}</td>
+              <td class="num">{t.record.d}</td>
+              <td class="num">{t.record.l}</td>
+              <td class="num">{t.record.gf}</td>
+              <td class="num">{t.record.ga}</td>
+              <td class="num strong">{t.points}</td>
               <td class="nowrap"><span class="badge" style={stageStyle(t.koReached)}>{stageLabel(t.koReached)}</span></td>
             </tr>
           ))}
