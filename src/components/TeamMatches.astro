@@ -1,0 +1,102 @@
+---
+// A team's full match history (group + knockout), used inside drill-down rows.
+import type { TournamentData, Stage } from '../lib/wc2026';
+import { flagCode, playerColor, stageShort } from '../lib/wc2026-ui';
+
+interface Props { country: string; data: TournamentData }
+const { country, data } = Astro.props;
+
+const ownerOf = new Map(data.teams.map((t) => [t.country, t.owner]));
+const ownerColor = (c: string) => {
+  const o = ownerOf.get(c);
+  return o ? playerColor(o) : '#cbd5e1';
+};
+
+const matches = data.matches
+  .filter((m) => m.home === country || m.away === country)
+  .sort((a, b) => a.date.localeCompare(b.date));
+
+const fmtDate = (iso: string) => {
+  if (!iso) return '';
+  const d = new Date(iso + 'T00:00:00Z');
+  return Number.isNaN(d.getTime())
+    ? iso
+    : new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(d);
+};
+---
+
+<div class="tm">
+  {matches.length === 0 ? (
+    <p class="tm-empty">No matches yet.</p>
+  ) : (
+    matches.map((m) => {
+      const home = m.home === country;
+      const my = home ? m.homeScore : m.awayScore;
+      const opp = home ? m.awayScore : m.homeScore;
+      const oppName = home ? m.away : m.home;
+      const played = my !== null && opp !== null;
+      const res = !played ? '' : (my as number) > (opp as number) ? 'W' : (my as number) < (opp as number) ? 'L' : 'D';
+      const tag = m.group ? m.group : stageShort(m.stage as Stage);
+      return (
+        <div class={`tm-row${played ? '' : ' tm-future'}`}>
+          <span class="tm-tag">{tag}</span>
+          <span class="tm-date">{fmtDate(m.date)}</span>
+          <span class="tm-opp">
+            <span class="tm-vs">v</span>
+            {flagCode(oppName) && (
+              <img class="flag" src={`https://flagcdn.com/w40/${flagCode(oppName)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(oppName)}.png 2x`} width="18" height="13" alt="" loading="lazy" />
+            )}
+            <span class="tm-name">{oppName}</span>
+            <span class="owner-dot" style={`background-color:${ownerColor(oppName)}`}></span>
+          </span>
+          <span class={`tm-score${m.status === 'in' ? ' live' : ''}`}>{played ? `${my} - ${opp}` : '—'}</span>
+          {res && <span class={`tm-res tm-${res}`}>{res}</span>}
+        </div>
+      );
+    })
+  )}
+</div>
+
+<style>
+  .tm { background: #fbfcfd; border-top: 1px solid #eef2f6; padding: 0.15rem 0; }
+  .tm-empty { margin: 0; padding: 0.5rem 0.85rem 0.5rem 1.7rem; font-size: 0.82rem; color: #94a3b8; }
+  .tm-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.32rem 0.85rem 0.32rem 1.7rem;
+    font-size: 0.82rem;
+    border-bottom: 1px solid #f4f6f9;
+    color: #475569;
+  }
+  .tm-row:last-child { border-bottom: none; }
+  .tm-row.tm-future { color: #94a3b8; }
+  .tm-tag {
+    flex: none;
+    min-width: 1.5rem;
+    text-align: center;
+    padding: 0.05rem 0.3rem;
+    border-radius: 5px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: #475569;
+    background: #eef2f6;
+  }
+  .tm-date { flex: none; min-width: 2.8rem; font-size: 0.72rem; color: #94a3b8; }
+  .tm-opp { display: inline-flex; align-items: center; gap: 0.4rem; min-width: 0; flex: 1; }
+  .tm-vs { color: #cbd5e1; font-size: 0.72rem; }
+  .tm-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .owner-dot { width: 7px; height: 7px; border-radius: 999px; flex: none; }
+  .tm-score { flex: none; font-weight: 700; color: #0f172a; }
+  .tm-score.live { color: #dc2626; }
+  .tm-res {
+    flex: none;
+    font-size: 0.62rem;
+    font-weight: 800;
+    padding: 0.05rem 0.3rem;
+    border-radius: 4px;
+  }
+  .tm-W { background: #dcfce7; color: #15803d; }
+  .tm-D { background: #fef9c3; color: #a16207; }
+  .tm-L { background: #fee2e2; color: #b91c1c; }
+</style>

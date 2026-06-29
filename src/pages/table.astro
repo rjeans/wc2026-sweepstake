@@ -2,6 +2,7 @@
 import Layout from '../layouts/WC2026Layout.astro';
 import { getTournamentData, stageLabel } from '../lib/wc2026';
 import { playerColor, stageStyle, stageShort, tierStyle, flagCode, fmtSigned, MEDALS } from '../lib/wc2026-ui';
+import TeamMatches from '../components/TeamMatches.astro';
 
 const data = getTournamentData();
 const hasScores = data.status === 'in-progress' || data.status === 'complete';
@@ -107,24 +108,28 @@ const maxTeamPoints = Math.max(
                 <span class="bd-total">{player.points}<small>pts</small></span>
               </span>
             </div>
-            <ul class="bd-teams">
+            <div class="bd-teams">
               {teams.map((t) => (
-                <li class={`bd-team${t.points === 0 ? ' zero' : ''}`}>
-                  <span class="tier-dot" style={tierStyle(t.tier)}>{t.tier}</span>
-                  {flagCode(t.country) && (
-                    <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
-                  )}
-                  <span class="bd-name">{t.country}</span>
-                  {t.koReached !== 'GROUP' && (
-                    <span class="ko-badge" style={stageStyle(t.koReached)}>{stageShort(t.koReached)}</span>
-                  )}
-                  <span class="bd-bar">
-                    <span class="bd-fill" style={`width:${(t.points / maxTeamPoints) * 100}%;background-color:${playerColor(player.name)}`}></span>
-                  </span>
-                  <span class="bd-pts">{t.points}</span>
-                </li>
+                <details class={`bd-team-d${t.points === 0 ? ' zero' : ''}`}>
+                  <summary class="bd-team">
+                    <span class="chev"></span>
+                    <span class="tier-dot" style={tierStyle(t.tier)}>{t.tier}</span>
+                    {flagCode(t.country) && (
+                      <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
+                    )}
+                    <span class="bd-name">{t.country}</span>
+                    {t.koReached !== 'GROUP' && (
+                      <span class="ko-badge" style={stageStyle(t.koReached)}>{stageShort(t.koReached)}</span>
+                    )}
+                    <span class="bd-bar">
+                      <span class="bd-fill" style={`width:${(t.points / maxTeamPoints) * 100}%;background-color:${playerColor(player.name)}`}></span>
+                    </span>
+                    <span class="bd-pts">{t.points}</span>
+                  </summary>
+                  <TeamMatches country={t.country} data={data} />
+                </details>
               ))}
-            </ul>
+            </div>
           </div>
           );
         })}
@@ -170,6 +175,19 @@ const maxTeamPoints = Math.max(
   .bd-total { font-size: 1.25rem; font-weight: 800; color: var(--accent); }
   .bd-total small { font-size: 0.65rem; font-weight: 600; color: #94a3b8; margin-left: 0.15rem; }
   .bd-teams { list-style: none; margin: 0; padding: 0; }
+  .bd-team-d { border-top: 1px solid #f4f6f9; }
+  .bd-team-d:first-child { border-top: none; }
+  .bd-team-d.zero { opacity: 0.55; }
+  summary.bd-team { cursor: pointer; list-style: none; }
+  summary.bd-team::-webkit-details-marker { display: none; }
+  .bd-team .chev {
+    width: 0; height: 0; flex: none;
+    border-left: 5px solid #cbd5e1;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    transition: transform 0.15s ease;
+  }
+  .bd-team-d[open] > summary .chev { transform: rotate(90deg); border-left-color: #94a3b8; }
   .ko-badge {
     flex: none;
     padding: 0.05rem 0.35rem;

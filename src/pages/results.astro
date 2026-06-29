@@ -1,13 +1,14 @@
 ---
 import Layout from '../layouts/WC2026Layout.astro';
-import { getTournamentData, stageLabel, playerSlug, type Stage } from '../lib/wc2026';
-import { playerColor, tierStyle, stageStyle, flagCode } from '../lib/wc2026-ui';
+import { getTournamentData } from '../lib/wc2026';
+import { playerColor, tierStyle, stageStyle, stageShort, flagCode } from '../lib/wc2026-ui';
 import PlayerPills from '../components/PlayerPills.astro';
+import TeamMatches from '../components/TeamMatches.astro';
 
 const data = getTournamentData();
 const hasScores = data.status === 'in-progress' || data.status === 'complete';
 
-// Team records table: order by total points, then GD, then GF, then FIFA rank.
+// All 48 teams, ordered by total points, then GD, then GF, then FIFA rank.
 const teamsSorted = [...data.teams].sort((a, b) => {
   if (b.points !== a.points) return b.points - a.points;
   const aGD = a.record.gf - a.record.ga;
@@ -21,89 +22,120 @@ const teamsSorted = [...data.teams].sort((a, b) => {
 <Layout title="Team Scores" active="results">
   <PlayerPills active="all" />
 
-  {/* TEAM SCORES — all 48 teams; tap an owner (or a pill) for their breakdown */}
+  {/* TEAM SCORES — all 48 teams; tap a team for its matches */}
   <section>
     <div class="section-head">
       <h2 class="label">Team Scores</h2>
-      <span class="count">48 teams, ordered by Pts, GD, GF</span>
+      <span class="count">tap a team for its matches</span>
     </div>
     {!hasScores && (
       <p class="lead">Aggregate win/draw/loss records fill in as results are synced.</p>
     )}
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="num">#</th>
-            <th>Country</th>
-            <th>Grp</th>
-            <th class="num">FIFA</th>
-            <th>Owner</th>
-            <th class="num">Pld</th>
-            <th class="num">W</th>
-            <th class="num">D</th>
-            <th class="num">L</th>
-            <th class="num">GF</th>
-            <th class="num">GA</th>
-            <th class="num">Pts</th>
-            <th>Stage</th>
-          </tr>
-        </thead>
-        <tbody>
-          {teamsSorted.map((t, i) => (
-            <tr>
-              <td class="num rank">{i + 1}</td>
-              <td class="nowrap strong">
-                <span class="team">
-                  <span class="tier-dot" style={tierStyle(t.tier)}>{t.tier}</span>
-                  {flagCode(t.country) && (
-                    <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
-                  )}
-                  {t.country}
-                </span>
-              </td>
-              <td><span class="group">{t.group}</span></td>
-              <td class="num">{t.fifa_rank}</td>
-              <td class="nowrap">
-                {t.owner ? (
-                  <a class="player-link" href={`/results/${playerSlug(t.owner)}`} style={`--accent:${playerColor(t.owner)}`}>
-                    <span class="chip-dot"></span>{t.owner}
-                  </a>
-                ) : (
-                  <span class="muted">&mdash;</span>
+
+    <div class="tt">
+      <div class="tt-scroll">
+        <div class="tt-grid tt-head">
+          <span></span>
+          <span class="num">#</span>
+          <span>Country</span>
+          <span>Grp</span>
+          <span>Owner</span>
+          <span class="num">Pld</span>
+          <span class="num">W</span>
+          <span class="num">D</span>
+          <span class="num">L</span>
+          <span class="num">GF</span>
+          <span class="num">GA</span>
+          <span class="num">Pts</span>
+          <span>Stage</span>
+        </div>
+        {teamsSorted.map((t, i) => (
+          <details class="tt-team">
+            <summary class="tt-grid tt-row">
+              <span class="chev"></span>
+              <span class="num rank">{i + 1}</span>
+              <span class="tt-country">
+                <span class="tier-dot" style={tierStyle(t.tier)}>{t.tier}</span>
+                {flagCode(t.country) && (
+                  <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
                 )}
-              </td>
-              <td class="num">{t.record.p}</td>
-              <td class="num">{t.record.w}</td>
-              <td class="num">{t.record.d}</td>
-              <td class="num">{t.record.l}</td>
-              <td class="num">{t.record.gf}</td>
-              <td class="num">{t.record.ga}</td>
-              <td class="num strong">{t.points}</td>
-              <td class="nowrap"><span class="badge" style={stageStyle(t.koReached)}>{stageLabel(t.koReached)}</span></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                <span class="tt-name">{t.country}</span>
+              </span>
+              <span><span class="group">{t.group}</span></span>
+              <span class="nowrap">
+                {t.owner ? (
+                  <span class="chip" style={`--accent:${playerColor(t.owner)}`}>
+                    <span class="chip-dot"></span>{t.owner}
+                  </span>
+                ) : <span class="muted">&mdash;</span>}
+              </span>
+              <span class="num">{t.record.p}</span>
+              <span class="num">{t.record.w}</span>
+              <span class="num">{t.record.d}</span>
+              <span class="num">{t.record.l}</span>
+              <span class="num">{t.record.gf}</span>
+              <span class="num">{t.record.ga}</span>
+              <span class="num strong">{t.points}</span>
+              <span><span class="badge sm" style={stageStyle(t.koReached)}>{stageShort(t.koReached) || 'Grp'}</span></span>
+            </summary>
+            <TeamMatches country={t.country} data={data} />
+          </details>
+        ))}
+      </div>
     </div>
   </section>
 </Layout>
 
 <style>
-  .player-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-weight: 600;
-    color: #0f172a;
-    text-decoration: none;
+  .tt {
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
   }
-  .player-link:hover { color: var(--accent); text-decoration: underline; }
-  .player-link .chip-dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 999px;
-    background: var(--accent);
-    flex: none;
+  .tt-scroll { overflow-x: auto; }
+  .tt-grid {
+    display: grid;
+    grid-template-columns: 0.9rem 1.4rem minmax(7rem, 1fr) 1.6rem 5rem 2.1rem 1.6rem 1.6rem 1.6rem 1.9rem 1.9rem 2.3rem 3rem;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 560px;
+    padding: 0.5rem 0.7rem;
+  }
+  .tt-grid .num { text-align: right; }
+  .tt-head {
+    background: #f8fafc;
+    border-bottom: 2px solid #e2e8f0;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  .tt-team { border-bottom: 1px solid #f1f5f9; }
+  .tt-team:last-child { border-bottom: none; }
+  summary.tt-row { cursor: pointer; list-style: none; font-size: 0.84rem; }
+  summary.tt-row::-webkit-details-marker { display: none; }
+  summary.tt-row:hover { background: #f8fafc; }
+  .tt-team[open] > summary.tt-row { background: #f1f5f9; }
+  .rank { color: #94a3b8; }
+  .tt-country { display: inline-flex; align-items: center; gap: 0.45rem; min-width: 0; font-weight: 600; color: #0f172a; }
+  .tt-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .chev {
+    width: 0; height: 0; flex: none;
+    border-left: 5px solid #94a3b8;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    transition: transform 0.15s ease;
+  }
+  .tt-team[open] > summary .chev { transform: rotate(90deg); }
+  .chip { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 600; color: #0f172a; font-size: 0.8rem; }
+  .chip-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); flex: none; }
+  .badge.sm { padding: 0.08rem 0.4rem; font-size: 0.62rem; font-weight: 800; }
+  .group {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 20px; padding: 0.05rem 0.3rem; border-radius: 6px;
+    font-size: 0.72rem; font-weight: 700; color: #475569; background: #f1f5f9;
   }
 </style>
