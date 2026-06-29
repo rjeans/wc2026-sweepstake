@@ -17,7 +17,7 @@ Ecuador,1,1,1,2,2,GROUP
 Egypt,1,2,0,5,3,GROUP
 England,2,1,0,6,2,GROUP
 France,3,0,0,10,2,GROUP
-Germany,2,0,1,10,4,GROUP
+Germany,2,0,1,10,4,R32
 Ghana,1,1,1,2,2,GROUP
 Haiti,0,0,3,2,8,GROUP
 Iran,0,3,0,3,3,GROUP
@@ -31,7 +31,7 @@ Netherlands,2,1,0,10,4,GROUP
 New Zealand,0,1,2,4,10,GROUP
 Norway,2,0,1,8,7,GROUP
 Panama,0,0,3,0,4,GROUP
-Paraguay,1,1,1,2,4,GROUP
+Paraguay,1,1,1,2,4,R32
 Portugal,1,2,0,6,1,GROUP
 Qatar,0,1,2,2,10,GROUP
 Saudi Arabia,0,2,1,1,5,GROUP
