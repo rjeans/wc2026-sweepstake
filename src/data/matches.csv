@@ -74,7 +74,7 @@ date,stage,group,home,home_score,away,away_score,status,winner
 2026-06-28,R32,,South Africa,0,Canada,1,post,Canada
 2026-06-29,R32,,Brazil,2,Japan,1,post,Brazil
 2026-06-29,R32,,Germany,1,Paraguay,1,post,Paraguay
-2026-06-30,R32,,France,2,Sweden,0,in,
+2026-06-30,R32,,France,3,Sweden,0,post,France
 2026-06-30,R32,,Ivory Coast,1,Norway,2,post,Norway
 2026-06-30,R32,,Netherlands,1,Morocco,1,post,Morocco
 2026-07-01,R32,,Belgium,,Senegal,,pre,
@@ -88,4 +88,5 @@ date,stage,group,home,home_score,away,away_score,status,winner
 2026-07-03,R32,,Switzerland,,Algeria,,pre,
 2026-07-04,R32,,Colombia,,Ghana,,pre,
 2026-07-04,R16,,Canada,,Morocco,,pre,
+2026-07-04,R16,,Paraguay,,France,,pre,
 2026-07-05,R16,,Brazil,,Norway,,pre,
