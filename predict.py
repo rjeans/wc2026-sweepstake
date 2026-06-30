@@ -89,12 +89,15 @@ def load_real_matches(path: str):
             if stage == "GROUP":
                 locked_groups[(home, away)] = (hs_i, as_i)
             else:
-                if hs_i > as_i:
+                win_col = (r.get("winner") or "").strip()
+                if win_col:
+                    winner = win_col  # recorded winner (covers penalty shootouts)
+                elif hs_i > as_i:
                     winner = home
                 elif as_i > hs_i:
                     winner = away
                 else:
-                    winner = None  # PK shootout - ESPN normally resolves; leave to sim if not
+                    winner = None  # level and no recorded winner yet - leave to sim
                 locked_kos[stage].append((home, away, hs_i, as_i, winner))
     return locked_groups, dict(locked_kos)
 

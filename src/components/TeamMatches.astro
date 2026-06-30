@@ -38,8 +38,9 @@ function matchPoints(m: (typeof matches)[number]): { pts: number; qualified: boo
     return { pts, qualified };
   }
   const i = STAGE_ORDER.indexOf(m.stage);
-  const won = my > opp && i + 1 < STAGE_ORDER.length;
-  return { pts: won ? STAGE_BONUS[STAGE_ORDER[i + 1]] - STAGE_BONUS[m.stage] : 0, qualified: false };
+  // Advancement (incl. penalty shootouts) is keyed off the recorded winner.
+  const advanced = (m.winner ? m.winner === country : my > opp) && i + 1 < STAGE_ORDER.length;
+  return { pts: advanced ? STAGE_BONUS[STAGE_ORDER[i + 1]] - STAGE_BONUS[m.stage] : 0, qualified: false };
 }
 
 const fmtDate = (iso: string) => {
@@ -61,7 +62,17 @@ const fmtDate = (iso: string) => {
       const opp = home ? m.awayScore : m.homeScore;
       const oppName = home ? m.away : m.home;
       const played = my !== null && opp !== null;
-      const res = !played ? '' : (my as number) > (opp as number) ? 'W' : (my as number) < (opp as number) ? 'L' : 'D';
+      // Knockout ties level after 90/120 are decided on penalties: show W/L by
+      // the recorded winner with a "pens" marker rather than a misleading draw.
+      let res = '';
+      let pens = false;
+      if (played) {
+        const mh = my as number, oh = opp as number;
+        if (mh > oh) res = 'W';
+        else if (mh < oh) res = 'L';
+        else if (m.stage !== 'GROUP' && m.winner) { res = m.winner === country ? 'W' : 'L'; pens = true; }
+        else res = 'D';
+      }
       const tag = m.group ? m.group : stageShort(m.stage as Stage);
       const mp = matchPoints(m);
       return (
@@ -77,7 +88,7 @@ const fmtDate = (iso: string) => {
             <span class="owner-dot" style={`background-color:${ownerColor(oppName)}`}></span>
           </span>
           <span class={`tm-score${m.status === 'in' ? ' live' : ''}`}>{played ? `${my} - ${opp}` : '—'}</span>
-          {res && <span class={`tm-res tm-${res}`}>{res}</span>}
+          {res && <span class={`tm-res tm-${res}`}>{res}{pens && <small>p</small>}</span>}
           {mp && (
             <span class={`tm-pts${mp.pts === 0 ? ' nil' : ''}`}>
               +{mp.pts}{mp.qualified && <small>R32</small>}

@@ -80,6 +80,7 @@ export interface Match {
   homeScore: number | null; // null = not yet played
   awayScore: number | null;
   status: MatchStatus; // 'in' means currently being played
+  winner: string | null; // actual winner incl. penalty shootouts; null until decided
 }
 
 export type TournamentStatus =
@@ -199,6 +200,7 @@ function loadMatches(): Match[] {
       homeScore: toScore(r.home_score),
       awayScore: toScore(r.away_score),
       status,
+      winner: r.winner && r.winner.trim() ? r.winner.trim() : null,
     };
   });
 }
@@ -268,7 +270,9 @@ export function getTournamentData(): TournamentData {
       bumpKo(m.home, m.homeScore, m.awayScore);
       bumpKo(m.away, m.awayScore, m.homeScore);
       if (i + 1 < STAGE_ORDER.length) {
-        const winner = m.homeScore > m.awayScore ? m.home : m.awayScore > m.homeScore ? m.away : null;
+        // Prefer the recorded winner (covers penalty shootouts on a level score).
+        const winner =
+          m.winner ?? (m.homeScore > m.awayScore ? m.home : m.awayScore > m.homeScore ? m.away : null);
         if (winner) creditKo(winner, STAGE_ORDER[i + 1]);
       }
     }

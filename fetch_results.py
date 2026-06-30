@@ -196,6 +196,16 @@ def build_matches(events: list[dict], known: set[str], groups: dict[str, str]) -
         # per-team aggregates in results.csv still only count completed
         # matches, so standings don't churn between HT and FT.
         has_score = m["completed"] or m["in_progress"]
+        # Actual winner per ESPN's flag (true even for a penalty-shootout winner
+        # on a level score); falls back to the higher score. Blank until full-time.
+        winner = ""
+        if m["completed"]:
+            if a["winner"]:
+                winner = a["name"]
+            elif b["winner"]:
+                winner = b["name"]
+            elif a["score"] != b["score"]:
+                winner = a["name"] if a["score"] > b["score"] else b["name"]
         matches.append({
             "date": m["date"],
             "stage": m["stage"],
@@ -205,13 +215,14 @@ def build_matches(events: list[dict], known: set[str], groups: dict[str, str]) -
             "away": b["name"],
             "away_score": b["score"] if has_score else "",
             "status": m["status"],
+            "winner": winner,
         })
     matches.sort(key=lambda r: (r["date"], STAGE_ORDER.index(r["stage"]), r["home"]))
     return matches
 
 
 def write_matches(matches: list[dict], path: str) -> None:
-    cols = ["date", "stage", "group", "home", "home_score", "away", "away_score", "status"]
+    cols = ["date", "stage", "group", "home", "home_score", "away", "away_score", "status", "winner"]
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()

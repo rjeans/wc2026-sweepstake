@@ -1,90 +1,90 @@
-date,stage,group,home,home_score,away,away_score,status
-2026-06-11,GROUP,A,Mexico,2,South Africa,0,post
-2026-06-12,GROUP,B,Canada,1,Bosnia-Herzegovina,1,post
-2026-06-12,GROUP,A,South Korea,2,Czechia,1,post
-2026-06-13,GROUP,C,Brazil,1,Morocco,1,post
-2026-06-13,GROUP,B,Qatar,1,Switzerland,1,post
-2026-06-13,GROUP,D,United States,4,Paraguay,1,post
-2026-06-14,GROUP,D,Australia,2,Türkiye,0,post
-2026-06-14,GROUP,E,Germany,7,Curaçao,1,post
-2026-06-14,GROUP,C,Haiti,0,Scotland,1,post
-2026-06-14,GROUP,E,Ivory Coast,1,Ecuador,0,post
-2026-06-14,GROUP,F,Netherlands,2,Japan,2,post
-2026-06-15,GROUP,G,Belgium,1,Egypt,1,post
-2026-06-15,GROUP,H,Saudi Arabia,1,Uruguay,1,post
-2026-06-15,GROUP,H,Spain,0,Cape Verde,0,post
-2026-06-15,GROUP,F,Sweden,5,Tunisia,1,post
-2026-06-16,GROUP,I,France,3,Senegal,1,post
-2026-06-16,GROUP,G,Iran,2,New Zealand,2,post
-2026-06-16,GROUP,I,Iraq,1,Norway,4,post
-2026-06-17,GROUP,J,Argentina,3,Algeria,0,post
-2026-06-17,GROUP,J,Austria,3,Jordan,1,post
-2026-06-17,GROUP,L,England,4,Croatia,2,post
-2026-06-17,GROUP,L,Ghana,1,Panama,0,post
-2026-06-17,GROUP,K,Portugal,1,Congo DR,1,post
-2026-06-18,GROUP,B,Canada,6,Qatar,0,post
-2026-06-18,GROUP,A,Czechia,1,South Africa,1,post
-2026-06-18,GROUP,B,Switzerland,4,Bosnia-Herzegovina,1,post
-2026-06-18,GROUP,K,Uzbekistan,1,Colombia,3,post
-2026-06-19,GROUP,A,Mexico,1,South Korea,0,post
-2026-06-19,GROUP,C,Scotland,0,Morocco,1,post
-2026-06-19,GROUP,D,United States,2,Australia,0,post
-2026-06-20,GROUP,C,Brazil,3,Haiti,0,post
-2026-06-20,GROUP,E,Germany,2,Ivory Coast,1,post
-2026-06-20,GROUP,F,Netherlands,5,Sweden,1,post
-2026-06-20,GROUP,D,Türkiye,0,Paraguay,1,post
-2026-06-21,GROUP,G,Belgium,0,Iran,0,post
-2026-06-21,GROUP,E,Ecuador,0,Curaçao,0,post
-2026-06-21,GROUP,H,Spain,4,Saudi Arabia,0,post
-2026-06-21,GROUP,F,Tunisia,0,Japan,4,post
-2026-06-21,GROUP,H,Uruguay,2,Cape Verde,2,post
-2026-06-22,GROUP,J,Argentina,2,Austria,0,post
-2026-06-22,GROUP,I,France,3,Iraq,0,post
-2026-06-22,GROUP,G,New Zealand,1,Egypt,3,post
-2026-06-23,GROUP,L,England,0,Ghana,0,post
-2026-06-23,GROUP,J,Jordan,1,Algeria,2,post
-2026-06-23,GROUP,I,Norway,3,Senegal,2,post
-2026-06-23,GROUP,L,Panama,0,Croatia,1,post
-2026-06-23,GROUP,K,Portugal,5,Uzbekistan,0,post
-2026-06-24,GROUP,B,Bosnia-Herzegovina,3,Qatar,1,post
-2026-06-24,GROUP,K,Colombia,1,Congo DR,0,post
-2026-06-24,GROUP,C,Morocco,4,Haiti,2,post
-2026-06-24,GROUP,C,Scotland,0,Brazil,3,post
-2026-06-24,GROUP,B,Switzerland,2,Canada,1,post
-2026-06-25,GROUP,E,Curaçao,0,Ivory Coast,2,post
-2026-06-25,GROUP,A,Czechia,0,Mexico,3,post
-2026-06-25,GROUP,E,Ecuador,2,Germany,1,post
-2026-06-25,GROUP,F,Japan,1,Sweden,1,post
-2026-06-25,GROUP,A,South Africa,1,South Korea,0,post
-2026-06-25,GROUP,F,Tunisia,1,Netherlands,3,post
-2026-06-26,GROUP,I,Norway,1,France,4,post
-2026-06-26,GROUP,D,Paraguay,0,Australia,0,post
-2026-06-26,GROUP,I,Senegal,5,Iraq,0,post
-2026-06-26,GROUP,D,Türkiye,3,United States,2,post
-2026-06-27,GROUP,H,Cape Verde,0,Saudi Arabia,0,post
-2026-06-27,GROUP,K,Colombia,0,Portugal,0,post
-2026-06-27,GROUP,K,Congo DR,3,Uzbekistan,1,post
-2026-06-27,GROUP,L,Croatia,2,Ghana,1,post
-2026-06-27,GROUP,G,Egypt,1,Iran,1,post
-2026-06-27,GROUP,G,New Zealand,1,Belgium,5,post
-2026-06-27,GROUP,L,Panama,0,England,2,post
-2026-06-27,GROUP,H,Uruguay,0,Spain,1,post
-2026-06-28,GROUP,J,Algeria,3,Austria,3,post
-2026-06-28,GROUP,J,Jordan,1,Argentina,3,post
-2026-06-28,R32,,South Africa,0,Canada,1,post
-2026-06-29,R32,,Brazil,2,Japan,1,post
-2026-06-29,R32,,Germany,1,Paraguay,1,post
-2026-06-30,R32,,France,,Sweden,,pre
-2026-06-30,R32,,Ivory Coast,,Norway,,pre
-2026-06-30,R32,,Netherlands,1,Morocco,1,post
-2026-07-01,R32,,Belgium,,Senegal,,pre
-2026-07-01,R32,,England,,Congo DR,,pre
-2026-07-01,R32,,Mexico,,Ecuador,,pre
-2026-07-02,R32,,Portugal,,Croatia,,pre
-2026-07-02,R32,,Spain,,Austria,,pre
-2026-07-02,R32,,United States,,Bosnia-Herzegovina,,pre
-2026-07-03,R32,,Argentina,,Cape Verde,,pre
-2026-07-03,R32,,Australia,,Egypt,,pre
-2026-07-03,R32,,Switzerland,,Algeria,,pre
-2026-07-04,R32,,Colombia,,Ghana,,pre
-2026-07-04,R16,,Canada,,Morocco,,pre
+date,stage,group,home,home_score,away,away_score,status,winner
+2026-06-11,GROUP,A,Mexico,2,South Africa,0,post,Mexico
+2026-06-12,GROUP,B,Canada,1,Bosnia-Herzegovina,1,post,
+2026-06-12,GROUP,A,South Korea,2,Czechia,1,post,South Korea
+2026-06-13,GROUP,C,Brazil,1,Morocco,1,post,
+2026-06-13,GROUP,B,Qatar,1,Switzerland,1,post,
+2026-06-13,GROUP,D,United States,4,Paraguay,1,post,United States
+2026-06-14,GROUP,D,Australia,2,Türkiye,0,post,Australia
+2026-06-14,GROUP,E,Germany,7,Curaçao,1,post,Germany
+2026-06-14,GROUP,C,Haiti,0,Scotland,1,post,Scotland
+2026-06-14,GROUP,E,Ivory Coast,1,Ecuador,0,post,Ivory Coast
+2026-06-14,GROUP,F,Netherlands,2,Japan,2,post,
+2026-06-15,GROUP,G,Belgium,1,Egypt,1,post,
+2026-06-15,GROUP,H,Saudi Arabia,1,Uruguay,1,post,
+2026-06-15,GROUP,H,Spain,0,Cape Verde,0,post,
+2026-06-15,GROUP,F,Sweden,5,Tunisia,1,post,Sweden
+2026-06-16,GROUP,I,France,3,Senegal,1,post,France
+2026-06-16,GROUP,G,Iran,2,New Zealand,2,post,
+2026-06-16,GROUP,I,Iraq,1,Norway,4,post,Norway
+2026-06-17,GROUP,J,Argentina,3,Algeria,0,post,Argentina
+2026-06-17,GROUP,J,Austria,3,Jordan,1,post,Austria
+2026-06-17,GROUP,L,England,4,Croatia,2,post,England
+2026-06-17,GROUP,L,Ghana,1,Panama,0,post,Ghana
+2026-06-17,GROUP,K,Portugal,1,Congo DR,1,post,
+2026-06-18,GROUP,B,Canada,6,Qatar,0,post,Canada
+2026-06-18,GROUP,A,Czechia,1,South Africa,1,post,
+2026-06-18,GROUP,B,Switzerland,4,Bosnia-Herzegovina,1,post,Switzerland
+2026-06-18,GROUP,K,Uzbekistan,1,Colombia,3,post,Colombia
+2026-06-19,GROUP,A,Mexico,1,South Korea,0,post,Mexico
+2026-06-19,GROUP,C,Scotland,0,Morocco,1,post,Morocco
+2026-06-19,GROUP,D,United States,2,Australia,0,post,United States
+2026-06-20,GROUP,C,Brazil,3,Haiti,0,post,Brazil
+2026-06-20,GROUP,E,Germany,2,Ivory Coast,1,post,Germany
+2026-06-20,GROUP,F,Netherlands,5,Sweden,1,post,Netherlands
+2026-06-20,GROUP,D,Türkiye,0,Paraguay,1,post,Paraguay
+2026-06-21,GROUP,G,Belgium,0,Iran,0,post,
+2026-06-21,GROUP,E,Ecuador,0,Curaçao,0,post,
+2026-06-21,GROUP,H,Spain,4,Saudi Arabia,0,post,Spain
+2026-06-21,GROUP,F,Tunisia,0,Japan,4,post,Japan
+2026-06-21,GROUP,H,Uruguay,2,Cape Verde,2,post,
+2026-06-22,GROUP,J,Argentina,2,Austria,0,post,Argentina
+2026-06-22,GROUP,I,France,3,Iraq,0,post,France
+2026-06-22,GROUP,G,New Zealand,1,Egypt,3,post,Egypt
+2026-06-23,GROUP,L,England,0,Ghana,0,post,
+2026-06-23,GROUP,J,Jordan,1,Algeria,2,post,Algeria
+2026-06-23,GROUP,I,Norway,3,Senegal,2,post,Norway
+2026-06-23,GROUP,L,Panama,0,Croatia,1,post,Croatia
+2026-06-23,GROUP,K,Portugal,5,Uzbekistan,0,post,Portugal
+2026-06-24,GROUP,B,Bosnia-Herzegovina,3,Qatar,1,post,Bosnia-Herzegovina
+2026-06-24,GROUP,K,Colombia,1,Congo DR,0,post,Colombia
+2026-06-24,GROUP,C,Morocco,4,Haiti,2,post,Morocco
+2026-06-24,GROUP,C,Scotland,0,Brazil,3,post,Brazil
+2026-06-24,GROUP,B,Switzerland,2,Canada,1,post,Switzerland
+2026-06-25,GROUP,E,Curaçao,0,Ivory Coast,2,post,Ivory Coast
+2026-06-25,GROUP,A,Czechia,0,Mexico,3,post,Mexico
+2026-06-25,GROUP,E,Ecuador,2,Germany,1,post,Ecuador
+2026-06-25,GROUP,F,Japan,1,Sweden,1,post,
+2026-06-25,GROUP,A,South Africa,1,South Korea,0,post,South Africa
+2026-06-25,GROUP,F,Tunisia,1,Netherlands,3,post,Netherlands
+2026-06-26,GROUP,I,Norway,1,France,4,post,France
+2026-06-26,GROUP,D,Paraguay,0,Australia,0,post,
+2026-06-26,GROUP,I,Senegal,5,Iraq,0,post,Senegal
+2026-06-26,GROUP,D,Türkiye,3,United States,2,post,Türkiye
+2026-06-27,GROUP,H,Cape Verde,0,Saudi Arabia,0,post,
+2026-06-27,GROUP,K,Colombia,0,Portugal,0,post,
+2026-06-27,GROUP,K,Congo DR,3,Uzbekistan,1,post,Congo DR
+2026-06-27,GROUP,L,Croatia,2,Ghana,1,post,Croatia
+2026-06-27,GROUP,G,Egypt,1,Iran,1,post,
+2026-06-27,GROUP,G,New Zealand,1,Belgium,5,post,Belgium
+2026-06-27,GROUP,L,Panama,0,England,2,post,England
+2026-06-27,GROUP,H,Uruguay,0,Spain,1,post,Spain
+2026-06-28,GROUP,J,Algeria,3,Austria,3,post,
+2026-06-28,GROUP,J,Jordan,1,Argentina,3,post,Argentina
+2026-06-28,R32,,South Africa,0,Canada,1,post,Canada
+2026-06-29,R32,,Brazil,2,Japan,1,post,Brazil
+2026-06-29,R32,,Germany,1,Paraguay,1,post,Paraguay
+2026-06-30,R32,,France,,Sweden,,pre,
+2026-06-30,R32,,Ivory Coast,,Norway,,pre,
+2026-06-30,R32,,Netherlands,1,Morocco,1,post,Morocco
+2026-07-01,R32,,Belgium,,Senegal,,pre,
+2026-07-01,R32,,England,,Congo DR,,pre,
+2026-07-01,R32,,Mexico,,Ecuador,,pre,
+2026-07-02,R32,,Portugal,,Croatia,,pre,
+2026-07-02,R32,,Spain,,Austria,,pre,
+2026-07-02,R32,,United States,,Bosnia-Herzegovina,,pre,
+2026-07-03,R32,,Argentina,,Cape Verde,,pre,
+2026-07-03,R32,,Australia,,Egypt,,pre,
+2026-07-03,R32,,Switzerland,,Algeria,,pre,
+2026-07-04,R32,,Colombia,,Ghana,,pre,
+2026-07-04,R16,,Canada,,Morocco,,pre,

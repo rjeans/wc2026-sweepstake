@@ -149,15 +149,19 @@ def load_ko_rounds(path):
             credit(home, st)
             credit(away, st)
             # A completed knockout win advances the winner to the next round.
+            # Prefer the recorded winner (covers penalty shootouts on a level
+            # score); fall back to the higher score for older data.
             hs, as_ = row.get("home_score", "").strip(), row.get("away_score", "").strip()
-            if (row.get("status") or "").strip() == "post" and hs and as_ and i + 1 < len(STAGE_ORDER):
-                try:
-                    h, a = int(hs), int(as_)
-                except ValueError:
-                    continue
-                winner = home if h > a else away if a > h else None
-                if winner:
-                    credit(winner, STAGE_ORDER[i + 1])
+            win = (row.get("winner") or "").strip()
+            if (row.get("status") or "").strip() == "post" and i + 1 < len(STAGE_ORDER):
+                if not win and hs and as_:
+                    try:
+                        h, a = int(hs), int(as_)
+                        win = home if h > a else away if a > h else ""
+                    except ValueError:
+                        win = ""
+                if win:
+                    credit(win, STAGE_ORDER[i + 1])
     return rounds
 
 
