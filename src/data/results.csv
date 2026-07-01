@@ -13,7 +13,7 @@ Congo DR,1,1,1,4,3,GROUP
 Croatia,2,0,1,5,5,GROUP
 Curaçao,0,1,2,1,9,GROUP
 Czechia,0,1,2,2,6,GROUP
-Ecuador,1,1,1,2,2,GROUP
+Ecuador,1,1,1,2,2,R32
 Egypt,1,2,0,5,3,GROUP
 England,2,1,0,6,2,GROUP
 France,3,0,0,10,2,R32
@@ -25,7 +25,7 @@ Iraq,0,0,3,1,12,GROUP
 Ivory Coast,2,0,1,4,2,R32
 Japan,1,2,0,7,3,R32
 Jordan,0,0,3,3,8,GROUP
-Mexico,3,0,0,6,0,GROUP
+Mexico,3,0,0,6,0,R32
 Morocco,2,1,0,6,3,R32
 Netherlands,2,1,0,10,4,R32
 New Zealand,0,1,2,4,10,GROUP
