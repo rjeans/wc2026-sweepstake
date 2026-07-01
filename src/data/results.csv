@@ -3,7 +3,7 @@ Algeria,1,1,1,5,7,GROUP
 Argentina,3,0,0,8,1,GROUP
 Australia,1,1,1,2,2,GROUP
 Austria,1,1,1,6,6,GROUP
-Belgium,1,2,0,6,2,GROUP
+Belgium,1,2,0,6,2,R32
 Bosnia-Herzegovina,1,1,1,5,6,GROUP
 Brazil,2,1,0,7,1,R32
 Canada,1,1,1,8,3,R32
@@ -36,7 +36,7 @@ Portugal,1,2,0,6,1,GROUP
 Qatar,0,1,2,2,10,GROUP
 Saudi Arabia,0,2,1,1,5,GROUP
 Scotland,1,0,2,1,4,GROUP
-Senegal,1,0,2,8,6,GROUP
+Senegal,1,0,2,8,6,R32
 South Africa,1,1,1,2,3,R32
 South Korea,1,0,2,2,3,GROUP
 Spain,2,1,0,5,0,GROUP
