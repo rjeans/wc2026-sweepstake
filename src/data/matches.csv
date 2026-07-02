@@ -82,7 +82,7 @@ date,stage,group,home,home_score,away,away_score,status,winner
 2026-07-01,R32,,Mexico,2,Ecuador,0,post,Mexico
 2026-07-02,R32,,Portugal,,Croatia,,pre,
 2026-07-02,R32,,Spain,,Austria,,pre,
-2026-07-02,R32,,United States,1,Bosnia-Herzegovina,0,in,
+2026-07-02,R32,,United States,2,Bosnia-Herzegovina,0,post,United States
 2026-07-03,R32,,Argentina,,Cape Verde,,pre,
 2026-07-03,R32,,Australia,,Egypt,,pre,
 2026-07-03,R32,,Switzerland,,Algeria,,pre,
@@ -91,3 +91,4 @@ date,stage,group,home,home_score,away,away_score,status,winner
 2026-07-04,R16,,Paraguay,,France,,pre,
 2026-07-05,R16,,Brazil,,Norway,,pre,
 2026-07-06,R16,,Mexico,,England,,pre,
+2026-07-07,R16,,United States,,Belgium,,pre,
