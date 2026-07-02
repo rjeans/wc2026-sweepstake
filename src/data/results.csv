@@ -10,7 +10,7 @@ Canada,1,1,1,8,3,R32
 Cape Verde,0,3,0,2,2,GROUP
 Colombia,2,1,0,4,1,GROUP
 Congo DR,1,1,1,4,3,R32
-Croatia,2,0,1,5,5,GROUP
+Croatia,2,0,1,5,5,R32
 Curaçao,0,1,2,1,9,GROUP
 Czechia,0,1,2,2,6,GROUP
 Ecuador,1,1,1,2,2,R32
@@ -32,7 +32,7 @@ New Zealand,0,1,2,4,10,GROUP
 Norway,2,0,1,8,7,R32
 Panama,0,0,3,0,4,GROUP
 Paraguay,1,1,1,2,4,R32
-Portugal,1,2,0,6,1,GROUP
+Portugal,1,2,0,6,1,R32
 Qatar,0,1,2,2,10,GROUP
 Saudi Arabia,0,2,1,1,5,GROUP
 Scotland,1,0,2,1,4,GROUP
