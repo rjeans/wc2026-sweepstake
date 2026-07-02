@@ -89,6 +89,14 @@ def main(argv=None) -> int:
         for c, iso in missing:
             print(f"WARNING: no Elo for {c} (ISO={iso})", file=sys.stderr)
 
+    # Never clobber good data with a partial/empty scrape (e.g. the source
+    # returned an error page). Leave the existing file so sim.py/predict.py keep
+    # using the last good Elo rather than falling back to FIFA points.
+    if len(rows) < 40:
+        print(f"ERROR: only resolved {len(rows)}/48 teams; leaving {args.output} "
+              "unchanged (keeping last good Elo).", file=sys.stderr)
+        return 3
+
     with open(args.output, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=["country", "iso", "elo", "fetched_at"])
         w.writeheader()
