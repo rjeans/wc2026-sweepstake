@@ -8,7 +8,7 @@ Bosnia-Herzegovina,1,1,1,5,6,R32
 Brazil,2,1,0,7,1,R32
 Canada,1,1,1,8,3,R32
 Cape Verde,0,3,0,2,2,R32
-Colombia,2,1,0,4,1,GROUP
+Colombia,2,1,0,4,1,R32
 Congo DR,1,1,1,4,3,R32
 Croatia,2,0,1,5,5,R32
 Curaçao,0,1,2,1,9,GROUP
@@ -18,7 +18,7 @@ Egypt,1,2,0,5,3,R32
 England,2,1,0,6,2,R32
 France,3,0,0,10,2,R32
 Germany,2,0,1,10,4,R32
-Ghana,1,1,1,2,2,GROUP
+Ghana,1,1,1,2,2,R32
 Haiti,0,0,3,2,8,GROUP
 Iran,0,3,0,3,3,GROUP
 Iraq,0,0,3,1,12,GROUP
