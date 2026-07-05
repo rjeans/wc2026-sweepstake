@@ -36,6 +36,23 @@ and finds the cause. The good calls are mine. The semicolons are its.
 read them back and cut the bits that are wrong, or too pleased with themselves.
 This one included.)
 
+## The tools, not magic
+
+People assume the AI must have some special hotline into GitHub or Cloudflare.
+It doesn't — it uses exactly the same command-line tools I would, just faster
+and without the typos. Anything to do with the code goes through **git** and
+the **GitHub CLI** (`gh`): committing, pushing, opening a pull request, even
+flipping this very repo from private to public a few minutes ago — all just
+commands it runs. Deployment rides on **Wrangler**, Cloudflare's own CLI, which
+is what actually ships the built site out to their network.
+
+So "push that fix," or "make the repo public," really means Claude Code typing
+ordinary `git`, `gh` and `wrangler` commands into a terminal on the Mac mini —
+the boring, auditable, exactly-what-a-human-would-do path. And because every
+change lands as a normal git commit with a message attached, I can always see
+precisely what it did, and roll it back if it did something daft. (It has,
+occasionally, done something daft.)
+
 ## Running it from my pocket
 
 The whole thing lives on a **Mac mini** that sits at home doing nothing
