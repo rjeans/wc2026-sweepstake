@@ -54,6 +54,7 @@ export interface TeamRow extends Team {
   points: number; // total contribution to owner's score: group points + progression bonus
   stage: Stage;
   koReached: Stage; // deepest knockout round the team appears in the fixtures (GROUP = not through)
+  eliminated: boolean; // out of the tournament: lost a knockout tie, or didn't escape the group
   // Played/won/drawn/lost/goals across ALL matches (group + completed knockout).
   record: { p: number; w: number; d: number; l: number; gf: number; ga: number };
 }
@@ -260,6 +261,8 @@ export function getTournamentData(): TournamentData {
     if (gf > ga) s.w += 1; else if (gf < ga) s.l += 1; else s.d += 1;
     koStats.set(c, s);
   };
+  // Teams knocked out in the bracket: the beaten side of a decided knockout tie.
+  const koEliminated = new Set<string>();
   for (const m of matches) {
     if (m.stage === 'GROUP') continue;
     const i = STAGE_ORDER.indexOf(m.stage);
@@ -269,11 +272,12 @@ export function getTournamentData(): TournamentData {
     if (m.status === 'post' && m.homeScore !== null && m.awayScore !== null) {
       bumpKo(m.home, m.homeScore, m.awayScore);
       bumpKo(m.away, m.awayScore, m.homeScore);
-      if (i + 1 < STAGE_ORDER.length) {
-        // Prefer the recorded winner (covers penalty shootouts on a level score).
-        const winner =
-          m.winner ?? (m.homeScore > m.awayScore ? m.home : m.awayScore > m.homeScore ? m.away : null);
-        if (winner) creditKo(winner, STAGE_ORDER[i + 1]);
+      // Prefer the recorded winner (covers penalty shootouts on a level score).
+      const winner =
+        m.winner ?? (m.homeScore > m.awayScore ? m.home : m.awayScore > m.homeScore ? m.away : null);
+      if (winner) {
+        if (i + 1 < STAGE_ORDER.length) creditKo(winner, STAGE_ORDER[i + 1]);
+        koEliminated.add(winner === m.home ? m.away : m.home);
       }
     }
   }
@@ -307,6 +311,9 @@ export function getTournamentData(): TournamentData {
       points: groupPoints + STAGE_BONUS[reached],
       stage,
       koReached: reached,
+      eliminated:
+        koEliminated.has(t.country) ||
+        ((status === 'in-progress' || status === 'complete') && reached === 'GROUP'),
       record: {
         p: gw + gd + gl + ko.p,
         w: gw + ko.w,

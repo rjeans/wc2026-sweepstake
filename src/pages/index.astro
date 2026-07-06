@@ -63,7 +63,7 @@ const through = data.teams.filter((t) => t.koReached !== 'GROUP').length;
                 return (
                   <td class="nowrap">
                     {t ? (
-                      <span class={`team${through > 0 && t.koReached === 'GROUP' ? ' out' : ''}`}>
+                      <span class={`team${t.eliminated ? ' out' : ''}`}>
                         {flagCode(t.country) && (
                           <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
                         )}
