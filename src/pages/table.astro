@@ -170,7 +170,7 @@ const activeStages = STAGE_COLS.filter(
             </div>
             <div class="bd-teams">
               {teams.map((t) => (
-                <details class={`bd-team-d${t.points === 0 ? ' zero' : ''}`}>
+                <details class={`bd-team-d${t.points === 0 ? ' zero' : ''}${t.eliminated ? ' out' : ''}`}>
                   <summary class="bd-team">
                     <span class="chev"></span>
                     <span class="tier-dot" style={tierStyle(t.tier)}>{t.tier}</span>
@@ -179,7 +179,7 @@ const activeStages = STAGE_COLS.filter(
                     )}
                     <span class="bd-name">{t.country}</span>
                     {t.koReached !== 'GROUP' && (
-                      <span class="ko-badge" style={stageStyle(t.koReached)}>{stageShort(t.koReached)}</span>
+                      <span class="ko-badge" style={t.eliminated ? '' : stageStyle(t.koReached)}>{stageShort(t.koReached)}</span>
                     )}
                     <span class="bd-bar">
                       <span class="bd-fill" style={`width:${(t.points / maxTeamPoints) * 100}%;background-color:${playerColor(player.name)}`}></span>
@@ -238,6 +238,12 @@ const activeStages = STAGE_COLS.filter(
   .bd-team-d { border-top: 1px solid #f4f6f9; }
   .bd-team-d:first-child { border-top: none; }
   .bd-team-d.zero { opacity: 0.55; }
+  /* Knocked out (lost a KO tie, or didn't escape the group): grey the name and
+     flag and drain the badge colour, but keep the points bar legible so the
+     contribution still reads. Teams still alive keep a vivid badge. */
+  .bd-team-d.out .bd-name { color: #94a3b8; }
+  .bd-team-d.out .flag { filter: grayscale(1); opacity: 0.6; }
+  .bd-team-d.out .ko-badge { background-color: rgba(148, 163, 184, 0.28); color: inherit; }
   summary.bd-team { cursor: pointer; list-style: none; }
   summary.bd-team::-webkit-details-marker { display: none; }
   .bd-team .chev {

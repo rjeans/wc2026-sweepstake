@@ -69,7 +69,7 @@ const through = data.teams.filter((t) => t.koReached !== 'GROUP').length;
                         )}
                         {t.country}
                         {t.koReached !== 'GROUP' && (
-                          <span class="ko-badge" style={stageStyle(t.koReached)}>{stageShort(t.koReached)}</span>
+                          <span class="ko-badge" style={t.eliminated ? '' : stageStyle(t.koReached)}>{stageShort(t.koReached)}</span>
                         )}
                       </span>
                     ) : (
@@ -99,4 +99,10 @@ const through = data.teams.filter((t) => t.koReached !== 'GROUP').length;
   /* Once the bracket is set, fade the teams that didn't make it through. */
   .team.out { opacity: 0.45; }
   .team.out .flag { filter: grayscale(1); }
+  /* Eliminated teams keep a round badge (how far they got) but drained of its
+     stage colour, so only teams still alive show a vivid badge. */
+  .team.out .ko-badge {
+    background-color: rgba(148, 163, 184, 0.28);
+    color: inherit;
+  }
 </style>
