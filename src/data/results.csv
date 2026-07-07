@@ -1,6 +1,6 @@
 country,gw,gd,gl,gf,ga,stage
 Algeria,1,1,1,5,7,R32
-Argentina,3,0,0,8,1,R32
+Argentina,3,0,0,8,1,R16
 Australia,1,1,1,2,2,R32
 Austria,1,1,1,6,6,R32
 Belgium,1,2,0,6,2,R16
@@ -14,7 +14,7 @@ Croatia,2,0,1,5,5,R32
 Curaçao,0,1,2,1,9,GROUP
 Czechia,0,1,2,2,6,GROUP
 Ecuador,1,1,1,2,2,R32
-Egypt,1,2,0,5,3,R32
+Egypt,1,2,0,5,3,R16
 England,2,1,0,6,2,R16
 France,3,0,0,10,2,R16
 Germany,2,0,1,10,4,R32
