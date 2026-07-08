@@ -27,11 +27,12 @@ shortest price in the market - but with less banked, she's feast-or-famine.
 them. His quarter-final is a straight family meeting: **Pete's Norway v Henry's
 England** (11 Jul). Winner climbs, loser almost certainly slides.
 
-**Pete — projected 4th.** The only player with *two* teams in the quarters -
-**Norway** and **Belgium** - which sounds great until you notice both are
-outsiders, and one of them (Belgium) has to get past Ella's Spain. Two bites at
-the cherry across a busy weekend: **Belgium v Spain** (10 Jul) and **Norway v
-England** (11 Jul).
+**Pete — projected 4th.** He has *two* teams in the quarters - **Norway** and
+**Belgium** - same as Richard, with one crucial difference: Richard's pair meet
+each other, whereas Pete's sit on opposite sides of the bracket, so they don't
+cancel each other out. Which sounds great until you notice both are outsiders,
+and Belgium have to get past Ella's Spain first. Two bites at the cherry across
+a busy weekend: **Belgium v Spain** (10 Jul) and **Norway v England** (11 Jul).
 
 **Nichola — projected ~4th, but honestly anywhere from 1st to 8th.** The wild
 card of the whole thing. She owns **France**, joint-favourite for the trophy,
