@@ -38,6 +38,7 @@ const STAGE_BADGE: Record<Stage, { bg: string; fg: string }> = {
   R16: { bg: '#cffafe', fg: '#0e7490' },
   QF: { bg: '#d1fae5', fg: '#047857' },
   SF: { bg: '#fef9c3', fg: '#a16207' },
+  THIRD: { bg: '#fef3c7', fg: '#b45309' },
   FINAL: { bg: '#ffedd5', fg: '#c2410c' },
   CHAMPION: { bg: '#fde68a', fg: '#92400e' },
 };
@@ -45,7 +46,7 @@ export const stageStyle = (s: Stage) => `background-color:${STAGE_BADGE[s].bg};c
 
 // Compact knockout label for inline "made the last 32 / 16 / …" badges.
 const STAGE_SHORT: Record<Stage, string> = {
-  GROUP: '', R32: 'R32', R16: 'R16', QF: 'QF', SF: 'SF', FINAL: 'Final', CHAMPION: 'Winner',
+  GROUP: '', R32: 'R32', R16: 'R16', QF: 'QF', SF: 'SF', THIRD: '3rd', FINAL: 'Final', CHAMPION: 'Winner',
 };
 export const stageShort = (s: Stage) => STAGE_SHORT[s];
 

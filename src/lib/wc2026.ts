@@ -10,8 +10,15 @@ export const playerSlug = (name: string) => name.toLowerCase();
 const GROUP_WIN = 3;
 const GROUP_DRAW = 1;
 
+// Linear tournament path (advancement/depth). 'THIRD' is NOT here: it branches
+// off the semi-final. It's a valid Stage value (see below) but never a step.
 export const STAGE_ORDER = ['GROUP', 'R32', 'R16', 'QF', 'SF', 'FINAL', 'CHAMPION'] as const;
-export type Stage = (typeof STAGE_ORDER)[number];
+export type Stage = (typeof STAGE_ORDER)[number] | 'THIRD';
+// The linear ladder only (excludes THIRD) — used for depth/advancement.
+export type LinearStage = (typeof STAGE_ORDER)[number];
+
+// Third-place play-off winner: semi-final depth + this bonus (mirrors scoring.py).
+export const THIRD_BONUS = 20;
 
 const STAGE_LABEL: Record<Stage, string> = {
   GROUP: 'Group',
@@ -19,18 +26,20 @@ const STAGE_LABEL: Record<Stage, string> = {
   R16: 'Round of 16',
   QF: 'Quarter-final',
   SF: 'Semi-final',
+  THIRD: 'Third place',
   FINAL: 'Final',
   CHAMPION: 'Champion',
 };
 
 // Cumulative progression bonus a team keeps once it reaches a round. Mirrors the
-// cumulative of INCREMENT in scoring.py — keep the two in sync.
+// cumulative of INCREMENT in scoring.py — keep the two in sync. THIRD = SF + 20.
 export const STAGE_BONUS: Record<Stage, number> = {
   GROUP: 0,
   R32: 5,
   R16: 10,
   QF: 20,
   SF: 40,
+  THIRD: 60,
   FINAL: 80,
   CHAMPION: 160,
 };
@@ -153,9 +162,10 @@ function loadResults(): Map<string, ResultRow> | null {
   if (!existsSync(path)) return null;
   const m = new Map<string, ResultRow>();
   for (const r of parseCsv(path)) {
-    const stage = STAGE_ORDER.includes(r.stage as Stage)
-      ? (r.stage as Stage)
-      : 'GROUP';
+    const stage: Stage =
+      (STAGE_ORDER as readonly string[]).includes(r.stage) || r.stage === 'THIRD'
+        ? (r.stage as Stage)
+        : 'GROUP';
     m.set(r.country, {
       gw: parseInt(r.gw) || 0,
       gd: parseInt(r.gd) || 0,
@@ -194,7 +204,9 @@ function loadMatches(): Match[] {
       r.status === 'in' || r.status === 'post' ? r.status : 'pre';
     return {
       date: r.date ?? '',
-      stage: STAGE_ORDER.includes(r.stage as Stage) ? (r.stage as Stage) : 'GROUP',
+      stage: (STAGE_ORDER as readonly string[]).includes(r.stage) || r.stage === 'THIRD'
+        ? (r.stage as Stage)
+        : 'GROUP',
       group: r.group ?? '',
       home: r.home,
       away: r.away,
@@ -247,8 +259,8 @@ export function getTournamentData(): TournamentData {
   // Deepest knockout round each team appears in across the published fixtures.
   // This reflects qualification as soon as the bracket is drawn, before the
   // results-derived `stage` catches up. GROUP = not (yet) through.
-  const koByCountry = new Map<string, Stage>();
-  const creditKo = (c: string, s: Stage) => {
+  const koByCountry = new Map<string, LinearStage>();
+  const creditKo = (c: string, s: LinearStage) => {
     const cur = koByCountry.get(c);
     if (!cur || STAGE_ORDER.indexOf(s) > STAGE_ORDER.indexOf(cur)) koByCountry.set(c, s);
   };
@@ -263,12 +275,29 @@ export function getTournamentData(): TournamentData {
   };
   // Teams knocked out in the bracket: the beaten side of a decided knockout tie.
   const koEliminated = new Set<string>();
+  // Winner of the third-place play-off: banks +20 on top of a semi-final exit.
+  const thirdPlaceWinners = new Set<string>();
   for (const m of matches) {
     if (m.stage === 'GROUP') continue;
-    const i = STAGE_ORDER.indexOf(m.stage);
+    if (m.stage === 'THIRD') {
+      // Not a progression step: only the winner banks the bonus, nobody advances.
+      if (m.status === 'post' && m.homeScore !== null && m.awayScore !== null) {
+        bumpKo(m.home, m.homeScore, m.awayScore);
+        bumpKo(m.away, m.awayScore, m.homeScore);
+        const w = m.winner ?? (m.homeScore > m.awayScore ? m.home : m.awayScore > m.homeScore ? m.away : null);
+        if (w) {
+          thirdPlaceWinners.add(w);
+          koEliminated.add(w === m.home ? m.away : m.home);
+        }
+      }
+      continue;
+    }
+    // THIRD is handled above, so m.stage is a linear ladder stage here.
+    const linearStage = m.stage as LinearStage;
+    const i = STAGE_ORDER.indexOf(linearStage);
     // Both teams have reached this round; a completed win advances the winner.
-    creditKo(m.home, m.stage);
-    creditKo(m.away, m.stage);
+    creditKo(m.home, linearStage);
+    creditKo(m.away, linearStage);
     if (m.status === 'post' && m.homeScore !== null && m.awayScore !== null) {
       bumpKo(m.home, m.homeScore, m.awayScore);
       bumpKo(m.away, m.awayScore, m.homeScore);
@@ -295,8 +324,12 @@ export function getTournamentData(): TournamentData {
     // and the bracket appearance. Reaching a round (incl. qualifying for the
     // R32) banks its progression bonus immediately, before results catch up.
     const bracket = koByCountry.get(t.country) ?? 'GROUP';
-    const reached: Stage =
-      STAGE_ORDER.indexOf(bracket) > STAGE_ORDER.indexOf(stage) ? bracket : stage;
+    // Depth is a linear-ladder concept: a third-place finish reads as a semi-
+    // final exit, and its +20 is added separately below (thirdPlaceWinners).
+    const wonThird = thirdPlaceWinners.has(t.country) || stage === 'THIRD';
+    const depthStage: LinearStage = stage === 'THIRD' ? 'SF' : (stage as LinearStage);
+    const reached: LinearStage =
+      STAGE_ORDER.indexOf(bracket) > STAGE_ORDER.indexOf(depthStage) ? bracket : depthStage;
     const ko = koStats.get(t.country) ?? { p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0 };
     return {
       ...t,
@@ -308,7 +341,7 @@ export function getTournamentData(): TournamentData {
       gf,
       ga,
       groupPoints,
-      points: groupPoints + STAGE_BONUS[reached],
+      points: groupPoints + STAGE_BONUS[reached] + (wonThird ? THIRD_BONUS : 0),
       stage,
       koReached: reached,
       eliminated:

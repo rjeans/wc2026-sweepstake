@@ -56,7 +56,12 @@ STAGE_ORDER = ["GROUP", "R32", "R16", "QF", "SF", "FINAL", "CHAMPION"]
 INCREMENT = {
     "GROUP": 0, "R32": 5, "R16": 5, "QF": 10, "SF": 20, "FINAL": 40, "CHAMPION": 80,
 }
-LOSERS_AT = {"FINAL": 1, "SF": 2, "QF": 4, "R16": 8, "R32": 16}
+# Winning the third-place play-off is a branch off the semi-final: the winner
+# keeps SF depth but scores cumulative(SF) + THIRD_BONUS. The loser (4th) stays
+# at SF. It is NOT a step in STAGE_ORDER (nothing advances "through" it).
+THIRD_BONUS = 20
+# Of the two beaten semi-finalists, one wins the play-off (THIRD), one stays SF.
+LOSERS_AT = {"FINAL": 1, "THIRD": 1, "SF": 1, "QF": 4, "R16": 8, "R32": 16}
 
 STAGE_ALIASES = {
     "GROUPS": "GROUP", "GROUP": "GROUP", "OUT": "GROUP", "": "GROUP",
@@ -67,19 +72,32 @@ STAGE_ALIASES = {
     "F": "FINAL", "FINAL": "FINAL", "RUNNER-UP": "FINAL", "RUNNERUP": "FINAL",
     "W": "CHAMPION", "WIN": "CHAMPION", "WINNER": "CHAMPION", "CHAMPION": "CHAMPION",
     "CHAMPIONS": "CHAMPION",
+    "3P": "THIRD", "3RD": "THIRD", "THIRD": "THIRD", "THIRD PLACE": "THIRD",
+    "THIRD-PLACE": "THIRD", "3RD PLACE": "THIRD", "3RD-PLACE": "THIRD",
 }
 
-# Simulated P(winner's owner tops the table) at this champion value (~99.7%).
-CALIBRATED_PROBABILITY = 0.997
+# Simulated P(winner's owner tops the table) at this champion value.
+# The third-place play-off bonus (THIRD = SF + 20) lets a rival's beaten
+# semi-finalist bank a little more, nudging this down from ~99.7% to ~99.2%
+# with the champion held at 160 (re-run sim.py after any scoring change).
+CALIBRATED_PROBABILITY = 0.992
 
 
 def cumulative(stage: str) -> int:
+    if stage == "THIRD":  # branch off the semi-final, not a linear step
+        return cumulative("SF") + THIRD_BONUS
     total = 0
     for s in STAGE_ORDER:
         total += INCREMENT[s]
         if s == stage:
             return total
     raise ValueError(f"unknown stage {stage!r}")
+
+
+def rank(stage: str) -> int:
+    """Depth rank for 'how far did they get'. THIRD is a semi-final exit, so it
+    ranks alongside SF; only its points differ."""
+    return STAGE_ORDER.index("SF" if stage == "THIRD" else stage)
 
 
 def norm_stage(s: str) -> str:
@@ -135,13 +153,32 @@ def load_ko_rounds(path):
         return rounds
 
     def credit(c, st):
-        if c and STAGE_ORDER.index(st) > STAGE_ORDER.index(rounds.get(c, "GROUP")):
+        # Higher points wins ties on equal depth (THIRD outranks SF on points).
+        if c and (rank(st), cumulative(st)) > (
+            rank(rounds.get(c, "GROUP")), cumulative(rounds.get(c, "GROUP"))
+        ):
             rounds[c] = st
 
     with open(path, newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
             st = norm_stage(row.get("stage"))
             if st == "GROUP":
+                continue
+            if st == "THIRD":
+                # Only the play-off WINNER banks THIRD; nobody advances from it.
+                if (row.get("status") or "").strip() == "post":
+                    win = (row.get("winner") or "").strip()
+                    if not win:
+                        hs, as_ = row.get("home_score", "").strip(), row.get("away_score", "").strip()
+                        if hs and as_:
+                            try:
+                                h, a = int(hs), int(as_)
+                                win = (row.get("home", "").strip() if h > a
+                                       else row.get("away", "").strip() if a > h else "")
+                            except ValueError:
+                                win = ""
+                    if win:
+                        credit(win, "THIRD")
                 continue
             i = STAGE_ORDER.index(st)
             home, away = row.get("home", "").strip(), row.get("away", "").strip()
@@ -181,8 +218,10 @@ def score(owners, teams_of, results):
             pts += team_points(r)
             gf += r["gf"]
             gd += r["gf"] - r["ga"]
-            if STAGE_ORDER.index(r["stage"]) > STAGE_ORDER.index(deepest):
-                deepest = r["stage"]
+            # Best run is a bracket depth, so a third-place finish reads as "SF".
+            depth_stage = "SF" if r["stage"] == "THIRD" else r["stage"]
+            if rank(depth_stage) > rank(deepest):
+                deepest = depth_stage
             if r["stage"] == "CHAMPION":
                 champion_owner = person
         rows.append({"person": person, "points": pts, "gf": gf, "gd": gd, "best": deepest})
@@ -248,7 +287,7 @@ def main(argv=None):
     ko_rounds = load_ko_rounds(args.matches)
     for c, br in ko_rounds.items():
         r = results.get(c)
-        if r and STAGE_ORDER.index(br) > STAGE_ORDER.index(r["stage"]):
+        if r and (rank(br), cumulative(br)) > (rank(r["stage"]), cumulative(r["stage"])):
             r["stage"] = br
 
     unknown = set(results) - set(owners)

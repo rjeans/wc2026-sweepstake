@@ -67,7 +67,8 @@ def _load_points() -> tuple[dict[str, float], str]:
 POINTS, RATING_SOURCE = _load_points()
 
 # Progression cumulative used in scoring.py (champion is the knob => 0 in base).
-CUM = {"GROUP": 0, "R32": 5, "R16": 10, "QF": 20, "SF": 40, "FINAL": 80}
+# THIRD = SF + 20 is the third-place play-off winner (a branch off the semi).
+CUM = {"GROUP": 0, "R32": 5, "R16": 10, "QF": 20, "SF": 40, "THIRD": 60, "FINAL": 80}
 
 # Poisson goals: lam = LAMBDA0 * exp(+/- K * rating_diff).
 # Same K works for both rating sources - Elo and FIFA points happen to live on
@@ -131,15 +132,23 @@ def simulate(teams, by_group, rng):
         stage[c] = "R32"
     alive = qualifiers[:]
     rng.shuffle(alive)
+    sf_losers = []
     for nxt in ["R16", "QF", "SF", "FINAL", "CHAMPION"]:
         winners = []
         for i in range(0, len(alive), 2):
-            w, _, _ = _play(alive[i], alive[i + 1], rng, knockout=True)
+            a, b = alive[i], alive[i + 1]
+            w, _, _ = _play(a, b, rng, knockout=True)
             winners.append(w)
+            if nxt == "FINAL":  # this round's losers are the beaten semi-finalists
+                sf_losers.append(b if w == a else a)
         for w in winners:
             stage[w] = nxt
         alive = winners
         rng.shuffle(alive)
+    # Third-place play-off: winner banks THIRD (SF + 20), loser stays SF.
+    if len(sf_losers) == 2:
+        w3, _, _ = _play(sf_losers[0], sf_losers[1], rng, knockout=True)
+        stage[w3] = "THIRD"
     return stage, gpts, gf, ga
 
 

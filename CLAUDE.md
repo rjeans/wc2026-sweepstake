@@ -48,14 +48,23 @@ Scoring (`scoring.py`):
 - The table sorts by **points, then goals for, then goal difference**.
 - The champion bonus is **calibrated, not arbitrary**. The progression ladder
   now **doubles** each round (cumulative 5/10/20/40/80/160); the cup is 160
-  (`INCREMENT["CHAMPION"] = 80`), giving ~99.7% chance the winner's owner tops
+  (`INCREMENT["CHAMPION"] = 80`), giving ~99.2% chance the winner's owner tops
   the table. **If you touch any scoring constant, you MUST re-run `sim.py` and
   reset the relevant `INCREMENT` values to match the desired probability**, then
   update `CALIBRATED_PROBABILITY` and the docstring/table to stay honest. The
-  same ladder is mirrored in `predict.py` (`INCREMENT`), `sim.py` (`CUM`) and
-  `src/lib/wc2026.ts` (`STAGE_BONUS`) — keep all four in sync.
-- `worst_case()` reports the mathematically-certain threshold (now ~274). Don't
-  delete it — it documents the trade-off between "certain" and "~99.7% certain".
+  same ladder is mirrored in `predict.py` (`INCREMENT`/`CUM`), `sim.py` (`CUM`)
+  and `src/lib/wc2026.ts` (`STAGE_BONUS`) — keep all four in sync.
+- **Third-place play-off**: winning it is worth **+20** over a plain semi-final
+  exit — stage `"THIRD"` = `cumulative("SF") + THIRD_BONUS` = 60. The *loser*
+  (4th) stays at SF. `"THIRD"` is a **branch off the semi-final, not a linear
+  step** in `STAGE_ORDER`: depth-wise it ranks as SF (best-run reads "Semi-
+  final"); only its points differ. It's handled specially in every scorer
+  (`scoring.py`, `predict.py`, `sim.py`, `wc2026.ts`) and ingested by
+  `fetch_results.py` (winner only). Adding it dropped the champion calibration
+  from ~99.7% to ~99.2% at cup=160.
+- `worst_case()` reports the mathematically-certain threshold (now ~294, up from
+  ~274 once a beaten semi-finalist can bank the +20). Don't delete it — it
+  documents the trade-off between "certain" and "~99.2% certain".
 
 ## Key facts / context
 
@@ -71,10 +80,11 @@ Scoring (`scoring.py`):
 
 Group points spread across six teams pull against guaranteeing the winner's
 owner wins. As of 24 Jun 2026 the owner chose the **progression-weighted
-"doubling" ladder** (cup worth 160) for ~99.7% near-certainty, deliberately
-moving away from the earlier ~90% balance (cup 80). The upset is now rare by
-design. If asked to rebalance again, explain the consequence (re-calibration
-across the four mirrored constant sets) rather than silently changing it.
+"doubling" ladder** (cup worth 160) for ~99.2% near-certainty (a hair below the
+original ~99.7% since the third-place +20 was added), deliberately moving away
+from the earlier ~90% balance (cup 80). The upset is now rare by design. If
+asked to rebalance again, explain the consequence (re-calibration across the
+four mirrored constant sets) rather than silently changing it.
 
 ## Typical tasks you may be asked to do
 

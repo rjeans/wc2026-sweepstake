@@ -34,16 +34,24 @@ import urllib.request
 ENDPOINT = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
 DEFAULT_DATES = "20260611-20260720"   # group stage start → final + a buffer
 
-# ESPN season.slug  ->  scoring.py stage code
+# ESPN season.slug  ->  scoring.py stage code.
+# NOTE: the third-place play-off slug is a best guess (ESPN hasn't published the
+# 2026 fixture yet) — verify the exact slug once the semi-finals are drawn.
 STAGE = {
-    "group-stage":    "GROUP",
-    "round-of-32":    "R32",
-    "round-of-16":    "R16",
-    "quarterfinals":  "QF",
-    "semifinals":     "SF",
-    "final":          "FINAL",
+    "group-stage":         "GROUP",
+    "round-of-32":         "R32",
+    "round-of-16":         "R16",
+    "quarterfinals":       "QF",
+    "semifinals":          "SF",
+    "third-place":         "THIRD",
+    "third-place-match":   "THIRD",
+    "3rd-place":           "THIRD",
+    "final":               "FINAL",
 }
 STAGE_ORDER = ["GROUP", "R32", "R16", "QF", "SF", "FINAL", "CHAMPION"]
+# Chronological order incl. the third-place play-off, for sorting match rows only
+# (THIRD is not a linear progression step in the scoring ladder).
+_MATCH_ORDER = ["GROUP", "R32", "R16", "QF", "SF", "THIRD", "FINAL", "CHAMPION"]
 
 
 def fetch_events(dates: str) -> list[dict]:
@@ -110,6 +118,7 @@ def aggregate(events: list[dict], known_teams: set[str]) -> tuple[dict, list[str
              for t in known_teams}
     unmatched: set[str] = set()
     final_winner: str | None = None
+    third_winner: str | None = None
 
     for ev in events:
         m = parse_match(ev)
@@ -142,6 +151,16 @@ def aggregate(events: list[dict], known_teams: set[str]) -> tuple[dict, list[str
             else:
                 stats[a["name"]]["gd"] += 1
                 stats[b["name"]]["gd"] += 1
+        elif m["stage"] == "THIRD":
+            # Third-place play-off: only the WINNER banks THIRD; the loser (4th)
+            # keeps its semi-final stage. Don't bump both as if they "reached" it.
+            if m["completed"]:
+                if a["winner"]:
+                    third_winner = a["name"]
+                elif b["winner"]:
+                    third_winner = b["name"]
+                elif a["score"] != b["score"]:
+                    third_winner = a["name"] if a["score"] > b["score"] else b["name"]
         else:
             # Knockout: both teams REACHED this stage. Winners will also
             # appear in the next round's match and get bumped from there.
@@ -155,6 +174,8 @@ def aggregate(events: list[dict], known_teams: set[str]) -> tuple[dict, list[str
                 elif a["score"] != b["score"]:
                     final_winner = a["name"] if a["score"] > b["score"] else b["name"]
 
+    if third_winner:
+        stats[third_winner]["stage"] = "THIRD"
     if final_winner:
         stats[final_winner]["stage"] = "CHAMPION"
 
@@ -217,7 +238,7 @@ def build_matches(events: list[dict], known: set[str], groups: dict[str, str]) -
             "status": m["status"],
             "winner": winner,
         })
-    matches.sort(key=lambda r: (r["date"], STAGE_ORDER.index(r["stage"]), r["home"]))
+    matches.sort(key=lambda r: (r["date"], _MATCH_ORDER.index(r["stage"]), r["home"]))
     return matches
 
 

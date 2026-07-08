@@ -35,11 +35,15 @@ import sim as smod  # POINTS, LAMBDA0, K, _poisson, _play
 GROUP_WIN, GROUP_DRAW = 3, 1
 INCREMENT = {"GROUP": 0, "R32": 5, "R16": 5, "QF": 10, "SF": 20, "FINAL": 40, "CHAMPION": 80}
 STAGE_ORDER = ["GROUP", "R32", "R16", "QF", "SF", "FINAL", "CHAMPION"]
+THIRD_BONUS = 20  # won the third-place play-off: semi-final depth + this bonus
 CUM = {}
 total = 0
 for s in STAGE_ORDER:
     total += INCREMENT[s]
     CUM[s] = total
+# "THIRD" is not a linear stage: it branches off the semi-final. The play-off
+# winner keeps SF depth but scores CUM[SF] + THIRD_BONUS.
+CUM["THIRD"] = CUM["SF"] + THIRD_BONUS
 
 
 def load_teams(path: str):
@@ -209,6 +213,7 @@ def simulate_one(teams, by_group, locked_groups, locked_kos, ko_fixtures, rng):
     # (match_stage, stage the winners advance to). match_stage is the key used
     # in matches.csv / locked_kos - the round being PLAYED, not reached.
     alive = qualifiers[:]
+    sf_losers: list[str] = []
     for match_stage, nxt in [("R32", "R16"), ("R16", "QF"), ("QF", "SF"),
                              ("SF", "FINAL"), ("FINAL", "CHAMPION")]:
         ordered = _order_by_pairings(alive, ko_fixtures.get(match_stage, []))
@@ -218,10 +223,21 @@ def simulate_one(teams, by_group, locked_groups, locked_kos, ko_fixtures, rng):
             rng.shuffle(alive)         # bracket not available - random draw
         winners = []
         for i in range(0, len(alive), 2):
-            winners.append(_ko_winner(match_stage, alive[i], alive[i + 1]))
+            a, b = alive[i], alive[i + 1]
+            w = _ko_winner(match_stage, a, b)
+            winners.append(w)
+            if match_stage == "SF":
+                sf_losers.append(b if w == a else a)
         for w in winners:
             stage[w] = nxt
         alive = winners
+
+    # Third-place play-off between the two beaten semi-finalists: the winner
+    # banks "THIRD" (SF depth + THIRD_BONUS); the loser (4th) stays at SF.
+    # Honours a real locked result if matches.csv already has the play-off.
+    if len(sf_losers) == 2:
+        third = _ko_winner("THIRD", sf_losers[0], sf_losers[1])
+        stage[third] = "THIRD"
 
     return stage, gpts, gf, ga
 
@@ -291,7 +307,9 @@ def run(trials: int, teams, by_group, allocation, locked_groups, locked_kos, ko_
         # Per-team
         for c in all_teams:
             s = stage.get(c, "GROUP")
-            team_stage_counts[c][s] += 1
+            # Depth-wise "THIRD" is a semi-final exit (the +20 is a bonus, not a
+            # deeper round), so the reach tallies fold it into SF.
+            team_stage_counts[c]["SF" if s == "THIRD" else s] += 1
             team_pts_sum[c] += gpts.get(c, 0) + CUM[s]
         # Per-player
         scores = []
