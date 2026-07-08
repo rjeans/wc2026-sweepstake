@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/WC2026Layout.astro';
-import { loadPredictions } from '../../lib/predictions';
+import { loadPredictions, type PlayerPrediction } from '../../lib/predictions';
 import { playerColor, flagCode } from '../../lib/wc2026-ui';
 
 const pred = loadPredictions();
@@ -13,6 +13,14 @@ const playerRows = pred
   : [];
 
 const fmtPct = (p: number) => `${(p * 100).toFixed(1)}%`;
+const ordinal = (n: number) => {
+  const s = ['th', 'st', 'nd', 'rd'], v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+};
+const finishBand = (p: PlayerPrediction) => {
+  const [lo, hi] = p.position_ci;
+  return lo === hi ? ordinal(lo) : `${ordinal(lo)}–${ordinal(hi)}`;
+};
 const fmtOdds = (o: number | null | undefined) =>
   o == null ? '—' : o < 100 ? o.toFixed(2) : o < 1000 ? o.toFixed(0) : '—';
 const fmtPts = (n: number) => n.toFixed(1);
@@ -74,6 +82,7 @@ const compareLabel = pred?.comparison_date
                 <th class="num">Odds</th>
                 <th class="num">P(win)</th>
                 <th class="num">P(top 3)</th>
+                <th class="num">Finish (80%)</th>
                 <th class="num">E[pts]</th>
                 <th class="num">P(owns winner)</th>
                 <th>Move</th>
@@ -93,6 +102,9 @@ const compareLabel = pred?.comparison_date
                     <td class="num strong">{fmtOdds(p.odds_decimal)}</td>
                     <td class="num">{fmtPct(p.p_win)}</td>
                     <td class="num">{fmtPct(p.p_top3)}</td>
+                    <td class="num nowrap" title={`Most likely ${ordinal(p.most_likely_position)} (${fmtPct(p.position_probs[p.most_likely_position - 1])}) · ${Math.round(p.position_ci_prob * 100)}% chance of finishing ${finishBand(p)}`}>
+                      {finishBand(p)}
+                    </td>
                     <td class="num">{fmtPts(p.expected_points)}</td>
                     <td class="num">{fmtPct(p.p_owns_champion)}</td>
                     <td class={`move ${arr.cls}`} title={arr.label}>{arr.glyph} <small>{arr.label}</small></td>
@@ -195,6 +207,15 @@ const compareLabel = pred?.comparison_date
         all simulations. Arrows show the change since the most recent dated snapshot,
         rounded to the nearest 0.3 percentage points to keep sampling noise from
         flickering them.
+      </p>
+      <p>
+        <strong>Finish (80%)</strong> is a confidence range on the final table
+        place: every simulation ranks all eight players, and the column shows the
+        shortest band of positions that together account for at least 80% of the
+        outcomes. It's a fuller picture than the odds alone — a player can lead the
+        table today, and even top it on expected points, yet still be most likely to
+        <em>finish</em> second, because they only overhaul into first when they own
+        the champion.
       </p>
     </div>
   </section>

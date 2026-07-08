@@ -11,6 +11,14 @@ export interface PlayerPrediction {
   max_points_seen: number;
   p_owns_champion: number;
   odds_decimal: number | null;
+  // Finishing-position distribution from the same sims: probability of each
+  // place (index 0 = 1st), the single most likely place, the mean place, and
+  // the shortest band of places holding >= position_ci_prob of the outcomes.
+  position_probs: number[];
+  most_likely_position: number;
+  expected_position: number;
+  position_ci: [number, number];
+  position_ci_prob: number;
   delta_p_win?: number;
   delta_expected_points?: number;
   delta_odds_decimal?: number;

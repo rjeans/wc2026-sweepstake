@@ -235,6 +235,37 @@ def score_player(owned, stage, gpts, gf, ga):
     return pts, gf_sum, gd_sum
 
 
+def position_summary(counter: Counter, trials: int, n: int, threshold: float = 0.80):
+    """Summarise a player's finishing-position distribution.
+
+    Returns the probability of each place (1..n), the single most likely place,
+    the mean place, and the shortest contiguous band of places that together
+    hold at least `threshold` of the probability - a confidence range on where
+    the player finishes.
+    """
+    probs = [counter.get(k, 0) / trials for k in range(1, n + 1)]
+    most_likely = max(range(1, n + 1), key=lambda k: counter.get(k, 0))
+    mean_pos = sum(k * probs[k - 1] for k in range(1, n + 1))
+    # Shortest window [lo, hi] whose probability mass >= threshold (ties -> lower lo).
+    best = None
+    for lo in range(1, n + 1):
+        cum = 0.0
+        for hi in range(lo, n + 1):
+            cum += probs[hi - 1]
+            if cum >= threshold:
+                if best is None or (hi - lo) < (best[1] - best[0]):
+                    best = (lo, hi, cum)
+                break
+    lo, hi, cov = best if best else (1, n, 1.0)
+    return {
+        "position_probs": [round(p, 5) for p in probs],
+        "most_likely_position": most_likely,
+        "expected_position": round(mean_pos, 3),
+        "position_ci": [lo, hi],
+        "position_ci_prob": round(cov, 5),
+    }
+
+
 def run(trials: int, teams, by_group, allocation, locked_groups, locked_kos, ko_fixtures, rng):
     players_teams: dict[str, list[str]] = defaultdict(list)
     for country, owner in allocation.items():
@@ -247,6 +278,9 @@ def run(trials: int, teams, by_group, allocation, locked_groups, locked_kos, ko_
     pts_sum: dict[str, float] = defaultdict(float)
     pts_max: dict[str, int] = defaultdict(lambda: 0)
     champ_owner = Counter()
+    # Finishing position (1 = top of the table) tallied every trial, so we can
+    # report a confidence range on each player's final table place.
+    pos_counts: dict[str, Counter] = {p: Counter() for p in players}
 
     # Per-team tracking
     team_stage_counts: dict[str, Counter] = {c: Counter() for c in all_teams}
@@ -272,6 +306,8 @@ def run(trials: int, teams, by_group, allocation, locked_groups, locked_kos, ko_
         wins[scores[0][0]] += 1
         for s in scores[:3]:
             top3[s[0]] += 1
+        for idx, s in enumerate(scores):
+            pos_counts[s[0]][idx + 1] += 1
         champion = next((c for c, s in stage.items() if s == "CHAMPION"), None)
         if champion:
             champ_owner[allocation.get(champion)] += 1
@@ -303,6 +339,7 @@ def run(trials: int, teams, by_group, allocation, locked_groups, locked_kos, ko_
     teams_out.sort(key=lambda x: -x["p_champion"])
 
     out = []
+    n_players = len(players)
     for p in players:
         pw = wins[p] / trials
         out.append({
@@ -313,6 +350,7 @@ def run(trials: int, teams, by_group, allocation, locked_groups, locked_kos, ko_
             "max_points_seen": pts_max[p],
             "p_owns_champion": champ_owner[p] / trials,
             "odds_decimal": (1.0 / pw) if pw > 0 else None,
+            **position_summary(pos_counts[p], trials, n_players),
         })
     out.sort(key=lambda x: -x["p_win"])
     return out, teams_out
