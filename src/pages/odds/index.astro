@@ -5,6 +5,13 @@ import { playerColor, flagCode } from '../../lib/wc2026-ui';
 
 const pred = loadPredictions();
 
+// Sweepstake table is ordered by expected final points (which already bake in
+// the champion/win bonus), not by P(win) — a big banked lead can outrank a
+// shorter title price. The team table below stays sorted by title chance.
+const playerRows = pred
+  ? [...pred.predictions].sort((a, b) => b.expected_points - a.expected_points)
+  : [];
+
 const fmtPct = (p: number) => `${(p * 100).toFixed(1)}%`;
 const fmtOdds = (o: number | null | undefined) =>
   o == null ? '—' : o < 100 ? o.toFixed(2) : o < 1000 ? o.toFixed(0) : '—';
@@ -53,6 +60,9 @@ const compareLabel = pred?.comparison_date
           based on <strong>{pred.trials.toLocaleString()}</strong> Monte Carlo simulated tournaments
           seeded with <strong>{pred.locked_group_matches}</strong> completed group matches.
           {compareLabel && <> Arrows compare to the snapshot from <strong>{compareLabel}</strong>.</>}
+          Rows are ordered by <strong>expected final points</strong> (E[pts]), which
+          already include the champion bonus — so a big banked lead can rank above a
+          shorter <em>odds</em> price.
         </p>
 
         <div class="table-wrap">
@@ -70,7 +80,7 @@ const compareLabel = pred?.comparison_date
               </tr>
             </thead>
             <tbody>
-              {pred.predictions.map((p, i) => {
+              {playerRows.map((p, i) => {
                 const arr = arrowProb(p.delta_p_win);
                 return (
                   <tr class={i === 0 ? 'top' : ''}>
