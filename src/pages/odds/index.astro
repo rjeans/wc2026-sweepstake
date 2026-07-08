@@ -5,11 +5,16 @@ import { playerColor, flagCode } from '../../lib/wc2026-ui';
 
 const pred = loadPredictions();
 
-// Sweepstake table is ordered by expected final points (which already bake in
-// the champion/win bonus), not by P(win) — a big banked lead can outrank a
-// shorter title price. The team table below stays sorted by title chance.
+// Sweepstake table is ordered by expected final position — each player's mean
+// finishing place across all simulations — i.e. the most likely final order.
+// This "crystallises" as teams go out: a player who can only finish (say) 6th
+// has an expected position of exactly 6.0 and locks into that slot, so a high
+// ceiling no longer floats an all-but-eliminated player above settled ones.
+// Ties break by expected points. Team table below stays sorted by title chance.
 const playerRows = pred
-  ? [...pred.predictions].sort((a, b) => b.expected_points - a.expected_points)
+  ? [...pred.predictions].sort(
+      (a, b) => a.expected_position - b.expected_position || b.expected_points - a.expected_points,
+    )
   : [];
 
 const fmtPct = (p: number) => `${(p * 100).toFixed(1)}%`;
@@ -68,9 +73,9 @@ const compareLabel = pred?.comparison_date
           based on <strong>{pred.trials.toLocaleString()}</strong> Monte Carlo simulated tournaments
           seeded with <strong>{pred.locked_group_matches}</strong> completed group matches.
           {compareLabel && <> Arrows compare to the snapshot from <strong>{compareLabel}</strong>.</>}
-          Rows are ordered by <strong>expected final points</strong> (E[pts]), which
-          already include the champion bonus — so a big banked lead can rank above a
-          shorter <em>odds</em> price.
+          Rows are ordered by <strong>projected final position</strong> — each player's
+          average finishing place across every simulation — so settled placings lock
+          into their slot as teams are knocked out.
         </p>
 
         <div class="table-wrap">
