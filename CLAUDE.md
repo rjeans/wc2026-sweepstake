@@ -92,6 +92,15 @@ Daily recaps live in `src/content/recaps/<YYYY-MM-DD>.md` (frontmatter:
 generator. House style: short paragraphs, **bold** the actors, frame matches by
 owner ("Tega's Germany beat Emily's Ivory Coast").
 
+**No violent or war metaphors.** Do not describe matches or the sweepstake with
+imagery of war, death, or violence (e.g. "bloodbath", "war", "battle",
+"massacre", "slaughter", "carnage", "scalp", "cage match", "grudge match").
+Keep it a friendly family game: prefer "contest", "tie", "clash of owners",
+"a big win", "an all-their-own tie". Standard football result-words that merely
+denote a lopsided score ("rout", "demolished") and the literal term "penalty
+shootout" are fine. **Before committing any recap — new or edited — review the
+whole text for war/violent metaphors and remove them.**
+
 **Every recap must include an `## Odds watch` section** summarising the `/odds`
 market: the favourite and their decimal price, the chasing pack, the biggest
 mover(s), and any table-vs-market divergence (a team can climb the points table
