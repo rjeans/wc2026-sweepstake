@@ -281,13 +281,17 @@ export function getTournamentData(): TournamentData {
     if (m.stage === 'GROUP') continue;
     if (m.stage === 'THIRD') {
       // Not a progression step: only the winner banks the bonus, nobody advances.
-      if (m.status === 'post' && m.homeScore !== null && m.awayScore !== null) {
-        bumpKo(m.home, m.homeScore, m.awayScore);
-        bumpKo(m.away, m.awayScore, m.homeScore);
+      // Live leader banks it provisionally; stats/elimination settle at full-time.
+      const decided = m.status === 'post';
+      if ((decided || m.status === 'in') && m.homeScore !== null && m.awayScore !== null) {
+        if (decided) {
+          bumpKo(m.home, m.homeScore, m.awayScore);
+          bumpKo(m.away, m.awayScore, m.homeScore);
+        }
         const w = m.winner ?? (m.homeScore > m.awayScore ? m.home : m.awayScore > m.homeScore ? m.away : null);
         if (w) {
           thirdPlaceWinners.add(w);
-          koEliminated.add(w === m.home ? m.away : m.home);
+          if (decided) koEliminated.add(w === m.home ? m.away : m.home);
         }
       }
       continue;
@@ -298,15 +302,21 @@ export function getTournamentData(): TournamentData {
     // Both teams have reached this round; a completed win advances the winner.
     creditKo(m.home, linearStage);
     creditKo(m.away, linearStage);
-    if (m.status === 'post' && m.homeScore !== null && m.awayScore !== null) {
-      bumpKo(m.home, m.homeScore, m.awayScore);
-      bumpKo(m.away, m.awayScore, m.homeScore);
+    const decided = m.status === 'post';
+    if ((decided || m.status === 'in') && m.homeScore !== null && m.awayScore !== null) {
+      // Match stats and elimination only settle at full-time; but the leader of a
+      // live tie advances provisionally, so the table tracks in-play knockout
+      // results the same way the odds do (a level live score has no leader).
+      if (decided) {
+        bumpKo(m.home, m.homeScore, m.awayScore);
+        bumpKo(m.away, m.awayScore, m.homeScore);
+      }
       // Prefer the recorded winner (covers penalty shootouts on a level score).
       const winner =
         m.winner ?? (m.homeScore > m.awayScore ? m.home : m.awayScore > m.homeScore ? m.away : null);
       if (winner) {
         if (i + 1 < STAGE_ORDER.length) creditKo(winner, STAGE_ORDER[i + 1]);
-        koEliminated.add(winner === m.home ? m.away : m.home);
+        if (decided) koEliminated.add(winner === m.home ? m.away : m.home);
       }
     }
   }

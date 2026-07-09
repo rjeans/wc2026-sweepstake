@@ -166,7 +166,8 @@ def load_ko_rounds(path):
                 continue
             if st == "THIRD":
                 # Only the play-off WINNER banks THIRD; nobody advances from it.
-                if (row.get("status") or "").strip() == "post":
+                # Live leader counts provisionally, matching the odds/table.
+                if (row.get("status") or "").strip() in ("post", "in"):
                     win = (row.get("winner") or "").strip()
                     if not win:
                         hs, as_ = row.get("home_score", "").strip(), row.get("away_score", "").strip()
@@ -185,12 +186,14 @@ def load_ko_rounds(path):
             # Both teams have reached this round (they are in the tie).
             credit(home, st)
             credit(away, st)
-            # A completed knockout win advances the winner to the next round.
-            # Prefer the recorded winner (covers penalty shootouts on a level
-            # score); fall back to the higher score for older data.
+            # A knockout win advances the winner to the next round. We credit the
+            # LEADER of a live ('in') tie provisionally too, so the table tracks
+            # in-play knockout results the same way the odds do (predict.py locks
+            # the live leader). A level live score has no leader, so nothing is
+            # credited until someone's ahead / the match is decided.
             hs, as_ = row.get("home_score", "").strip(), row.get("away_score", "").strip()
             win = (row.get("winner") or "").strip()
-            if (row.get("status") or "").strip() == "post" and i + 1 < len(STAGE_ORDER):
+            if (row.get("status") or "").strip() in ("post", "in") and i + 1 < len(STAGE_ORDER):
                 if not win and hs and as_:
                     try:
                         h, a = int(hs), int(as_)
