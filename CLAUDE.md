@@ -45,7 +45,7 @@ Allocation (`sweepstake.py`):
 Scoring (`scoring.py`):
 - Progression bonuses are **cumulative** (a team keeps points for every round it
   clears). `STAGE_ORDER` and `INCREMENT` define this.
-- The table sorts by **points, then goals for, then goal difference**.
+- The table sorts by **points, then goal difference, then goals for**.
 - The champion bonus is **calibrated, not arbitrary**. The progression ladder
   now **doubles** each round (cumulative 5/10/20/40/80/160); the cup is 160
   (`INCREMENT["CHAMPION"] = 80`), giving ~99.2% chance the winner's owner tops
