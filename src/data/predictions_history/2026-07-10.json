@@ -1,72 +1,72 @@
 {
   "date": "2026-07-10",
-  "generated_at": "2026-07-10T07:44:42Z",
+  "generated_at": "2026-07-10T09:06:59Z",
   "trials": 50000,
   "predictions": [
     {
       "player": "Nichola",
-      "p_win": 0.33606,
-      "p_top3": 0.70218,
-      "expected_points": 127.8244,
+      "p_win": 0.33382,
+      "p_top3": 0.70002,
+      "expected_points": 127.6036,
       "max_points_seen": 192,
-      "p_owns_champion": 0.33606,
-      "odds_decimal": 2.975659108492531,
+      "p_owns_champion": 0.33382,
+      "odds_decimal": 2.995626385477203,
       "position_probs": [
-        0.33606,
+        0.33382,
         0.072,
-        0.29412,
-        0.20498,
-        0.09284,
+        0.2942,
+        0.20394,
+        0.09604,
         0.0,
         0.0,
         0.0
       ],
       "most_likely_position": 1,
-      "expected_position": 2.647,
+      "expected_position": 2.656,
       "position_ci": [
         1,
         4
       ],
-      "position_ci_prob": 0.90716
+      "position_ci_prob": 0.90396
     },
     {
       "player": "Ella",
-      "p_win": 0.27056,
-      "p_top3": 0.61036,
-      "expected_points": 127.204,
+      "p_win": 0.27244,
+      "p_top3": 0.61272,
+      "expected_points": 127.5776,
       "max_points_seen": 207,
-      "p_owns_champion": 0.27056,
-      "odds_decimal": 3.6960378474275575,
+      "p_owns_champion": 0.27244,
+      "odds_decimal": 3.670532961385993,
       "position_probs": [
-        0.27056,
-        0.12976,
-        0.21004,
-        0.24988,
-        0.13976,
+        0.27244,
+        0.1313,
+        0.20898,
+        0.25014,
+        0.13714,
         0.0,
         0.0,
         0.0
       ],
       "most_likely_position": 1,
-      "expected_position": 2.859,
+      "expected_position": 2.848,
       "position_ci": [
         1,
         4
       ],
-      "position_ci_prob": 0.86024
+      "position_ci_prob": 0.86286
     },
     {
       "player": "Richard",
-      "p_win": 0.24556,
+      "p_win": 0.24492,
       "p_top3": 1.0,
-      "expected_points": 165.7316,
+      "expected_points": 165.6576,
       "max_points_seen": 241,
-      "p_owns_champion": 0.24556,
-      "odds_decimal": 4.072324482814791,
+      "p_owns_champion": 0.24492,
+      "odds_decimal": 4.082965866405357,
       "position_probs": [
-        0.24556,
-        0.57214,
-        0.1823,
+        0.24492,
+        0.57374,
+        0.18134,
         0.0,
         0.0,
         0.0,
@@ -74,64 +74,64 @@
         0.0
       ],
       "most_likely_position": 2,
-      "expected_position": 1.937,
+      "expected_position": 1.936,
       "position_ci": [
         1,
         2
       ],
-      "position_ci_prob": 0.8177
+      "position_ci_prob": 0.81866
     },
     {
       "player": "Henry",
-      "p_win": 0.1056,
-      "p_top3": 0.36854,
-      "expected_points": 98.628,
+      "p_win": 0.10686,
+      "p_top3": 0.36972,
+      "expected_points": 98.7784,
       "max_points_seen": 203,
-      "p_owns_champion": 0.1056,
-      "odds_decimal": 9.46969696969697,
+      "p_owns_champion": 0.10686,
+      "odds_decimal": 9.358038555118847,
       "position_probs": [
-        0.1056,
-        0.1119,
-        0.15104,
-        0.28312,
-        0.34834,
+        0.10686,
+        0.10998,
+        0.15288,
+        0.2829,
+        0.34738,
         0.0,
         0.0,
         0.0
       ],
       "most_likely_position": 5,
-      "expected_position": 3.657,
+      "expected_position": 3.654,
       "position_ci": [
         2,
         5
       ],
-      "position_ci_prob": 0.8944
+      "position_ci_prob": 0.89314
     },
     {
       "player": "Pete",
-      "p_win": 0.04222,
-      "p_top3": 0.31892,
-      "expected_points": 99.612,
+      "p_win": 0.04196,
+      "p_top3": 0.31754,
+      "expected_points": 99.3828,
       "max_points_seen": 276,
-      "p_owns_champion": 0.04222,
-      "odds_decimal": 23.685457129322597,
+      "p_owns_champion": 0.04196,
+      "odds_decimal": 23.832221163012395,
       "position_probs": [
-        0.04222,
-        0.1142,
-        0.1625,
-        0.26202,
-        0.41906,
+        0.04196,
+        0.11298,
+        0.1626,
+        0.26302,
+        0.41944,
         0.0,
         0.0,
         0.0
       ],
       "most_likely_position": 5,
-      "expected_position": 3.901,
+      "expected_position": 3.905,
       "position_ci": [
         3,
         5
       ],
-      "position_ci_prob": 0.84358
+      "position_ci_prob": 0.84506
     },
     {
       "player": "Emily",
@@ -222,10 +222,10 @@
       "p_r16": 1.0,
       "p_qf": 1.0,
       "p_sf": 1.0,
-      "p_final": 0.59472,
-      "p_champion": 0.33606,
-      "expected_points": 104.8244,
-      "odds_decimal": 2.975659108492531
+      "p_final": 0.59506,
+      "p_champion": 0.33382,
+      "expected_points": 104.6036,
+      "odds_decimal": 2.995626385477203
     },
     {
       "country": "Spain",
@@ -235,11 +235,11 @@
       "p_qualify": 1.0,
       "p_r16": 1.0,
       "p_qf": 1.0,
-      "p_sf": 0.7862,
-      "p_final": 0.4718,
-      "p_champion": 0.27056,
-      "expected_points": 87.204,
-      "odds_decimal": 3.6960378474275575
+      "p_sf": 0.78998,
+      "p_final": 0.47554,
+      "p_champion": 0.27244,
+      "expected_points": 87.5776,
+      "odds_decimal": 3.670532961385993
     },
     {
       "country": "Argentina",
@@ -249,11 +249,11 @@
       "p_qualify": 1.0,
       "p_r16": 1.0,
       "p_qf": 1.0,
-      "p_sf": 0.77674,
-      "p_final": 0.43562,
-      "p_champion": 0.2306,
-      "expected_points": 84.536,
-      "odds_decimal": 4.336513443191674
+      "p_sf": 0.77654,
+      "p_final": 0.43436,
+      "p_champion": 0.22926,
+      "expected_points": 84.3516,
+      "odds_decimal": 4.361859897060107
     },
     {
       "country": "England",
@@ -263,11 +263,11 @@
       "p_qualify": 1.0,
       "p_r16": 1.0,
       "p_qf": 1.0,
-      "p_sf": 0.65166,
-      "p_final": 0.2723,
-      "p_champion": 0.1056,
-      "expected_points": 62.628,
-      "odds_decimal": 9.46969696969697
+      "p_sf": 0.65262,
+      "p_final": 0.27074,
+      "p_champion": 0.10686,
+      "expected_points": 62.7784,
+      "odds_decimal": 9.358038555118847
     },
     {
       "country": "Norway",
@@ -277,11 +277,11 @@
       "p_qualify": 1.0,
       "p_r16": 1.0,
       "p_qf": 1.0,
-      "p_sf": 0.34834,
-      "p_final": 0.09732,
-      "p_champion": 0.0245,
-      "expected_points": 40.308,
-      "odds_decimal": 40.816326530612244
+      "p_sf": 0.34738,
+      "p_final": 0.0956,
+      "p_champion": 0.02526,
+      "expected_points": 40.2828,
+      "odds_decimal": 39.5882818685669
     },
     {
       "country": "Belgium",
@@ -291,11 +291,11 @@
       "p_qualify": 1.0,
       "p_r16": 1.0,
       "p_qf": 1.0,
-      "p_sf": 0.2138,
-      "p_final": 0.06534,
-      "p_champion": 0.01772,
-      "expected_points": 34.304,
-      "odds_decimal": 56.433408577878104
+      "p_sf": 0.21002,
+      "p_final": 0.06422,
+      "p_champion": 0.0167,
+      "expected_points": 34.1,
+      "odds_decimal": 59.880239520958085
     },
     {
       "country": "Switzerland",
@@ -305,11 +305,11 @@
       "p_qualify": 1.0,
       "p_r16": 1.0,
       "p_qf": 1.0,
-      "p_sf": 0.22326,
-      "p_final": 0.0629,
-      "p_champion": 0.01496,
-      "expected_points": 36.1956,
-      "odds_decimal": 66.84491978609626
+      "p_sf": 0.22346,
+      "p_final": 0.06448,
+      "p_champion": 0.01566,
+      "expected_points": 36.306,
+      "odds_decimal": 63.85696040868454
     },
     {
       "country": "Mexico",
