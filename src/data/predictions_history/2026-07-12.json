@@ -1,9 +1,7 @@
 {
+  "date": "2026-07-12",
   "generated_at": "2026-07-12T00:33:15Z",
   "trials": 50000,
-  "locked_group_matches": 72,
-  "locked_ko_matches": 27,
-  "comparison_date": "2026-07-11",
   "predictions": [
     {
       "player": "Ella",
@@ -29,10 +27,7 @@
         1,
         4
       ],
-      "position_ci_prob": 1.0,
-      "delta_p_win": -0.00813999999999998,
-      "delta_expected_points": -1.0840000000000032,
-      "delta_odds_decimal": 0.06589564167780226
+      "position_ci_prob": 1.0
     },
     {
       "player": "Nichola",
@@ -58,10 +53,7 @@
         1,
         4
       ],
-      "position_ci_prob": 0.80222,
-      "delta_p_win": -0.006900000000000017,
-      "delta_expected_points": -0.818799999999996,
-      "delta_odds_decimal": 0.08399795763713724
+      "position_ci_prob": 0.80222
     },
     {
       "player": "Richard",
@@ -87,10 +79,7 @@
         1,
         3
       ],
-      "position_ci_prob": 1.0,
-      "delta_p_win": -0.003820000000000018,
-      "delta_expected_points": -0.7515999999999963,
-      "delta_odds_decimal": 0.0869511696798817
+      "position_ci_prob": 1.0
     },
     {
       "player": "Henry",
@@ -116,10 +105,7 @@
         2,
         4
       ],
-      "position_ci_prob": 0.8383,
-      "delta_p_win": 0.018860000000000016,
-      "delta_expected_points": 2.6543999999999954,
-      "delta_odds_decimal": -0.8165482022344852
+      "position_ci_prob": 0.8383
     },
     {
       "player": "Emily",
@@ -145,9 +131,7 @@
         6,
         6
       ],
-      "position_ci_prob": 1.0,
-      "delta_p_win": 0.0,
-      "delta_expected_points": 0.0
+      "position_ci_prob": 1.0
     },
     {
       "player": "Pete",
@@ -173,9 +157,7 @@
         5,
         5
       ],
-      "position_ci_prob": 0.80222,
-      "delta_p_win": 0.0,
-      "delta_expected_points": 0.0
+      "position_ci_prob": 0.80222
     },
     {
       "player": "Sophie",
@@ -201,9 +183,7 @@
         7,
         7
       ],
-      "position_ci_prob": 1.0,
-      "delta_p_win": 0.0,
-      "delta_expected_points": 0.0
+      "position_ci_prob": 1.0
     },
     {
       "player": "Tega",
@@ -229,9 +209,7 @@
         8,
         8
       ],
-      "position_ci_prob": 1.0,
-      "delta_p_win": 0.0,
-      "delta_expected_points": 0.0
+      "position_ci_prob": 1.0
     }
   ],
   "teams": [
@@ -247,10 +225,7 @@
       "p_final": 0.59648,
       "p_champion": 0.34742,
       "expected_points": 103.536,
-      "odds_decimal": 2.87836048586725,
-      "delta_p_champion": -0.00813999999999998,
-      "delta_expected_points": -1.0840000000000032,
-      "delta_odds_decimal": 0.06589564167780226
+      "odds_decimal": 2.87836048586725
     },
     {
       "country": "France",
@@ -264,10 +239,7 @@
       "p_final": 0.54426,
       "p_champion": 0.28318,
       "expected_points": 98.584,
-      "odds_decimal": 3.5313228335334417,
-      "delta_p_champion": -0.006900000000000017,
-      "delta_expected_points": -0.818799999999996,
-      "delta_odds_decimal": 0.08399795763713724
+      "odds_decimal": 3.5313228335334417
     },
     {
       "country": "Argentina",
@@ -281,10 +253,7 @@
       "p_final": 0.39608,
       "p_champion": 0.19678,
       "expected_points": 80.306,
-      "odds_decimal": 5.081817257851408,
-      "delta_p_champion": -0.0026199999999999835,
-      "delta_expected_points": -0.3640000000000043,
-      "delta_odds_decimal": 0.06677212244518937
+      "odds_decimal": 5.081817257851408
     },
     {
       "country": "England",
@@ -298,10 +267,7 @@
       "p_final": 0.41278,
       "p_champion": 0.1617,
       "expected_points": 81.5568,
-      "odds_decimal": 6.184291898577612,
-      "delta_p_champion": 0.018860000000000016,
-      "delta_expected_points": 2.6543999999999954,
-      "delta_odds_decimal": -0.8165482022344852
+      "odds_decimal": 6.184291898577612
     },
     {
       "country": "Switzerland",
@@ -315,10 +281,7 @@
       "p_final": 0.0504,
       "p_champion": 0.01092,
       "expected_points": 35.0172,
-      "odds_decimal": 91.57509157509158,
-      "delta_p_champion": -0.0012000000000000014,
-      "delta_expected_points": -0.38759999999999906,
-      "delta_odds_decimal": 9.066840750009078
+      "odds_decimal": 91.57509157509158
     },
     {
       "country": "Mexico",
@@ -332,9 +295,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 19.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "South Africa",
@@ -348,9 +309,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 9.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "South Korea",
@@ -364,9 +323,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 3.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Czechia",
@@ -380,9 +337,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 1.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Canada",
@@ -396,9 +351,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 14.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Bosnia-Herzegovina",
@@ -412,9 +365,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 9.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Qatar",
@@ -428,9 +379,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 1.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Brazil",
@@ -444,9 +393,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 17.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Morocco",
@@ -460,9 +407,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 27.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Haiti",
@@ -476,9 +421,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 0.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Scotland",
@@ -492,9 +435,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 3.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "United States",
@@ -508,9 +449,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 16.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Paraguay",
@@ -524,9 +463,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 14.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Australia",
@@ -540,9 +477,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 9.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "T\u00fcrkiye",
@@ -556,9 +491,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 3.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Germany",
@@ -572,9 +505,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 11.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Cura\u00e7ao",
@@ -588,9 +519,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 1.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Ivory Coast",
@@ -604,9 +533,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 11.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Ecuador",
@@ -620,9 +547,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 9.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Netherlands",
@@ -636,9 +561,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 12.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Japan",
@@ -652,9 +575,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 10.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Sweden",
@@ -668,9 +589,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 9.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Tunisia",
@@ -684,9 +603,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 0.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Belgium",
@@ -700,9 +617,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 25.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Egypt",
@@ -716,9 +631,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 15.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Iran",
@@ -732,9 +645,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 3.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "New Zealand",
@@ -748,9 +659,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 1.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Cape Verde",
@@ -764,9 +673,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 8.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Saudi Arabia",
@@ -780,9 +687,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 2.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Uruguay",
@@ -796,9 +701,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 2.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Senegal",
@@ -812,9 +715,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 8.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Iraq",
@@ -828,9 +729,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 0.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Norway",
@@ -844,9 +743,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 26.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Algeria",
@@ -860,9 +757,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 9.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Austria",
@@ -876,9 +771,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 9.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Jordan",
@@ -892,9 +785,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 0.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Portugal",
@@ -908,9 +799,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 15.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Congo DR",
@@ -924,9 +813,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 9.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Uzbekistan",
@@ -940,9 +827,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 0.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Colombia",
@@ -956,9 +841,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 17.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Croatia",
@@ -972,9 +855,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 11.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Ghana",
@@ -988,9 +869,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 9.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     },
     {
       "country": "Panama",
@@ -1004,9 +883,7 @@
       "p_final": 0.0,
       "p_champion": 0.0,
       "expected_points": 0.0,
-      "odds_decimal": null,
-      "delta_p_champion": 0.0,
-      "delta_expected_points": 0.0
+      "odds_decimal": null
     }
   ]
 }
