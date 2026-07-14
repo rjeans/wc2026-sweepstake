@@ -16,7 +16,7 @@ Czechia,0,1,2,2,6,GROUP
 Ecuador,1,1,1,2,2,R32
 Egypt,1,2,0,5,3,R16
 England,2,1,0,6,2,QF
-France,3,0,0,10,2,QF
+France,3,0,0,10,2,SF
 Germany,2,0,1,10,4,R32
 Ghana,1,1,1,2,2,R32
 Haiti,0,0,3,2,8,GROUP
@@ -39,7 +39,7 @@ Scotland,1,0,2,1,4,GROUP
 Senegal,1,0,2,8,6,R32
 South Africa,1,1,1,2,3,R32
 South Korea,1,0,2,2,3,GROUP
-Spain,2,1,0,5,0,QF
+Spain,2,1,0,5,0,SF
 Sweden,1,1,1,7,7,R32
 Switzerland,2,1,0,7,3,QF
 Tunisia,0,0,3,2,12,GROUP
