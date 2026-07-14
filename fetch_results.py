@@ -35,16 +35,17 @@ ENDPOINT = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scor
 DEFAULT_DATES = "20260611-20260720"   # group stage start → final + a buffer
 
 # ESPN season.slug  ->  scoring.py stage code.
-# NOTE: the third-place play-off slug is a best guess (ESPN hasn't published the
-# 2026 fixture yet) — verify the exact slug once the semi-finals are drawn.
+# ESPN's actual 2026 third-place slug is "3rd-place-match" (confirmed from the
+# live feed); the others are kept as tolerant aliases in case the feed varies.
 STAGE = {
     "group-stage":         "GROUP",
     "round-of-32":         "R32",
     "round-of-16":         "R16",
     "quarterfinals":       "QF",
     "semifinals":          "SF",
-    "third-place":         "THIRD",
+    "3rd-place-match":     "THIRD",
     "third-place-match":   "THIRD",
+    "third-place":         "THIRD",
     "3rd-place":           "THIRD",
     "final":               "FINAL",
 }
@@ -55,7 +56,10 @@ _MATCH_ORDER = ["GROUP", "R32", "R16", "QF", "SF", "THIRD", "FINAL", "CHAMPION"]
 
 
 def fetch_events(dates: str) -> list[dict]:
-    url = f"{ENDPOINT}?dates={dates}"
+    # ESPN's scoreboard caps at 100 events per request unless a limit is given;
+    # the 2026 World Cup has 104 matches, so without this the semi-finals, the
+    # third-place match and the final fall off the end. limit=1000 returns all.
+    url = f"{ENDPOINT}?dates={dates}&limit=1000"
     req = urllib.request.Request(url, headers={"User-Agent": "wc2026-sweepstake/1.0"})
     with urllib.request.urlopen(req, timeout=30) as r:
         payload = json.load(r)
