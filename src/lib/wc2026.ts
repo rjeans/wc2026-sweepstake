@@ -316,7 +316,10 @@ export function getTournamentData(): TournamentData {
         m.winner ?? (m.homeScore > m.awayScore ? m.home : m.awayScore > m.homeScore ? m.away : null);
       if (winner) {
         if (i + 1 < STAGE_ORDER.length) creditKo(winner, STAGE_ORDER[i + 1]);
-        if (decided) koEliminated.add(winner === m.home ? m.away : m.home);
+        // A beaten semi-finalist is NOT out: they drop into the third-place
+        // play-off (worth +20 if they win it), so don't grey them yet. The
+        // fourth-placed team is greyed when that play-off is decided (above).
+        if (decided && m.stage !== 'SF') koEliminated.add(winner === m.home ? m.away : m.home);
       }
     }
   }
