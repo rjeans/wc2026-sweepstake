@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-16T19:53:24Z",
+  "generated_at": "2026-07-16T20:19:19Z",
   "trials": 50000,
   "locked_group_matches": 72,
   "locked_ko_matches": 30,
@@ -7,15 +7,15 @@
   "predictions": [
     {
       "player": "Ella",
-      "p_win": 0.5481,
+      "p_win": 0.54604,
       "p_top3": 1.0,
-      "expected_points": 170.848,
+      "expected_points": 170.6832,
       "max_points_seen": 207,
-      "p_owns_champion": 0.5481,
-      "odds_decimal": 1.8244845831052727,
+      "p_owns_champion": 0.54604,
+      "odds_decimal": 1.8313676653725002,
       "position_probs": [
-        0.5481,
-        0.4519,
+        0.54604,
+        0.45396,
         0.0,
         0.0,
         0.0,
@@ -24,27 +24,27 @@
         0.0
       ],
       "most_likely_position": 1,
-      "expected_position": 1.452,
+      "expected_position": 1.454,
       "position_ci": [
         1,
         2
       ],
       "position_ci_prob": 1.0,
-      "delta_p_win": -0.0020200000000000218,
-      "delta_expected_points": -0.16159999999999286,
-      "delta_odds_decimal": 0.0066993726057456016
+      "delta_p_win": -0.0040800000000000836,
+      "delta_expected_points": -0.3264000000000067,
+      "delta_odds_decimal": 0.013582454872973049
     },
     {
       "player": "Richard",
-      "p_win": 0.4519,
+      "p_win": 0.45396,
       "p_top3": 1.0,
-      "expected_points": 197.152,
+      "expected_points": 197.3168,
       "max_points_seen": 241,
-      "p_owns_champion": 0.4519,
-      "odds_decimal": 2.212878955521133,
+      "p_owns_champion": 0.45396,
+      "odds_decimal": 2.2028372543836463,
       "position_probs": [
-        0.4519,
-        0.5481,
+        0.45396,
+        0.54604,
         0.0,
         0.0,
         0.0,
@@ -53,15 +53,15 @@
         0.0
       ],
       "most_likely_position": 2,
-      "expected_position": 1.548,
+      "expected_position": 1.546,
       "position_ci": [
         1,
         2
       ],
       "position_ci_prob": 1.0,
-      "delta_p_win": 0.0020200000000000218,
-      "delta_expected_points": 0.16159999999999286,
-      "delta_odds_decimal": -0.00993601736052474
+      "delta_p_win": 0.0040799999999999725,
+      "delta_expected_points": 0.3264000000000067,
+      "delta_odds_decimal": -0.01997771849801122
     },
     {
       "player": "Emily",
@@ -94,58 +94,58 @@
     {
       "player": "Henry",
       "p_win": 0.0,
-      "p_top3": 0.43012,
-      "expected_points": 91.6024,
+      "p_top3": 0.43254,
+      "expected_points": 91.6508,
       "max_points_seen": 103,
       "p_owns_champion": 0.0,
       "odds_decimal": null,
       "position_probs": [
         0.0,
         0.0,
-        0.43012,
-        0.56988,
+        0.43254,
+        0.56746,
         0.0,
         0.0,
         0.0,
         0.0
       ],
       "most_likely_position": 4,
-      "expected_position": 3.57,
+      "expected_position": 3.567,
       "position_ci": [
         3,
         4
       ],
       "position_ci_prob": 1.0,
       "delta_p_win": 0.0,
-      "delta_expected_points": 0.01640000000000441
+      "delta_expected_points": 0.0648000000000053
     },
     {
       "player": "Nichola",
       "p_win": 0.0,
-      "p_top3": 0.56988,
-      "expected_points": 83.3976,
+      "p_top3": 0.56746,
+      "expected_points": 83.3492,
       "max_points_seen": 92,
       "p_owns_champion": 0.0,
       "odds_decimal": null,
       "position_probs": [
         0.0,
         0.0,
-        0.56988,
+        0.56746,
         0.0,
-        0.43012,
+        0.43254,
         0.0,
         0.0,
         0.0
       ],
       "most_likely_position": 3,
-      "expected_position": 3.86,
+      "expected_position": 3.865,
       "position_ci": [
         3,
         5
       ],
       "position_ci_prob": 1.0,
       "delta_p_win": 0.0,
-      "delta_expected_points": -0.01640000000000441
+      "delta_expected_points": -0.0648000000000053
     },
     {
       "player": "Pete",
@@ -159,14 +159,14 @@
         0.0,
         0.0,
         0.0,
-        0.43012,
-        0.56988,
+        0.43254,
+        0.56746,
         0.0,
         0.0,
         0.0
       ],
       "most_likely_position": 5,
-      "expected_position": 4.57,
+      "expected_position": 4.567,
       "position_ci": [
         4,
         5
@@ -243,12 +243,12 @@
       "p_qf": 1.0,
       "p_sf": 1.0,
       "p_final": 1.0,
-      "p_champion": 0.5481,
-      "expected_points": 130.848,
-      "odds_decimal": 1.8244845831052727,
-      "delta_p_champion": -0.0020200000000000218,
-      "delta_expected_points": -0.16159999999999286,
-      "delta_odds_decimal": 0.0066993726057456016
+      "p_champion": 0.54604,
+      "expected_points": 130.6832,
+      "odds_decimal": 1.8313676653725002,
+      "delta_p_champion": -0.0040800000000000836,
+      "delta_expected_points": -0.3264000000000067,
+      "delta_odds_decimal": 0.013582454872973049
     },
     {
       "country": "Argentina",
@@ -260,12 +260,12 @@
       "p_qf": 1.0,
       "p_sf": 1.0,
       "p_final": 1.0,
-      "p_champion": 0.4519,
-      "expected_points": 125.152,
-      "odds_decimal": 2.212878955521133,
-      "delta_p_champion": 0.0020200000000000218,
-      "delta_expected_points": 0.16160000000000707,
-      "delta_odds_decimal": -0.00993601736052474
+      "p_champion": 0.45396,
+      "expected_points": 125.3168,
+      "odds_decimal": 2.2028372543836463,
+      "delta_p_champion": 0.0040799999999999725,
+      "delta_expected_points": 0.3264000000000067,
+      "delta_odds_decimal": -0.01997771849801122
     },
     {
       "country": "Mexico",
@@ -774,10 +774,10 @@
       "p_sf": 1.0,
       "p_final": 0.0,
       "p_champion": 0.0,
-      "expected_points": 60.3976,
+      "expected_points": 60.3492,
       "odds_decimal": null,
       "delta_p_champion": 0.0,
-      "delta_expected_points": -0.01640000000000441
+      "delta_expected_points": -0.06479999999999819
     },
     {
       "country": "Senegal",
@@ -950,10 +950,10 @@
       "p_sf": 1.0,
       "p_final": 0.0,
       "p_champion": 0.0,
-      "expected_points": 55.6024,
+      "expected_points": 55.6508,
       "odds_decimal": null,
       "delta_p_champion": 0.0,
-      "delta_expected_points": 0.01640000000000441
+      "delta_expected_points": 0.06479999999999819
     },
     {
       "country": "Croatia",
