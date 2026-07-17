@@ -1,6 +1,6 @@
 {
   "date": "2026-07-17",
-  "generated_at": "2026-07-17T22:16:44Z",
+  "generated_at": "2026-07-17T22:46:39Z",
   "trials": 50000,
   "predictions": [
     {
@@ -84,16 +84,16 @@
     {
       "player": "Henry",
       "p_win": 0.0,
-      "p_top3": 0.43082,
-      "expected_points": 91.6164,
+      "p_top3": 0.43124,
+      "expected_points": 91.6248,
       "max_points_seen": 103,
       "p_owns_champion": 0.0,
       "odds_decimal": null,
       "position_probs": [
         0.0,
         0.0,
-        0.43082,
-        0.56918,
+        0.43124,
+        0.56876,
         0.0,
         0.0,
         0.0,
@@ -110,17 +110,17 @@
     {
       "player": "Nichola",
       "p_win": 0.0,
-      "p_top3": 0.56918,
-      "expected_points": 83.3836,
+      "p_top3": 0.56876,
+      "expected_points": 83.3752,
       "max_points_seen": 92,
       "p_owns_champion": 0.0,
       "odds_decimal": null,
       "position_probs": [
         0.0,
         0.0,
-        0.56918,
+        0.56876,
         0.0,
-        0.43082,
+        0.43124,
         0.0,
         0.0,
         0.0
@@ -145,8 +145,8 @@
         0.0,
         0.0,
         0.0,
-        0.43082,
-        0.56918,
+        0.43124,
+        0.56876,
         0.0,
         0.0,
         0.0
@@ -686,7 +686,7 @@
       "p_sf": 1.0,
       "p_final": 0.0,
       "p_champion": 0.0,
-      "expected_points": 60.3836,
+      "expected_points": 60.3752,
       "odds_decimal": null
     },
     {
@@ -840,7 +840,7 @@
       "p_sf": 1.0,
       "p_final": 0.0,
       "p_champion": 0.0,
-      "expected_points": 55.6164,
+      "expected_points": 55.6248,
       "odds_decimal": null
     },
     {
