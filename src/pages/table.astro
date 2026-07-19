@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/WC2026Layout.astro';
-import { getTournamentData, stageLabel, STAGE_ORDER, STAGE_BONUS, type Stage } from '../lib/wc2026';
+import { getTournamentData, stageLabel, STAGE_ORDER, STAGE_BONUS, THIRD_BONUS, type Stage } from '../lib/wc2026';
 import { playerColor, stageStyle, stageShort, tierStyle, flagCode, fmtSigned, MEDALS } from '../lib/wc2026-ui';
 import TeamMatches from '../components/TeamMatches.astro';
 
@@ -27,17 +27,19 @@ const maxTeamPoints = Math.max(
 // that round x its increment).
 const STAGE_COLS: { key: Stage; label: string }[] = [
   { key: 'GROUP', label: 'Group' }, { key: 'R32', label: 'R32' }, { key: 'R16', label: 'R16' },
-  { key: 'QF', label: 'QF' }, { key: 'SF', label: 'SF' }, { key: 'FINAL', label: 'Final' },
-  { key: 'CHAMPION', label: 'Cup' },
+  { key: 'QF', label: 'QF' }, { key: 'SF', label: 'SF' }, { key: 'THIRD', label: '3rd' },
+  { key: 'FINAL', label: 'Final' }, { key: 'CHAMPION', label: 'Cup' },
 ];
 const pointsByStage = (p: (typeof data.players)[number]) => {
-  const b: Record<Stage, number> = { GROUP: 0, R32: 0, R16: 0, QF: 0, SF: 0, FINAL: 0, CHAMPION: 0 };
+  const b: Record<Stage, number> = { GROUP: 0, R32: 0, R16: 0, QF: 0, SF: 0, THIRD: 0, FINAL: 0, CHAMPION: 0 };
   for (const t of p.teams) {
     b.GROUP += t.groupPoints;
     const ri = STAGE_ORDER.indexOf(t.koReached);
     for (let s = 1; s < STAGE_ORDER.length; s++) {
       if (ri >= s) b[STAGE_ORDER[s]] += STAGE_BONUS[STAGE_ORDER[s]] - STAGE_BONUS[STAGE_ORDER[s - 1]];
     }
+    // Third-place play-off is a branch off the semi, so it's credited separately.
+    if (t.thirdPlace) b.THIRD += THIRD_BONUS;
   }
   return b;
 };
@@ -178,8 +180,8 @@ const activeStages = STAGE_COLS.filter(
                       <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
                     )}
                     <span class="bd-name">{t.country}</span>
-                    {t.koReached !== 'GROUP' && (
-                      <span class="ko-badge" style={t.eliminated ? '' : stageStyle(t.koReached)}>{stageShort(t.koReached)}</span>
+                    {(t.koReached !== 'GROUP' || t.thirdPlace) && (
+                      <span class="ko-badge" style={t.eliminated ? '' : stageStyle(t.thirdPlace ? 'THIRD' : t.koReached)}>{stageShort(t.thirdPlace ? 'THIRD' : t.koReached)}</span>
                     )}
                     <span class="bd-bar">
                       <span class="bd-fill" style={`width:${(t.points / maxTeamPoints) * 100}%;background-color:${playerColor(player.name)}`}></span>

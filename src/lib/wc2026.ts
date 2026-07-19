@@ -64,6 +64,7 @@ export interface TeamRow extends Team {
   stage: Stage;
   koReached: Stage; // deepest knockout round the team appears in the fixtures (GROUP = not through)
   eliminated: boolean; // out of the tournament: lost a knockout tie, or didn't escape the group
+  thirdPlace: boolean; // won the third-place play-off (+20 on top of the semi-final)
   // Played/won/drawn/lost/goals across ALL matches (group + completed knockout).
   record: { p: number; w: number; d: number; l: number; gf: number; ga: number };
 }
@@ -360,6 +361,7 @@ export function getTournamentData(): TournamentData {
       eliminated:
         koEliminated.has(t.country) ||
         ((status === 'in-progress' || status === 'complete') && reached === 'GROUP'),
+      thirdPlace: wonThird,
       record: {
         p: gw + gd + gl + ko.p,
         w: gw + ko.w,

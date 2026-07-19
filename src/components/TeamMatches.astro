@@ -1,6 +1,6 @@
 ---
 // A team's full match history (group + knockout), used inside drill-down rows.
-import { STAGE_ORDER, STAGE_BONUS, type TournamentData, type Stage } from '../lib/wc2026';
+import { STAGE_ORDER, STAGE_BONUS, THIRD_BONUS, type TournamentData, type Stage } from '../lib/wc2026';
 import { flagCode, playerColor, stageShort } from '../lib/wc2026-ui';
 
 interface Props { country: string; data: TournamentData }
@@ -37,9 +37,13 @@ function matchPoints(m: (typeof matches)[number]): { pts: number; qualified: boo
     if (qualified) pts += STAGE_BONUS.R32;
     return { pts, qualified };
   }
+  const won = m.winner ? m.winner === country : my > opp;
+  // Third-place play-off is a branch off the semi (not in STAGE_ORDER): the
+  // winner banks the flat +20, the loser nothing.
+  if (m.stage === 'THIRD') return { pts: won ? THIRD_BONUS : 0, qualified: false };
   const i = STAGE_ORDER.indexOf(m.stage);
   // Advancement (incl. penalty shootouts) is keyed off the recorded winner.
-  const advanced = (m.winner ? m.winner === country : my > opp) && i + 1 < STAGE_ORDER.length;
+  const advanced = won && i + 1 < STAGE_ORDER.length;
   return { pts: advanced ? STAGE_BONUS[STAGE_ORDER[i + 1]] - STAGE_BONUS[m.stage] : 0, qualified: false };
 }
 
