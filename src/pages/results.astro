@@ -46,6 +46,7 @@ const teamsSorted = [...data.teams].sort((a, b) => {
           <span class="num">L</span>
           <span class="num">GF</span>
           <span class="num">GA</span>
+          <span class="num">KO</span>
           <span class="num">Pts</span>
           <span>Stage</span>
         </div>
@@ -75,8 +76,9 @@ const teamsSorted = [...data.teams].sort((a, b) => {
               <span class="num">{t.record.l}</span>
               <span class="num">{t.record.gf}</span>
               <span class="num">{t.record.ga}</span>
+              <span class="num">{t.points - t.groupPoints > 0 ? t.points - t.groupPoints : <span class="muted">&mdash;</span>}</span>
               <span class="num strong">{t.points}</span>
-              <span><span class="badge sm" style={stageStyle(t.koReached)}>{stageShort(t.koReached) || 'Grp'}</span></span>
+              <span><span class="badge sm" style={stageStyle(t.thirdPlace ? 'THIRD' : t.koReached)}>{stageShort(t.thirdPlace ? 'THIRD' : t.koReached) || 'Grp'}</span></span>
             </summary>
             <TeamMatches country={t.country} data={data} />
           </details>
@@ -97,10 +99,10 @@ const teamsSorted = [...data.teams].sort((a, b) => {
   .tt-scroll { overflow-x: auto; }
   .tt-grid {
     display: grid;
-    grid-template-columns: 0.9rem 1.4rem minmax(7rem, 1fr) 1.6rem 5rem 2.1rem 1.6rem 1.6rem 1.6rem 1.9rem 1.9rem 2.3rem 3rem;
+    grid-template-columns: 0.9rem 1.4rem minmax(7rem, 1fr) 1.6rem 5rem 2.1rem 1.6rem 1.6rem 1.6rem 1.9rem 1.9rem 2.1rem 2.3rem 3rem;
     align-items: center;
     gap: 0.35rem;
-    min-width: 560px;
+    min-width: 600px;
     padding: 0.5rem 0.7rem;
   }
   .tt-grid .num { text-align: right; }

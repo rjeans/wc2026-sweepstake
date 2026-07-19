@@ -221,10 +221,12 @@ def score(owners, teams_of, results):
             pts += team_points(r)
             gf += r["gf"]
             gd += r["gf"] - r["ga"]
-            # Best run is a bracket depth, so a third-place finish reads as "SF".
-            depth_stage = "SF" if r["stage"] == "THIRD" else r["stage"]
-            if rank(depth_stage) > rank(deepest):
-                deepest = depth_stage
+            # Deepest run by (bracket depth, then points): a third-place finish
+            # (THIRD, worth 60) reads as "Third place" - deeper than a plain
+            # semi-final exit (40) but shallower than reaching the final (80).
+            st = r["stage"]
+            if (rank(st), cumulative(st)) > (rank(deepest), cumulative(deepest)):
+                deepest = st
             if r["stage"] == "CHAMPION":
                 champion_owner = person
         rows.append({"person": person, "points": pts, "gf": gf, "gd": gd, "best": deepest})
