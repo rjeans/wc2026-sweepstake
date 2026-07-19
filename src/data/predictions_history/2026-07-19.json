@@ -1,19 +1,19 @@
 {
   "date": "2026-07-19",
-  "generated_at": "2026-07-19T09:12:21Z",
+  "generated_at": "2026-07-19T10:03:34Z",
   "trials": 50000,
   "predictions": [
     {
       "player": "Ella",
-      "p_win": 0.55006,
+      "p_win": 0.5508,
       "p_top3": 1.0,
-      "expected_points": 171.0048,
+      "expected_points": 171.064,
       "max_points_seen": 207,
-      "p_owns_champion": 0.55006,
-      "odds_decimal": 1.8179834927098861,
+      "p_owns_champion": 0.5508,
+      "odds_decimal": 1.815541031227306,
       "position_probs": [
-        0.55006,
-        0.44994,
+        0.5508,
+        0.4492,
         0.0,
         0.0,
         0.0,
@@ -22,7 +22,7 @@
         0.0
       ],
       "most_likely_position": 1,
-      "expected_position": 1.45,
+      "expected_position": 1.449,
       "position_ci": [
         1,
         2
@@ -31,15 +31,15 @@
     },
     {
       "player": "Richard",
-      "p_win": 0.44994,
+      "p_win": 0.4492,
       "p_top3": 1.0,
-      "expected_points": 196.9952,
+      "expected_points": 196.936,
       "max_points_seen": 241,
-      "p_owns_champion": 0.44994,
-      "odds_decimal": 2.2225185580299596,
+      "p_owns_champion": 0.4492,
+      "odds_decimal": 2.2261798753339272,
       "position_probs": [
-        0.44994,
-        0.55006,
+        0.4492,
+        0.5508,
         0.0,
         0.0,
         0.0,
@@ -48,7 +48,7 @@
         0.0
       ],
       "most_likely_position": 2,
-      "expected_position": 1.55,
+      "expected_position": 1.551,
       "position_ci": [
         1,
         2
@@ -223,9 +223,9 @@
       "p_qf": 1.0,
       "p_sf": 1.0,
       "p_final": 1.0,
-      "p_champion": 0.55006,
-      "expected_points": 131.0048,
-      "odds_decimal": 1.8179834927098861
+      "p_champion": 0.5508,
+      "expected_points": 131.064,
+      "odds_decimal": 1.815541031227306
     },
     {
       "country": "Argentina",
@@ -237,9 +237,9 @@
       "p_qf": 1.0,
       "p_sf": 1.0,
       "p_final": 1.0,
-      "p_champion": 0.44994,
-      "expected_points": 124.9952,
-      "odds_decimal": 2.2225185580299596
+      "p_champion": 0.4492,
+      "expected_points": 124.936,
+      "odds_decimal": 2.2261798753339272
     },
     {
       "country": "Mexico",
