@@ -68,8 +68,8 @@ const through = data.teams.filter((t) => t.koReached !== 'GROUP').length;
                           <img class="flag" src={`https://flagcdn.com/w40/${flagCode(t.country)}.png`} srcset={`https://flagcdn.com/w80/${flagCode(t.country)}.png 2x`} width="20" height="14" alt="" loading="lazy" />
                         )}
                         {t.country}
-                        {t.koReached !== 'GROUP' && (
-                          <span class="ko-badge" style={t.eliminated ? '' : stageStyle(t.koReached)}>{stageShort(t.koReached)}</span>
+                        {(t.koReached !== 'GROUP' || t.thirdPlace) && (
+                          <span class="ko-badge" style={t.eliminated ? '' : stageStyle(t.thirdPlace ? 'THIRD' : t.koReached)}>{stageShort(t.thirdPlace ? 'THIRD' : t.koReached)}</span>
                         )}
                       </span>
                     ) : (
