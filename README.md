@@ -20,9 +20,11 @@ where the owner of the eventual champions is the strong favourite to win.
 | `sample_allocation.csv` | An example draw (from `--seed 7`). |
 | `results_template.csv` | Blank results sheet (all 48 teams) to fill in as the tournament unfolds. |
 
-The live site at [wc26.jeansy.org](https://wc26.jeansy.org) adds `fetch_results.py`
-(pulls scores from ESPN) and `scrape_elo.py` (team strength ratings), run on a
-schedule so the table and odds update themselves; see `CLAUDE.md` for that setup.
+The live site at [wc26.jeansy.org](https://wc26.jeansy.org) also has
+`fetch_results.py` (pulls scores from ESPN) and `scrape_elo.py` (team strength
+ratings). These ran on a schedule during the tournament; now that it's over the
+site is a static archive — it rebuilds and deploys on push, with no timed data
+refresh. Run those scripts by hand if you ever need to regenerate the data.
 
 **Requirements:** Python 3.10+. Standard library only — nothing to install.
 
